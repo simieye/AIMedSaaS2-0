@@ -113,3 +113,5 @@ export * from './ContractManagement.jsx';
 export * from './PaymentTracking.jsx';
 export * from './ReportGeneration.jsx';
 export * from './HallucinationAlerts.jsx';
+export * from './ApprovalWorkflow.jsx';
+export * from './ROIAnalysisDashboard.jsx';

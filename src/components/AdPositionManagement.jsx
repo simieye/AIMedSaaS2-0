@@ -1,528 +1,410 @@
 // @ts-ignore;
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // @ts-ignore;
-import { Card, CardContent, CardHeader, CardTitle, Button, Input, Select, Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useToast, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
+import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useToast, Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
 // @ts-ignore;
-import { Search, Filter, Plus, Eye, Edit, Trash2, Monitor, Smartphone, Tablet, Layout, Calendar, DollarSign, TrendingUp, Clock, CheckCircle, AlertCircle } from 'lucide-react';
+import { Layout, Image, Ad, Megaphone, Eye, Edit, Plus, Calendar, DollarSign, BarChart3, TrendingUp, Users, Target, Settings, Monitor, Smartphone, Tablet, Globe, Zap, Clock, CheckCircle, AlertTriangle, Filter, Search, RefreshCw } from 'lucide-react';
 
 export function AdPositionManagement({
-  $w,
-  className,
-  style
+  adPositions,
+  sponsors
 }) {
   const {
     toast
   } = useToast();
+  const [selectedPosition, setSelectedPosition] = useState(null);
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [filterType, setFilterType] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('all');
-  const [selectedType, setSelectedType] = useState('all');
-  const [adPositions, setAdPositions] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const mockAdPositions = [{
-    id: 'AD001',
-    name: '首页横幅广告',
-    type: 'banner',
-    position: 'homepage_top',
-    status: 'active',
-    dimensions: {
-      width: 1200,
-      height: 200,
-      unit: 'px'
-    },
-    devices: ['desktop', 'tablet'],
-    pricing: {
-      model: 'cpm',
-      rate: 50,
-      currency: 'CNY'
-    },
-    availability: {
-      totalSlots: 10,
-      occupiedSlots: 8,
-      availableSlots: 2
-    },
-    performance: {
-      impressions: 2500000,
-      clicks: 87500,
-      ctr: 3.5,
-      revenue: 125000
-    },
-    targeting: {
-      demographics: ['doctors', 'pharmacists'],
-      specialties: ['cardiology', 'internal_medicine'],
-      regions: ['beijing', 'shanghai', 'guangzhou']
-    },
-    schedule: {
-      startDate: '2024-01-01',
-      endDate: '2024-12-31',
-      timezone: 'Asia/Shanghai'
-    },
-    restrictions: {
-      maxFileSize: '2MB',
-      allowedFormats: ['jpg', 'png', 'gif'],
-      contentRestrictions: ['no_misleading_claims', 'medical_approval_required']
-    },
-    createdAt: '2023-12-01',
-    updatedAt: '2024-01-10'
-  }, {
-    id: 'AD002',
-    name: '侧边栏广告',
-    type: 'sidebar',
-    position: 'right_sidebar',
-    status: 'active',
-    dimensions: {
-      width: 300,
-      height: 600,
-      unit: 'px'
-    },
-    devices: ['desktop'],
-    pricing: {
-      model: 'cpc',
-      rate: 2.5,
-      currency: 'CNY'
-    },
-    availability: {
-      totalSlots: 5,
-      occupiedSlots: 3,
-      availableSlots: 2
-    },
-    performance: {
-      impressions: 1200000,
-      clicks: 48000,
-      ctr: 4.0,
-      revenue: 120000
-    },
-    targeting: {
-      demographics: ['doctors', 'researchers'],
-      specialties: ['oncology', 'radiology'],
-      regions: ['national']
-    },
-    schedule: {
-      startDate: '2024-01-01',
-      endDate: '2024-12-31',
-      timezone: 'Asia/Shanghai'
-    },
-    restrictions: {
-      maxFileSize: '1MB',
-      allowedFormats: ['jpg', 'png'],
-      contentRestrictions: ['no_misleading_claims']
-    },
-    createdAt: '2023-12-05',
-    updatedAt: '2024-01-08'
-  }, {
-    id: 'AD003',
-    name: '移动端横幅',
-    type: 'mobile_banner',
-    position: 'mobile_header',
-    status: 'active',
-    dimensions: {
-      width: 375,
-      height: 100,
-      unit: 'px'
-    },
-    devices: ['mobile'],
-    pricing: {
-      model: 'cpm',
-      rate: 30,
-      currency: 'CNY'
-    },
-    availability: {
-      totalSlots: 8,
-      occupiedSlots: 6,
-      availableSlots: 2
-    },
-    performance: {
-      impressions: 1800000,
-      clicks: 54000,
-      ctr: 3.0,
-      revenue: 54000
-    },
-    targeting: {
-      demographics: ['young_doctors', 'medical_students'],
-      specialties: ['general', 'pediatrics'],
-      regions: ['tier1_cities']
-    },
-    schedule: {
-      startDate: '2024-01-01',
-      endDate: '2024-12-31',
-      timezone: 'Asia/Shanghai'
-    },
-    restrictions: {
-      maxFileSize: '500KB',
-      allowedFormats: ['jpg', 'png'],
-      contentRestrictions: ['mobile_optimized']
-    },
-    createdAt: '2023-12-10',
-    updatedAt: '2024-01-12'
-  }, {
-    id: 'AD004',
-    name: '内容赞助位',
-    type: 'content_sponsorship',
-    position: 'article_inline',
-    status: 'inactive',
-    dimensions: {
-      width: 600,
-      height: 400,
-      unit: 'px'
-    },
-    devices: ['desktop', 'tablet', 'mobile'],
-    pricing: {
-      model: 'fixed',
-      rate: 10000,
-      currency: 'CNY'
-    },
-    availability: {
-      totalSlots: 3,
-      occupiedSlots: 0,
-      availableSlots: 3
-    },
-    performance: {
-      impressions: 0,
-      clicks: 0,
-      ctr: 0,
-      revenue: 0
-    },
-    targeting: {
-      demographics: ['all'],
-      specialties: ['all'],
-      regions: ['all']
-    },
-    schedule: {
-      startDate: '2024-02-01',
-      endDate: '2024-12-31',
-      timezone: 'Asia/Shanghai'
-    },
-    restrictions: {
-      maxFileSize: '3MB',
-      allowedFormats: ['jpg', 'png', 'video'],
-      contentRestrictions: ['high_quality_content']
-    },
-    createdAt: '2024-01-05',
-    updatedAt: '2024-01-05'
-  }];
-  useEffect(() => {
-    setAdPositions(mockAdPositions);
-  }, []);
   const getStatusBadge = status => {
     const statusConfig = {
-      active: {
+      available: {
         color: 'bg-green-100 text-green-800',
         icon: CheckCircle,
-        text: '活跃'
+        text: '可用'
       },
-      inactive: {
-        color: 'bg-gray-100 text-gray-800',
-        icon: AlertCircle,
-        text: '未激活'
+      occupied: {
+        color: 'bg-blue-100 text-blue-800',
+        icon: Users,
+        text: '已占用'
       },
       maintenance: {
         color: 'bg-yellow-100 text-yellow-800',
-        icon: Clock,
+        icon: AlertTriangle,
         text: '维护中'
+      },
+      disabled: {
+        color: 'bg-gray-100 text-gray-800',
+        icon: Settings,
+        text: '已禁用'
       }
     };
-    const config = statusConfig[status] || statusConfig.inactive;
+    const config = statusConfig[status] || statusConfig.available;
     const Icon = config.icon;
     return <Badge className={config.color}>
-        <Icon className="w-3 h-3 mr-1" />
-        {config.text}
-      </Badge>;
+      <Icon className="w-3 h-3 mr-1" />
+      {config.text}
+    </Badge>;
   };
-  const getTypeBadge = type => {
-    const typeConfig = {
-      banner: {
-        color: 'bg-blue-100 text-blue-800',
-        text: '横幅广告'
-      },
-      sidebar: {
-        color: 'bg-purple-100 text-purple-800',
-        text: '侧边栏广告'
-      },
-      mobile_banner: {
-        color: 'bg-green-100 text-green-800',
-        text: '移动横幅'
-      },
-      content_sponsorship: {
-        color: 'bg-orange-100 text-orange-800',
-        text: '内容赞助'
-      }
+  const getTypeIcon = type => {
+    const icons = {
+      banner: Layout,
+      sidebar: Monitor,
+      popup: Smartphone,
+      native: Tablet,
+      video: Zap
     };
-    const config = typeConfig[type] || typeConfig.banner;
-    return <Badge className={config.color}>{config.text}</Badge>;
+    return icons[type] || Layout;
   };
-  const getDeviceIcon = devices => {
-    if (devices.includes('mobile')) return <Smartphone className="w-4 h-4" />;
-    if (devices.includes('tablet')) return <Tablet className="w-4 h-4" />;
-    return <Monitor className="w-4 h-4" />;
+  const formatCurrency = (amount, currency) => {
+    const symbols = {
+      CNY: '¥',
+      USD: '$',
+      EUR: '€'
+    };
+    return `${symbols[currency] || currency} ${amount.toLocaleString()}`;
   };
-  const formatCurrency = amount => {
-    return new Intl.NumberFormat('zh-CN', {
-      style: 'currency',
-      currency: 'CNY',
-      minimumFractionDigits: 0
-    }).format(amount);
-  };
-  const handleViewDetails = positionId => {
+  const handleViewPosition = position => {
+    setSelectedPosition(position);
     toast({
-      title: "查看详情",
-      description: `正在查看广告位 ${positionId} 的详细信息`
+      title: "查看广告位详情",
+      description: `正在查看广告位 ${position.name}`
     });
   };
-  const handleEdit = positionId => {
+  const handleEditPosition = position => {
     toast({
       title: "编辑广告位",
-      description: `正在编辑广告位 ${positionId}`
+      description: `正在编辑广告位 ${position.name}`
     });
   };
-  const handlePreview = positionId => {
-    toast({
-      title: "预览广告位",
-      description: `正在预览广告位 ${positionId}`
-    });
+  const handleBookPosition = position => {
+    if (position.status === 'available') {
+      toast({
+        title: "预订广告位",
+        description: `正在预订广告位 ${position.name}`
+      });
+    } else {
+      toast({
+        title: "广告位不可用",
+        description: "该广告位当前不可预订",
+        variant: "destructive"
+      });
+    }
   };
-  const handleStatusChange = (positionId, newStatus) => {
-    setAdPositions(prev => prev.map(position => position.id === positionId ? {
-      ...position,
-      status: newStatus
-    } : position));
-    toast({
-      title: "状态更新",
-      description: `广告位 ${positionId} 状态已更新`
-    });
-  };
-  const handleDelete = positionId => {
-    setAdPositions(prev => prev.filter(position => position.id !== positionId));
-    toast({
-      title: "删除成功",
-      description: `广告位 ${positionId} 已删除`,
-      variant: "destructive"
-    });
-  };
-  const filteredAdPositions = adPositions.filter(position => {
-    const matchesSearch = position.name.toLowerCase().includes(searchTerm.toLowerCase()) || position.position.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = selectedStatus === 'all' || position.status === selectedStatus;
-    const matchesType = selectedType === 'all' || position.type === selectedType;
+  const filteredPositions = adPositions.filter(position => {
+    const matchesSearch = position.name.toLowerCase().includes(searchTerm.toLowerCase()) || position.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = filterStatus === 'all' || position.status === filterStatus;
+    const matchesType = filterType === 'all' || position.type === filterType;
     return matchesSearch && matchesStatus && matchesType;
   });
-  const totalRevenue = adPositions.reduce((sum, position) => sum + position.performance.revenue, 0);
-  const totalImpressions = adPositions.reduce((sum, position) => sum + position.performance.impressions, 0);
-  const avgCTR = adPositions.length > 0 ? (adPositions.reduce((sum, position) => sum + position.performance.ctr, 0) / adPositions.length).toFixed(1) : 0;
-  return <div className={className} style={style}>
-      <div className="space-y-6">
-        {/* 头部 */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">广告位管理</h1>
-            <p className="text-gray-600">管理广告位配置、排期和效果监控</p>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              创建广告位
-            </Button>
-          </div>
-        </div>
-
-        {/* 筛选器 */}
+  const availablePositions = adPositions.filter(p => p.status === 'available').length;
+  const occupiedPositions = adPositions.filter(p => p.status === 'occupied').length;
+  const totalRevenue = adPositions.reduce((sum, position) => {
+    const convertedValue = position.currency === 'USD' ? position.performance.revenue * 7.2 : position.performance.revenue;
+    return sum + convertedValue;
+  }, 0);
+  const avgCTR = adPositions.length > 0 ? adPositions.reduce((sum, position) => sum + position.performance.ctr, 0) / adPositions.length : 0;
+  return <div className="space-y-6">
+      {/* 统计卡片 */}
+      <div className="grid grid-cols-4 gap-4">
         <Card>
           <CardContent className="p-4">
-            <div className="grid grid-cols-3 gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input placeholder="搜索广告位名称或位置..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <Layout className="w-6 h-6 text-blue-600" />
               </div>
-              
-              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-                <SelectTrigger>
-                  <SelectValue placeholder="选择状态" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">全部状态</SelectItem>
-                  <SelectItem value="active">活跃</SelectItem>
-                  <SelectItem value="inactive">未激活</SelectItem>
-                  <SelectItem value="maintenance">维护中</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={selectedType} onValueChange={setSelectedType}>
-                <SelectTrigger>
-                  <SelectValue placeholder="选择类型" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">全部类型</SelectItem>
-                  <SelectItem value="banner">横幅广告</SelectItem>
-                  <SelectItem value="sidebar">侧边栏广告</SelectItem>
-                  <SelectItem value="mobile_banner">移动横幅</SelectItem>
-                  <SelectItem value="content_sponsorship">内容赞助</SelectItem>
-                </SelectContent>
-              </Select>
+              <div>
+                <p className="text-sm text-gray-600">总广告位</p>
+                <p className="text-2xl font-bold text-gray-900">{adPositions.length}</p>
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* 统计卡片 */}
-        <div className="grid grid-cols-4 gap-4">
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Layout className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">总广告位</p>
-                  <p className="text-2xl font-bold text-gray-900">{adPositions.length}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <CheckCircle className="w-6 h-6 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">活跃广告位</p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {adPositions.filter(p => p.status === 'active').length}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-purple-100 rounded-lg">
-                  <DollarSign className="w-6 h-6 text-purple-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">总收入</p>
-                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(totalRevenue)}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-orange-100 rounded-lg">
-                  <TrendingUp className="w-6 h-6 text-orange-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">平均CTR</p>
-                  <p className="text-2xl font-bold text-gray-900">{avgCTR}%</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* 广告位列表 */}
         <Card>
-          <CardHeader>
-            <CardTitle>广告位列表</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>广告位名称</TableHead>
-                  <TableHead>类型</TableHead>
-                  <TableHead>尺寸</TableHead>
-                  <TableHead>设备</TableHead>
-                  <TableHead>定价</TableHead>
-                  <TableHead>占用率</TableHead>
-                  <TableHead>展示次数</TableHead>
-                  <TableHead>CTR</TableHead>
-                  <TableHead>状态</TableHead>
-                  <TableHead>操作</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredAdPositions.map(position => <TableRow key={position.id}>
-                    <TableCell>
-                      <div>
-                        <div className="font-medium text-gray-900">{position.name}</div>
-                        <div className="text-sm text-gray-500">{position.position}</div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      {getTypeBadge(position.type)}
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-gray-900">
-                        {position.dimensions.width}×{position.dimensions.height}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-1">
-                        {getDeviceIcon(position.devices)}
-                        <span className="text-gray-900">{position.devices.length}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div>
-                        <div className="font-medium text-gray-900">
-                          {position.pricing.model === 'cpm' ? 'CPM' : position.pricing.model === 'cpc' ? 'CPC' : '固定'}
-                        </div>
-                        <div className="text-sm text-gray-500">{formatCurrency(position.pricing.rate)}</div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <div className="flex-1 bg-gray-200 rounded-full h-2">
-                          <div className="bg-blue-600 h-2 rounded-full" style={{
-                        width: `${position.availability.occupiedSlots / position.availability.totalSlots * 100}%`
-                      }}></div>
-                        </div>
-                        <span className="text-sm text-gray-900">
-                          {position.availability.occupiedSlots}/{position.availability.totalSlots}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-gray-900">{position.performance.impressions.toLocaleString()}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-gray-900">{position.performance.ctr}%</div>
-                    </TableCell>
-                    <TableCell>
-                      {getStatusBadge(position.status)}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <Button variant="ghost" size="sm" onClick={() => handleViewDetails(position.id)}>
-                          <Eye className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handlePreview(position.id)}>
-                          <Monitor className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleEdit(position.id)}>
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Select onValueChange={value => handleStatusChange(position.id, value)}>
-                          <SelectTrigger className="w-20 h-8">
-                            <SelectValue placeholder="状态" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="active">激活</SelectItem>
-                            <SelectItem value="inactive">停用</SelectItem>
-                            <SelectItem value="maintenance">维护</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <Button variant="ghost" size="sm" onClick={() => handleDelete(position.id)}>
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>)}
-              </TableBody>
-            </Table>
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-green-100 rounded-lg">
+                <CheckCircle className="w-6 h-6 text-green-600" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">可用广告位</p>
+                <p className="text-2xl font-bold text-gray-900">{availablePositions}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <Users className="w-6 h-6 text-blue-600" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">已占用</p>
+                <p className="text-2xl font-bold text-gray-900">{occupiedPositions}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-purple-100 rounded-lg">
+                <DollarSign className="w-6 h-6 text-purple-600" />
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">总收入</p>
+                <p className="text-2xl font-bold text-gray-900">¥{(totalRevenue / 10000).toFixed(1)}万</p>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* 筛选器 */}
+      <Card>
+        <CardContent className="p-4">
+          <div className="flex items-center space-x-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <input type="text" placeholder="搜索广告位名称..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+            </div>
+            <Select value={filterStatus} onValueChange={setFilterStatus}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">全部状态</SelectItem>
+                <SelectItem value="available">可用</SelectItem>
+                <SelectItem value="occupied">已占用</SelectItem>
+                <SelectItem value="maintenance">维护中</SelectItem>
+                <SelectItem value="disabled">已禁用</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={filterType} onValueChange={setFilterType}>
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">全部类型</SelectItem>
+                <SelectItem value="banner">横幅</SelectItem>
+                <SelectItem value="sidebar">侧边栏</SelectItem>
+                <SelectItem value="popup">弹窗</SelectItem>
+                <SelectItem value="native">原生</SelectItem>
+                <SelectItem value="video">视频</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button variant="outline">
+              <Plus className="w-4 h-4 mr-2" />
+              新增广告位
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* 广告位列表 */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <span>广告位列表</span>
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <span>平均CTR: {avgCTR.toFixed(2)}%</span>
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>广告位名称</TableHead>
+                <TableHead>类型</TableHead>
+                <TableHead>位置</TableHead>
+                <TableHead>尺寸</TableHead>
+                <TableHead>状态</TableHead>
+                <TableHead>价格</TableHead>
+                <TableHead>展示次数</TableHead>
+                <TableHead>CTR</TableHead>
+                <TableHead>收入</TableHead>
+                <TableHead>操作</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredPositions.map(position => {
+              const Icon = getTypeIcon(position.type);
+              return <TableRow key={position.id} className="hover:bg-gray-50">
+                  <TableCell>
+                    <div className="flex items-center space-x-3">
+                      <Icon className="w-5 h-5 text-gray-500" />
+                      <div>
+                        <div className="font-medium text-gray-900">{position.name}</div>
+                        <div className="text-sm text-gray-500">{position.description}</div>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline">
+                      {position.type === 'banner' ? '横幅' : position.type === 'sidebar' ? '侧边栏' : position.type === 'popup' ? '弹窗' : position.type === 'native' ? '原生' : '视频'}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <div className="text-gray-900">{position.position}</div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="text-gray-900">{position.dimensions}</div>
+                  </TableCell>
+                  <TableCell>
+                    {getStatusBadge(position.status)}
+                  </TableCell>
+                  <TableCell>
+                    <div className="text-gray-900">
+                      {formatCurrency(position.price, position.currency)}
+                    </div>
+                    <div className="text-xs text-gray-500">{position.pricingModel.toUpperCase()}</div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="text-gray-900">{position.performance.impressions.toLocaleString()}</div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="text-gray-900">{position.performance.ctr}%</div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="text-gray-900">
+                      {formatCurrency(position.performance.revenue, position.currency)}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center space-x-2">
+                      <Button variant="ghost" size="sm" onClick={() => handleViewPosition(position)}>
+                        <Eye className="w-4 h-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleEditPosition(position)}>
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleBookPosition(position)} disabled={position.status !== 'available'}>
+                        <Calendar className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>;
+            })}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+
+      {/* 广告位详情弹窗 */}
+      {selectedPosition && <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[80vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-bold text-gray-900">{selectedPosition.name}</h3>
+                <Button variant="ghost" onClick={() => setSelectedPosition(null)}>
+                  ×
+                </Button>
+              </div>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-medium text-gray-900 mb-2">基本信息</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">类型:</span>
+                        <span className="text-gray-900">{selectedPosition.type}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">位置:</span>
+                        <span className="text-gray-900">{selectedPosition.position}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">尺寸:</span>
+                        <span className="text-gray-900">{selectedPosition.dimensions}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">价格:</span>
+                        <span className="text-gray-900">{formatCurrency(selectedPosition.price, selectedPosition.currency)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">计费模式:</span>
+                        <span className="text-gray-900">{selectedPosition.pricingModel.toUpperCase()}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900 mb-2">技术规格</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">文件大小:</span>
+                        <span className="text-gray-900">{selectedPosition.specifications.fileSize}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">支持格式:</span>
+                        <span className="text-gray-900">{selectedPosition.specifications.formats.join(', ')}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">动画支持:</span>
+                        <span className="text-gray-900">{selectedPosition.specifications.animation ? '是' : '否'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">点击跟踪:</span>
+                        <span className="text-gray-900">{selectedPosition.specifications.clickTracking ? '是' : '否'}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-medium text-gray-900 mb-2">性能数据</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">展示次数:</span>
+                        <span className="text-gray-900">{selectedPosition.performance.impressions.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">点击次数:</span>
+                        <span className="text-gray-900">{selectedPosition.performance.clicks.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">CTR:</span>
+                        <span className="text-gray-900">{selectedPosition.performance.ctr}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">转化次数:</span>
+                        <span className="text-gray-900">{selectedPosition.performance.conversions.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">收入:</span>
+                        <span className="text-gray-900">{formatCurrency(selectedPosition.performance.revenue, selectedPosition.currency)}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-gray-900 mb-2">可用性</h4>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">开始日期:</span>
+                        <span className="text-gray-900">{selectedPosition.availability.startDate}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">结束日期:</span>
+                        <span className="text-gray-900">{selectedPosition.availability.endDate}</span>
+                      </div>
+                      {selectedPosition.currentSponsor && <div className="flex justify-between">
+                          <span className="text-gray-600">当前赞助商:</span>
+                          <span className="text-gray-900">{selectedPosition.currentSponsor}</span>
+                        </div>}
+                      {selectedPosition.contractEnd && <div className="flex justify-between">
+                          <span className="text-gray-600">合同结束:</span>
+                          <span className="text-gray-900">{selectedPosition.contractEnd}</span>
+                        </div>}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>}
     </div>;
 }

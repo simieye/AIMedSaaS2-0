@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 // @ts-ignore;
 import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Tabs, TabsContent, TabsList, TabsTrigger, useToast } from '@/components/ui';
 // @ts-ignore;
-import { Brain, Users, Activity, Settings, Database, Shield, BarChart3, Calendar, AlertTriangle, CheckCircle, TrendingUp, Clock, Zap, Target, FileText, Heart, Stethoscope, Pill, Microscope, Building, CreditCard, BookOpen, Search, Filter, Download, Upload, RefreshCw, Plus, Edit, Trash2, Eye, ChevronRight, Globe, Lock, Key, UserCheck, Server, Cpu, HardDrive, Wifi, Battery, Thermometer, Wind } from 'lucide-react';
+import { Brain, Users, Activity, Settings, Database, Shield, BarChart3, Calendar, AlertTriangle, CheckCircle, TrendingUp, Clock, Zap, Target, FileText, Heart, Stethoscope, Pill, Microscope, Building, CreditCard, BookOpen, Search, Filter, Download, Upload, RefreshCw, Plus, Edit, Trash2, Eye, ChevronRight, Globe, Lock, Key, UserCheck, Server, Cpu, HardDrive, Wifi, Battery, Thermometer, Wind, Handshake, DollarSign, FileContract, Route, MapPin, Timeline, GanttChart } from 'lucide-react';
 
 // 导入子系统组件
 import { UnifiedDashboard } from '@/components/UnifiedDashboard';
@@ -43,10 +43,14 @@ export default function MedAIPlatform(props) {
     responseTime: 1.2,
     dataProcessed: '2.5TB',
     apiCalls: 125000,
-    errorRate: 0.02
+    errorRate: 0.02,
+    totalAgreements: 156,
+    activeSponsorships: 23,
+    ragDocuments: 4567,
+    roadmapProgress: 68
   };
 
-  // 子系统配置
+  // 子系统配置 - 增强版包含所有模块
   const mockSubsystems = [{
     id: 'patient-management',
     name: '患者管理',
@@ -57,7 +61,8 @@ export default function MedAIPlatform(props) {
     users: 14564,
     lastUpdate: '2024-01-20 14:30:00',
     performance: 98.5,
-    route: '/patient-management'
+    route: '/patient-management',
+    category: 'core'
   }, {
     id: 'doctor-management',
     name: '医生管理',
@@ -68,7 +73,8 @@ export default function MedAIPlatform(props) {
     users: 856,
     lastUpdate: '2024-01-20 14:25:00',
     performance: 96.2,
-    route: '/doctor-management'
+    route: '/doctor-management',
+    category: 'core'
   }, {
     id: 'ai-diagnosis',
     name: 'AI诊断',
@@ -79,7 +85,8 @@ export default function MedAIPlatform(props) {
     users: 2340,
     lastUpdate: '2024-01-20 14:35:00',
     performance: 94.8,
-    route: '/ai-diagnosis'
+    route: '/ai-diagnosis',
+    category: 'core'
   }, {
     id: 'rag-system',
     name: 'RAG系统',
@@ -90,89 +97,107 @@ export default function MedAIPlatform(props) {
     users: 1250,
     lastUpdate: '2024-01-20 14:20:00',
     performance: 92.5,
-    route: '/rag-system'
+    route: '/rag-system',
+    category: 'intelligence'
+  }, {
+    id: 'agreement-management',
+    name: '合作协议管理',
+    description: '合同协议、文档管理、审批流程',
+    icon: FileContract,
+    color: 'indigo',
+    status: 'active',
+    users: 67,
+    lastUpdate: '2024-01-20 14:15:00',
+    performance: 91.2,
+    route: '/agreement-management',
+    category: 'business'
   }, {
     id: 'pharma-sponsorship',
-    name: '医药赞助',
+    name: '医药赞助管理',
     description: '赞助项目管理、合同管理、财务跟踪',
     icon: Building,
     color: 'red',
     status: 'active',
     users: 45,
-    lastUpdate: '2024-01-20 14:15:00',
+    lastUpdate: '2024-01-20 14:10:00',
     performance: 89.3,
-    route: '/pharma-sponsorship'
+    route: '/pharma-sponsorship',
+    category: 'business'
   }, {
     id: 'api-management',
     name: 'API管理',
     description: 'API密钥管理、访问控制、使用统计',
     icon: Key,
-    color: 'indigo',
+    color: 'teal',
     status: 'active',
     users: 125,
     lastUpdate: '2024-01-20 14:40:00',
     performance: 97.8,
-    route: '/api-management'
-  }, {
-    id: 'agreement-management',
-    name: '协议管理',
-    description: '合同协议、文档管理、审批流程',
-    icon: FileText,
-    color: 'yellow',
-    status: 'active',
-    users: 67,
-    lastUpdate: '2024-01-20 14:10:00',
-    performance: 91.2,
-    route: '/agreement-management'
+    route: '/api-management',
+    category: 'technical'
   }, {
     id: 'roadmap',
-    name: '开发路线图',
+    name: 'A轮路线图',
     description: '项目规划、里程碑、任务分配',
-    icon: Calendar,
-    color: 'teal',
+    icon: Route,
+    color: 'yellow',
     status: 'active',
     users: 23,
     lastUpdate: '2024-01-20 14:45:00',
     performance: 88.7,
-    route: '/roadmap'
+    route: '/roadmap',
+    category: 'management'
   }];
 
-  // 最近活动数据
+  // 最近活动数据 - 增强版包含所有子系统活动
   const mockRecentActivities = [{
     id: 1,
     type: 'user_registration',
     description: '新用户注册：张医生',
     timestamp: '2024-01-20 14:30:00',
     user: '系统',
-    status: 'success'
+    status: 'success',
+    subsystem: 'doctor-management'
   }, {
     id: 2,
     type: 'ai_diagnosis',
     description: 'AI诊断完成：心血管疾病检测',
     timestamp: '2024-01-20 14:25:00',
     user: '李医生',
-    status: 'success'
+    status: 'success',
+    subsystem: 'ai-diagnosis'
   }, {
     id: 3,
-    type: 'system_alert',
-    description: '系统性能警告：响应时间超过阈值',
+    type: 'agreement_signed',
+    description: '合作协议签署：与XX医院达成合作',
     timestamp: '2024-01-20 14:20:00',
-    user: '系统',
-    status: 'warning'
+    user: '商务部门',
+    status: 'success',
+    subsystem: 'agreement-management'
   }, {
     id: 4,
-    type: 'data_sync',
-    description: '数据同步完成：患者记录更新',
+    type: 'sponsorship_approved',
+    description: '赞助项目批准：新药研发项目',
     timestamp: '2024-01-20 14:15:00',
-    user: '系统',
-    status: 'success'
+    user: '药企合作部',
+    status: 'success',
+    subsystem: 'pharma-sponsorship'
   }, {
     id: 5,
-    type: 'api_call',
-    description: 'API调用：第三方系统集成',
+    type: 'rag_document_added',
+    description: '知识库更新：新增医学文献125篇',
     timestamp: '2024-01-20 14:10:00',
-    user: 'API网关',
-    status: 'success'
+    user: 'AI团队',
+    status: 'success',
+    subsystem: 'rag-system'
+  }, {
+    id: 6,
+    type: 'milestone_completed',
+    description: '里程碑完成：AI诊断系统v2.0发布',
+    timestamp: '2024-01-20 14:05:00',
+    user: '项目管理',
+    status: 'success',
+    subsystem: 'roadmap'
   }];
 
   // 系统告警数据
@@ -183,7 +208,8 @@ export default function MedAIPlatform(props) {
     description: '主数据库连接池耗尽，需要立即处理',
     severity: 'critical',
     timestamp: '2024-01-20 14:35:00',
-    status: 'active'
+    status: 'active',
+    subsystem: 'technical'
   }, {
     id: 2,
     type: 'warning',
@@ -191,15 +217,17 @@ export default function MedAIPlatform(props) {
     description: 'AI诊断API响应时间超过3秒阈值',
     severity: 'medium',
     timestamp: '2024-01-20 14:30:00',
-    status: 'active'
+    status: 'active',
+    subsystem: 'ai-diagnosis'
   }, {
     id: 3,
     type: 'info',
-    title: '系统维护通知',
-    description: '计划于今晚22:00-24:00进行系统维护',
+    title: '合同到期提醒',
+    description: '与XX医院的合作协议将于30天后到期',
     severity: 'low',
     timestamp: '2024-01-20 14:00:00',
-    status: 'scheduled'
+    status: 'scheduled',
+    subsystem: 'agreement-management'
   }];
   useEffect(() => {
     setSystemStats(mockSystemStats);
@@ -212,8 +240,11 @@ export default function MedAIPlatform(props) {
       title: "子系统访问",
       description: `正在进入${subsystem.name}子系统`
     });
-    // 这里可以添加路由跳转逻辑
-    // $w.utils.navigateTo({ pageId: subsystem.route, params: {} });
+    // 使用系统路由跳转到对应页面
+    $w.utils.navigateTo({
+      pageId: subsystem.route.replace('/', ''),
+      params: {}
+    });
   };
   const handleAlertAction = (alertId, action) => {
     toast({
@@ -245,6 +276,16 @@ export default function MedAIPlatform(props) {
     };
     return colors[severity] || colors.low;
   };
+  const getCategoryColor = category => {
+    const colors = {
+      core: 'text-blue-600 bg-blue-100',
+      intelligence: 'text-purple-600 bg-purple-100',
+      business: 'text-red-600 bg-red-100',
+      technical: 'text-teal-600 bg-teal-100',
+      management: 'text-yellow-600 bg-yellow-100'
+    };
+    return colors[category] || colors.core;
+  };
   const formatNumber = num => {
     if (num >= 1000000) {
       return (num / 1000000).toFixed(1) + 'M';
@@ -252,6 +293,18 @@ export default function MedAIPlatform(props) {
       return (num / 1000).toFixed(1) + 'K';
     }
     return num.toString();
+  };
+  const getActivityIcon = type => {
+    const icons = {
+      user_registration: Users,
+      ai_diagnosis: Brain,
+      agreement_signed: FileContract,
+      sponsorship_approved: DollarSign,
+      rag_document_added: BookOpen,
+      milestone_completed: CheckCircle,
+      system_alert: AlertTriangle
+    };
+    return icons[type] || Activity;
   };
   return <div className="min-h-screen bg-gray-50" style={style}>
       <div className="container mx-auto px-4 py-6">
@@ -301,17 +354,17 @@ export default function MedAIPlatform(props) {
                 <Globe className="w-4 h-4" />
                 <span>子系统</span>
               </TabsTrigger>
-              <TabsTrigger value="users" className="flex items-center space-x-2">
-                <Users className="w-4 h-4" />
-                <span>用户管理</span>
+              <TabsTrigger value="business" className="flex items-center space-x-2">
+                <Handshake className="w-4 h-4" />
+                <span>业务管理</span>
+              </TabsTrigger>
+              <TabsTrigger value="intelligence" className="flex items-center space-x-2">
+                <Brain className="w-4 h-4" />
+                <span>智能系统</span>
               </TabsTrigger>
               <TabsTrigger value="monitoring" className="flex items-center space-x-2">
                 <Activity className="w-4 h-4" />
                 <span>系统监控</span>
-              </TabsTrigger>
-              <TabsTrigger value="security" className="flex items-center space-x-2">
-                <Shield className="w-4 h-4" />
-                <span>安全管理</span>
               </TabsTrigger>
               <TabsTrigger value="settings" className="flex items-center space-x-2">
                 <Settings className="w-4 h-4" />
@@ -380,45 +433,17 @@ export default function MedAIPlatform(props) {
                 </Card>
               </div>
 
-              {/* 系统健康状态 */}
+              {/* 业务指标统计 */}
               <div className="grid grid-cols-4 gap-4">
                 <Card>
                   <CardContent className="p-4">
                     <div className="flex items-center space-x-3">
-                      <div className="p-2 bg-green-100 rounded-lg">
-                        <CheckCircle className="w-6 h-6 text-green-600" />
+                      <div className="p-2 bg-indigo-100 rounded-lg">
+                        <FileContract className="w-6 h-6 text-indigo-600" />
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">系统健康度</p>
-                        <p className="text-2xl font-bold text-gray-900">{systemStats.systemHealth}%</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 bg-blue-100 rounded-lg">
-                        <Clock className="w-6 h-6 text-blue-600" />
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600">响应时间</p>
-                        <p className="text-2xl font-bold text-gray-900">{systemStats.responseTime}s</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center space-x-3">
-                      <div className="p-2 bg-purple-100 rounded-lg">
-                        <Server className="w-6 h-6 text-purple-600" />
-                      </div>
-                      <div>
-                        <p className="text-sm text-gray-600">正常运行时间</p>
-                        <p className="text-2xl font-bold text-gray-900">{systemStats.uptime}%</p>
+                        <p className="text-sm text-gray-600">合作协议</p>
+                        <p className="text-2xl font-bold text-gray-900">{systemStats.totalAgreements}</p>
                       </div>
                     </div>
                   </CardContent>
@@ -428,11 +453,39 @@ export default function MedAIPlatform(props) {
                   <CardContent className="p-4">
                     <div className="flex items-center space-x-3">
                       <div className="p-2 bg-red-100 rounded-lg">
-                        <AlertTriangle className="w-6 h-6 text-red-600" />
+                        <DollarSign className="w-6 h-6 text-red-600" />
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600">错误率</p>
-                        <p className="text-2xl font-bold text-gray-900">{systemStats.errorRate}%</p>
+                        <p className="text-sm text-gray-600">赞助项目</p>
+                        <p className="text-2xl font-bold text-gray-900">{systemStats.activeSponsorships}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-orange-100 rounded-lg">
+                        <BookOpen className="w-6 h-6 text-orange-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">知识库文档</p>
+                        <p className="text-2xl font-bold text-gray-900">{formatNumber(systemStats.ragDocuments)}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardContent className="p-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-yellow-100 rounded-lg">
+                        <Route className="w-6 h-6 text-yellow-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">路线图进度</p>
+                        <p className="text-2xl font-bold text-gray-900">{systemStats.roadmapProgress}%</p>
                       </div>
                     </div>
                   </CardContent>
@@ -450,15 +503,19 @@ export default function MedAIPlatform(props) {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      {recentActivities.map(activity => <div key={activity.id} className="flex items-center justify-between p-3 border rounded-lg">
+                      {recentActivities.map(activity => {
+                      const Icon = getActivityIcon(activity.type);
+                      return <div key={activity.id} className="flex items-center justify-between p-3 border rounded-lg">
                           <div className="flex items-center space-x-3">
                             <div className={`w-2 h-2 rounded-full ${activity.status === 'success' ? 'bg-green-500' : activity.status === 'warning' ? 'bg-yellow-500' : 'bg-red-500'}`}></div>
+                            <Icon className="w-4 h-4 text-gray-500" />
                             <div>
                               <div className="font-medium text-gray-900">{activity.description}</div>
                               <div className="text-sm text-gray-500">{activity.user} • {activity.timestamp}</div>
                             </div>
                           </div>
-                        </div>)}
+                        </div>;
+                    })}
                     </div>
                   </CardContent>
                 </Card>
@@ -519,6 +576,9 @@ export default function MedAIPlatform(props) {
                                 <Badge className={getStatusColor(subsystem.status)}>
                                   {subsystem.status === 'active' ? '运行中' : subsystem.status === 'inactive' ? '未激活' : subsystem.status === 'maintenance' ? '维护中' : '错误'}
                                 </Badge>
+                                <Badge className={getCategoryColor(subsystem.category)}>
+                                  {subsystem.category === 'core' ? '核心' : subsystem.category === 'intelligence' ? '智能' : subsystem.category === 'business' ? '业务' : subsystem.category === 'technical' ? '技术' : '管理'}
+                                </Badge>
                               </div>
                             </div>
                           </div>
@@ -548,62 +608,117 @@ export default function MedAIPlatform(props) {
               </div>
             </TabsContent>
 
-            {/* 用户管理标签页 */}
-            <TabsContent value="users" className="space-y-6">
+            {/* 业务管理标签页 */}
+            <TabsContent value="business" className="space-y-6">
               <div className="grid grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <Users className="w-5 h-5 mr-2" />
-                      用户统计
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                        <span className="text-gray-700">总用户数</span>
-                        <span className="font-semibold text-gray-900">{systemStats.totalUsers.toLocaleString()}</span>
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center space-x-4">
+                        <div className="p-3 bg-indigo-100 rounded-lg">
+                          <FileContract className="w-8 h-8 text-indigo-600" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900">合作协议管理</h3>
+                          <p className="text-sm text-gray-600 mt-1">合同协议、文档管理、审批流程</p>
+                          <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
+                            <span>协议数: {systemStats.totalAgreements}</span>
+                            <Badge className="bg-green-100 text-green-800">运行中</Badge>
+                          </div>
+                        </div>
                       </div>
-                      <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                        <span className="text-gray-700">活跃用户</span>
-                        <span className="font-semibold text-green-600">{systemStats.activeUsers.toLocaleString()}</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                        <span className="text-gray-700">医生用户</span>
-                        <span className="font-semibold text-blue-600">{systemStats.totalDoctors}</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                        <span className="text-gray-700">患者用户</span>
-                        <span className="font-semibold text-purple-600">{systemStats.totalPatients.toLocaleString()}</span>
-                      </div>
+                      <Button size="sm" onClick={() => handleSubsystemClick({
+                      id: 'agreement-management',
+                      route: '/AgreementManagement'
+                    })}>
+                        <ChevronRight className="w-4 h-4 mr-1" />
+                        进入
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <UserCheck className="w-5 h-5 mr-2" />
-                      权限管理
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <Button className="w-full justify-start" variant="outline">
-                        <Users className="w-4 h-4 mr-2" />
-                        患者管理
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center space-x-4">
+                        <div className="p-3 bg-red-100 rounded-lg">
+                          <DollarSign className="w-8 h-8 text-red-600" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900">医药赞助管理</h3>
+                          <p className="text-sm text-gray-600 mt-1">赞助项目管理、合同管理、财务跟踪</p>
+                          <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
+                            <span>项目数: {systemStats.activeSponsorships}</span>
+                            <Badge className="bg-green-100 text-green-800">运行中</Badge>
+                          </div>
+                        </div>
+                      </div>
+                      <Button size="sm" onClick={() => handleSubsystemClick({
+                      id: 'pharma-sponsorship',
+                      route: '/PharmaSponsorshipManagement'
+                    })}>
+                        <ChevronRight className="w-4 h-4 mr-1" />
+                        进入
                       </Button>
-                      <Button className="w-full justify-start" variant="outline">
-                        <Stethoscope className="w-4 h-4 mr-2" />
-                        医生管理
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* 智能系统标签页 */}
+            <TabsContent value="intelligence" className="space-y-6">
+              <div className="grid grid-cols-2 gap-6">
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center space-x-4">
+                        <div className="p-3 bg-purple-100 rounded-lg">
+                          <Brain className="w-8 h-8 text-purple-600" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900">AI诊断系统</h3>
+                          <p className="text-sm text-gray-600 mt-1">智能诊断、影像分析、辅助决策</p>
+                          <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
+                            <span>今日诊断: {systemStats.todayDiagnosis}</span>
+                            <Badge className="bg-green-100 text-green-800">运行中</Badge>
+                          </div>
+                        </div>
+                      </div>
+                      <Button size="sm" onClick={() => handleSubsystemClick({
+                      id: 'ai-diagnosis',
+                      route: '/AIDiagnosisWorkspace'
+                    })}>
+                        <ChevronRight className="w-4 h-4 mr-1" />
+                        进入
                       </Button>
-                      <Button className="w-full justify-start" variant="outline">
-                        <Key className="w-4 h-4 mr-2" />
-                        API密钥管理
-                      </Button>
-                      <Button className="w-full justify-start" variant="outline">
-                        <Shield className="w-4 h-4 mr-2" />
-                        角色权限配置
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-center space-x-4">
+                        <div className="p-3 bg-orange-100 rounded-lg">
+                          <BookOpen className="w-8 h-8 text-orange-600" />
+                        </div>
+                        <div>
+                          <h3 className="text-lg font-semibold text-gray-900">RAG系统</h3>
+                          <p className="text-sm text-gray-600 mt-1">知识库管理、文献检索、智能问答</p>
+                          <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
+                            <span>文档数: {formatNumber(systemStats.ragDocuments)}</span>
+                            <Badge className="bg-green-100 text-green-800">运行中</Badge>
+                          </div>
+                        </div>
+                      </div>
+                      <Button size="sm" onClick={() => handleSubsystemClick({
+                      id: 'rag-system',
+                      route: '/RAGSystemIntegration'
+                    })}>
+                        <ChevronRight className="w-4 h-4 mr-1" />
+                        进入
                       </Button>
                     </div>
                   </CardContent>
@@ -697,69 +812,6 @@ export default function MedAIPlatform(props) {
                         <span className="text-gray-600">可用性</span>
                         <span className="font-semibold text-green-600">{systemStats.uptime}%</span>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            {/* 安全管理标签页 */}
-            <TabsContent value="security" className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <Lock className="w-5 h-5 mr-2" />
-                      安全状态
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-3 bg-green-50 rounded">
-                        <span className="text-gray-700">防火墙状态</span>
-                        <span className="font-semibold text-green-600">正常</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-green-50 rounded">
-                        <span className="text-gray-700">SSL证书</span>
-                        <span className="font-semibold text-green-600">有效</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-yellow-50 rounded">
-                        <span className="text-gray-700">安全更新</span>
-                        <span className="font-semibold text-yellow-600">待更新</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-green-50 rounded">
-                        <span className="text-gray-700">入侵检测</span>
-                        <span className="font-semibold text-green-600">无威胁</span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <Shield className="w-5 h-5 mr-2" />
-                      访问控制
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <Button className="w-full justify-start" variant="outline">
-                        <Key className="w-4 h-4 mr-2" />
-                        API密钥管理
-                      </Button>
-                      <Button className="w-full justify-start" variant="outline">
-                        <UserCheck className="w-4 h-4 mr-2" />
-                        用户权限管理
-                      </Button>
-                      <Button className="w-full justify-start" variant="outline">
-                        <FileText className="w-4 h-4 mr-2" />
-                        访问日志
-                      </Button>
-                      <Button className="w-full justify-start" variant="outline">
-                        <AlertTriangle className="w-4 h-4 mr-2" />
-                        安全事件
-                      </Button>
                     </div>
                   </CardContent>
                 </Card>

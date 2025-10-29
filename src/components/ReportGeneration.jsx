@@ -1,393 +1,413 @@
 // @ts-ignore;
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // @ts-ignore;
-import { Card, CardContent, CardHeader, CardTitle, Button, Select, Badge, useToast, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
+import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
 // @ts-ignore;
-import { BarChart3, Download, FileText, Calendar, TrendingUp, DollarSign, Users, Target, Eye, Settings, RefreshCw } from 'lucide-react';
+import { FileText, Download, Printer, Mail, Calendar, Filter, BarChart3, PieChart, TrendingUp, DollarSign, Users, Target, Award, Settings, Eye, Edit, Plus, RefreshCw, FileSpreadsheet, FileImage, Presentation, FileCheck, Clock, CheckCircle } from 'lucide-react';
 
 export function ReportGeneration({
-  $w,
-  className,
-  style
+  sponsors,
+  projects,
+  financialData
 }) {
   const {
     toast
   } = useToast();
-  const [selectedReportType, setSelectedReportType] = useState('sponsorship_performance');
-  const [selectedTimeRange, setSelectedTimeRange] = useState('monthly');
+  const [selectedReportType, setSelectedReportType] = useState('summary');
+  const [selectedPeriod, setSelectedPeriod] = useState('monthly');
+  const [selectedSponsor, setSelectedSponsor] = useState('all');
   const [selectedFormat, setSelectedFormat] = useState('pdf');
-  const [reports, setReports] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
   const reportTypes = [{
-    value: 'sponsorship_performance',
-    label: '赞助效果报告',
-    description: '分析赞助活动的整体效果和ROI',
-    icon: TrendingUp
+    id: 'summary',
+    name: '综合报告',
+    description: '包含所有关键指标的综合分析报告',
+    icon: BarChart3,
+    sections: ['概览', '赞助商分析', '项目进展', '财务状况', 'ROI分析']
   }, {
-    value: 'financial_summary',
-    label: '财务汇总报告',
-    description: '财务收入、支出和利润分析',
-    icon: DollarSign
+    id: 'sponsor',
+    name: '赞助商报告',
+    description: '针对特定赞助商的详细报告',
+    icon: Users,
+    sections: ['赞助商概况', '合作项目', '财务数据', '绩效指标', '建议']
   }, {
-    value: 'sponsor_analytics',
-    label: '赞助商分析报告',
-    description: '赞助商表现和合作分析',
-    icon: Users
+    id: 'financial',
+    name: '财务报告',
+    description: '详细的财务分析和报表',
+    icon: DollarSign,
+    sections: ['收入分析', '成本分析', '利润分析', '现金流', '预测']
   }, {
-    value: 'project_performance',
-    label: '项目执行报告',
-    description: '项目执行情况和达成率分析',
-    icon: Target
+    id: 'project',
+    name: '项目报告',
+    description: '项目进展和成果报告',
+    icon: Target,
+    sections: ['项目概况', '里程碑', '风险管理', '资源使用', '成果评估']
   }, {
-    value: 'ad_performance',
-    label: '广告效果报告',
-    description: '广告位表现和转化分析',
-    icon: BarChart3
+    id: 'roi',
+    name: 'ROI分析报告',
+    description: '投资回报率专项分析',
+    icon: TrendingUp,
+    sections: ['ROI概览', '趋势分析', '对比分析', '预测', '建议']
   }, {
-    value: 'custom_report',
-    label: '自定义报告',
-    description: '根据需求定制专属报告',
-    icon: Settings
+    id: 'performance',
+    name: '绩效报告',
+    description: '关键绩效指标报告',
+    icon: Award,
+    sections: ['KPI概览', '目标达成', '趋势分析', '改进建议']
   }];
-  const timeRanges = [{
-    value: 'daily',
-    label: '日报'
+  const reportFormats = [{
+    id: 'pdf',
+    name: 'PDF',
+    description: '适合打印和分享',
+    icon: FileText,
+    extension: '.pdf'
   }, {
-    value: 'weekly',
-    label: '周报'
+    id: 'excel',
+    name: 'Excel',
+    description: '适合数据分析',
+    icon: FileSpreadsheet,
+    extension: '.xlsx'
   }, {
-    value: 'monthly',
-    label: '月报'
+    id: 'powerpoint',
+    name: 'PowerPoint',
+    description: '适合演示汇报',
+    icon: Presentation,
+    extension: '.pptx'
   }, {
-    value: 'quarterly',
-    label: '季报'
-  }, {
-    value: 'yearly',
-    label: '年报'
-  }, {
-    value: 'custom',
-    label: '自定义时间'
+    id: 'image',
+    name: '图片',
+    description: '适合快速查看',
+    icon: FileImage,
+    extension: '.png'
   }];
-  const formats = [{
-    value: 'pdf',
-    label: 'PDF'
-  }, {
-    value: 'excel',
-    label: 'Excel'
-  }, {
-    value: 'word',
-    label: 'Word'
-  }, {
-    value: 'powerpoint',
-    label: 'PowerPoint'
-  }];
-  const mockReports = [{
+  const recentReports = [{
     id: 'RPT001',
-    name: '2024年1月赞助效果报告',
-    type: 'sponsorship_performance',
+    name: '2024年1月综合报告',
+    type: 'summary',
+    period: '2024-01',
     format: 'pdf',
-    status: 'completed',
-    generatedDate: '2024-02-01 10:00:00',
-    fileSize: '2.5MB',
-    downloadUrl: '/reports/sponsorship_performance_202401.pdf',
-    generatedBy: '系统管理员'
+    generatedAt: '2024-02-01 10:30:00',
+    generatedBy: '系统管理员',
+    size: '2.5MB',
+    status: 'completed'
   }, {
     id: 'RPT002',
-    name: '2024年Q1财务汇总报告',
-    type: 'financial_summary',
-    format: 'excel',
-    status: 'completed',
-    generatedDate: '2024-04-01 14:30:00',
-    fileSize: '1.8MB',
-    downloadUrl: '/reports/financial_summary_2024Q1.xlsx',
-    generatedBy: '财务经理'
+    name: '辉瑞制药赞助商报告',
+    type: 'sponsor',
+    period: '2024-Q1',
+    format: 'pdf',
+    generatedAt: '2024-02-05 14:20:00',
+    generatedBy: '商务经理',
+    size: '1.8MB',
+    status: 'completed'
   }, {
     id: 'RPT003',
-    name: '辉瑞制药合作分析报告',
-    type: 'sponsor_analytics',
-    format: 'pdf',
-    status: 'generating',
-    generatedDate: null,
-    fileSize: null,
-    downloadUrl: null,
-    generatedBy: '系统管理员'
-  }, {
-    id: 'RPT004',
-    name: '2023年度项目执行报告',
-    type: 'project_performance',
-    format: 'powerpoint',
-    status: 'completed',
-    generatedDate: '2024-01-15 09:15:00',
-    fileSize: '5.2MB',
-    downloadUrl: '/reports/project_performance_2023.pptx',
-    generatedBy: '项目经理'
+    name: '财务分析报告',
+    type: 'financial',
+    period: '2024-Q1',
+    format: 'excel',
+    generatedAt: '2024-02-10 09:15:00',
+    generatedBy: '财务经理',
+    size: '3.2MB',
+    status: 'completed'
   }];
-  useEffect(() => {
-    setReports(mockReports);
-  }, []);
-  const getStatusBadge = status => {
-    const statusConfig = {
-      completed: {
-        color: 'bg-green-100 text-green-800',
-        text: '已完成'
-      },
-      generating: {
-        color: 'bg-blue-100 text-blue-800',
-        text: '生成中'
-      },
-      failed: {
-        color: 'bg-red-100 text-red-800',
-        text: '生成失败'
-      },
-      scheduled: {
-        color: 'bg-yellow-100 text-yellow-800',
-        text: '已计划'
-      }
-    };
-    const config = statusConfig[status] || statusConfig.completed;
-    return <Badge className={config.color}>{config.text}</Badge>;
-  };
-  const handleGenerateReport = async () => {
-    setLoading(true);
-    try {
-      // 模拟报告生成过程
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      const newReport = {
-        id: `RPT${Date.now()}`,
-        name: `${new Date().toLocaleDateString()} ${reportTypes.find(r => r.value === selectedReportType)?.label}`,
-        type: selectedReportType,
-        format: selectedFormat,
-        status: 'completed',
-        generatedDate: new Date().toISOString(),
-        fileSize: '1.2MB',
-        downloadUrl: `/reports/${selectedReportType}_${Date.now()}.${selectedFormat}`,
-        generatedBy: '当前用户'
-      };
-      setReports(prev => [newReport, ...prev]);
+  const scheduledReports = [{
+    id: 'SCH001',
+    name: '月度综合报告',
+    type: 'summary',
+    frequency: 'monthly',
+    nextRun: '2024-03-01 09:00:00',
+    recipients: ['manager@company.com', 'finance@company.com'],
+    format: 'pdf',
+    status: 'active'
+  }, {
+    id: 'SCH002',
+    name: '季度财务报告',
+    type: 'financial',
+    frequency: 'quarterly',
+    nextRun: '2024-04-01 09:00:00',
+    recipients: ['cfo@company.com', 'board@company.com'],
+    format: 'excel',
+    status: 'active'
+  }];
+  const handleGenerateReport = () => {
+    setIsGenerating(true);
+    setTimeout(() => {
+      setIsGenerating(false);
       toast({
         title: "报告生成成功",
-        description: `${newReport.name} 已生成完成`
+        description: `${selectedReportType === 'summary' ? '综合报告' : selectedReportType === 'sponsor' ? '赞助商报告' : selectedReportType === 'financial' ? '财务报告' : selectedReportType === 'project' ? '项目报告' : selectedReportType === 'roi' ? 'ROI分析报告' : '绩效报告'}已生成完成`
       });
-    } catch (error) {
-      toast({
-        title: "生成失败",
-        description: error.message,
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
+    }, 3000);
   };
-  const handleDownloadReport = report => {
+  const handleDownloadReport = (reportId, reportName) => {
     toast({
       title: "下载报告",
-      description: `正在下载 ${report.name}...`
-    });
-  };
-  const handleViewReport = report => {
-    toast({
-      title: "查看报告",
-      description: `正在打开 ${report.name}...`
+      description: `正在下载 ${reportName}`
     });
   };
   const handleScheduleReport = () => {
     toast({
-      title: "计划报告",
-      description: "报告已加入生成计划"
+      title: "定时报告",
+      description: "正在设置定时报告任务"
     });
   };
-  return <div className={className} style={style}>
-      <div className="space-y-6">
-        {/* 头部 */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">数据报告生成</h1>
-            <p className="text-gray-600">生成各类赞助效果、财务和项目执行报告</p>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline">
-              <RefreshCw className="w-4 h-4 mr-2" />
-              刷新列表
-            </Button>
-          </div>
-        </div>
-
-        {/* 报告生成配置 */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <FileText className="w-5 h-5 mr-2" />
-              生成新报告
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-4 gap-6">
+  const handleEmailReport = (reportId, reportName) => {
+    toast({
+      title: "发送报告",
+      description: `正在发送 ${reportName} 到邮箱`
+    });
+  };
+  const getStatusBadge = status => {
+    const statusConfig = {
+      completed: {
+        color: 'bg-green-100 text-green-800',
+        icon: CheckCircle,
+        text: '已完成'
+      },
+      generating: {
+        color: 'bg-blue-100 text-blue-800',
+        icon: Clock,
+        text: '生成中'
+      },
+      failed: {
+        color: 'bg-red-100 text-red-800',
+        icon: FileText,
+        text: '失败'
+      }
+    };
+    const config = statusConfig[status] || statusConfig.completed;
+    const Icon = config.icon;
+    return <Badge className={config.color}>
+      <Icon className="w-3 h-3 mr-1" />
+      {config.text}
+    </Badge>;
+  };
+  const getFrequencyBadge = frequency => {
+    const frequencyConfig = {
+      daily: {
+        color: 'bg-blue-100 text-blue-800',
+        text: '每日'
+      },
+      weekly: {
+        color: 'bg-green-100 text-green-800',
+        text: '每周'
+      },
+      monthly: {
+        color: 'bg-yellow-100 text-yellow-800',
+        text: '每月'
+      },
+      quarterly: {
+        color: 'bg-purple-100 text-purple-800',
+        text: '每季度'
+      },
+      yearly: {
+        color: 'bg-red-100 text-red-800',
+        text: '每年'
+      }
+    };
+    const config = frequencyConfig[frequency] || frequencyConfig.monthly;
+    return <Badge className={config.color}>{config.text}</Badge>;
+  };
+  const selectedReportConfig = reportTypes.find(r => r.id === selectedReportType);
+  const selectedFormatConfig = reportFormats.find(f => f.id === selectedFormat);
+  return <div className="space-y-6">
+      {/* 报告生成配置 */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center">
+            <Settings className="w-5 h-5 mr-2" />
+            报告生成配置
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  报告类型
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">报告类型</label>
                 <Select value={selectedReportType} onValueChange={setSelectedReportType}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {reportTypes.map(type => <SelectItem key={type.value} value={type.value}>
-                        {type.label}
+                    {reportTypes.map(type => <SelectItem key={type.id} value={type.id}>
+                        <div className="flex items-center space-x-2">
+                          <type.icon className="w-4 h-4" />
+                          <span>{type.name}</span>
+                        </div>
                       </SelectItem>)}
                   </SelectContent>
                 </Select>
-                <p className="text-sm text-gray-500 mt-1">
-                  {reportTypes.find(r => r.value === selectedReportType)?.description}
-                </p>
+                {selectedReportConfig && <p className="text-sm text-gray-500 mt-1">{selectedReportConfig.description}</p>}
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  时间范围
-                </label>
-                <Select value={selectedTimeRange} onValueChange={setSelectedTimeRange}>
+                <label className="block text-sm font-medium text-gray-700 mb-2">报告期间</label>
+                <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {timeRanges.map(range => <SelectItem key={range.value} value={range.value}>
-                        {range.label}
-                      </SelectItem>)}
+                    <SelectItem value="daily">每日</SelectItem>
+                    <SelectItem value="weekly">每周</SelectItem>
+                    <SelectItem value="monthly">每月</SelectItem>
+                    <SelectItem value="quarterly">每季度</SelectItem>
+                    <SelectItem value="yearly">每年</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
+              {selectedReportType === 'sponsor' && <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">选择赞助商</label>
+                  <Select value={selectedSponsor} onValueChange={setSelectedSponsor}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">全部赞助商</SelectItem>
+                      {sponsors.map(sponsor => <SelectItem key={sponsor.id} value={sponsor.id}>
+                          {sponsor.name}
+                        </SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                </div>}
+            </div>
+
+            <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  输出格式
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">输出格式</label>
                 <Select value={selectedFormat} onValueChange={setSelectedFormat}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {formats.map(format => <SelectItem key={format.value} value={format.value}>
-                        {format.label}
+                    {reportFormats.map(format => <SelectItem key={format.id} value={format.id}>
+                        <div className="flex items-center space-x-2">
+                          <format.icon className="w-4 h-4" />
+                          <span>{format.name}</span>
+                        </div>
                       </SelectItem>)}
                   </SelectContent>
                 </Select>
+                {selectedFormatConfig && <p className="text-sm text-gray-500 mt-1">{selectedFormatConfig.description}</p>}
               </div>
 
-              <div className="flex items-end">
-                <Button onClick={handleGenerateReport} disabled={loading} className="w-full">
-                  {loading ? <>
-                      <div className="w-4 h-4 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      生成中...
-                    </> : <>
-                      <BarChart3 className="w-4 h-4 mr-2" />
-                      生成报告
-                    </>}
-                </Button>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">报告内容</label>
+                {selectedReportConfig && <div className="space-y-1">
+                    {selectedReportConfig.sections.map((section, index) => <div key={index} className="flex items-center space-x-2">
+                        <input type="checkbox" defaultChecked className="rounded border-gray-300" />
+                        <span className="text-sm text-gray-700">{section}</span>
+                      </div>)}
+                  </div>}
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* 报告类型概览 */}
-        <div className="grid grid-cols-3 gap-6">
-          {reportTypes.slice(0, 3).map(type => {
-          const Icon = type.icon;
-          return <Card key={type.value}>
-                <CardContent className="p-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <Icon className="w-6 h-6 text-blue-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-900">{type.label}</h3>
-                      <p className="text-sm text-gray-600">{type.description}</p>
+          <div className="flex items-center space-x-4 mt-6">
+            <Button onClick={handleGenerateReport} disabled={isGenerating}>
+              {isGenerating ? <RefreshCw className="w-4 h-4 mr-2 animate-spin" /> : <FileText className="w-4 h-4 mr-2" />}
+              {isGenerating ? '生成中...' : '生成报告'}
+            </Button>
+            <Button variant="outline" onClick={handleScheduleReport}>
+              <Calendar className="w-4 h-4 mr-2" />
+              定时生成
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* 最近生成的报告 */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <span className="flex items-center">
+              <FileText className="w-5 h-5 mr-2" />
+              最近生成的报告
+            </span>
+            <Button variant="outline" size="sm">
+              <RefreshCw className="w-4 h-4 mr-2" />
+              刷新
+            </Button>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {recentReports.map(report => <div key={report.id} className="flex items-center justify-between p-4 border rounded-lg">
+                <div className="flex items-center space-x-4">
+                  <FileText className="w-8 h-8 text-gray-400" />
+                  <div>
+                    <h4 className="font-medium text-gray-900">{report.name}</h4>
+                    <div className="flex items-center space-x-4 text-sm text-gray-500">
+                      <span>类型: {reportTypes.find(t => t.id === report.type)?.name}</span>
+                      <span>格式: {report.format.toUpperCase()}</span>
+                      <span>大小: {report.size}</span>
+                      <span>生成时间: {report.generatedAt}</span>
+                      <span>生成者: {report.generatedBy}</span>
                     </div>
                   </div>
-                </CardContent>
-              </Card>;
-        })}
-        </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  {getStatusBadge(report.status)}
+                  <Button variant="ghost" size="sm" onClick={() => handleDownloadReport(report.id, report.name)}>
+                    <Download className="w-4 h-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm" onClick={() => handleEmailReport(report.id, report.name)}>
+                    <Mail className="w-4 h-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    <Eye className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>)}
+          </div>
+        </CardContent>
+      </Card>
 
-        {/* 历史报告列表 */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              <span className="flex items-center">
-                <Calendar className="w-5 h-5 mr-2" />
-                历史报告
-              </span>
-              <Button variant="outline" size="sm" onClick={handleScheduleReport}>
-                计划报告
-              </Button>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {reports.map(report => {
-              const reportType = reportTypes.find(r => r.value === report.type);
-              const Icon = reportType?.icon || FileText;
-              return <div key={report.id} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="p-2 bg-gray-100 rounded-lg">
-                          <Icon className="w-6 h-6 text-gray-600" />
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-gray-900">{report.name}</h4>
-                          <div className="flex items-center space-x-4 text-sm text-gray-500">
-                            <span>{reportType?.label}</span>
-                            <span>{report.format.toUpperCase()}</span>
-                            {report.fileSize && <span>{report.fileSize}</span>}
-                            {report.generatedDate && <span>生成于 {new Date(report.generatedDate).toLocaleDateString()}</span>}
-                            <span>生成者: {report.generatedBy}</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        {getStatusBadge(report.status)}
-                        {report.status === 'completed' && <>
-                            <Button variant="ghost" size="sm" onClick={() => handleViewReport(report)}>
-                              <Eye className="w-4 h-4" />
-                            </Button>
-                            <Button variant="outline" size="sm" onClick={() => handleDownloadReport(report)}>
-                              <Download className="w-4 h-4 mr-2" />
-                              下载
-                            </Button>
-                          </>}
-                      </div>
+      {/* 定时报告任务 */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <span className="flex items-center">
+              <Calendar className="w-5 h-5 mr-2" />
+              定时报告任务
+            </span>
+            <Button variant="outline" size="sm">
+              <Plus className="w-4 h-4 mr-2" />
+              新增定时任务
+            </Button>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {scheduledReports.map(report => <div key={report.id} className="flex items-center justify-between p-4 border rounded-lg">
+                <div className="flex items-center space-x-4">
+                  <Clock className="w-8 h-8 text-gray-400" />
+                  <div>
+                    <h4 className="font-medium text-gray-900">{report.name}</h4>
+                    <div className="flex items-center space-x-4 text-sm text-gray-500">
+                      <span>类型: {reportTypes.find(t => t.id === report.type)?.name}</span>
+                      {getFrequencyBadge(report.frequency)}
+                      <span>下次运行: {report.nextRun}</span>
+                      <span>格式: {report.format.toUpperCase()}</span>
+                      <span>收件人: {report.recipients.length}人</span>
                     </div>
-                  </div>;
-            })}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* 快速操作 */}
-        <Card>
-          <CardHeader>
-            <CardTitle>快速操作</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-4 gap-4">
-              <Button variant="outline" className="h-20 flex-col">
-                <TrendingUp className="w-6 h-6 mb-2" />
-                <span>月度效果报告</span>
-              </Button>
-              <Button variant="outline" className="h-20 flex-col">
-                <DollarSign className="w-6 h-6 mb-2" />
-                <span>季度财务报告</span>
-              </Button>
-              <Button variant="outline" className="h-20 flex-col">
-                <Users className="w-6 h-6 mb-2" />
-                <span>赞助商分析</span>
-              </Button>
-              <Button variant="outline" className="h-20 flex-col">
-                <Target className="w-6 h-6 mb-2" />
-                <span>项目执行报告</span>
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Badge className={report.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}>
+                    {report.status === 'active' ? '运行中' : '已暂停'}
+                  </Badge>
+                  <Button variant="ghost" size="sm">
+                    <Edit className="w-4 h-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm">
+                    <FileCheck className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>)}
+          </div>
+        </CardContent>
+      </Card>
     </div>;
 }
