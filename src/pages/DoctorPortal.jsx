@@ -1,317 +1,165 @@
 // @ts-ignore;
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 // @ts-ignore;
-import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Alert, AlertDescription, AlertTitle, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
-// @ts-ignore;
-import { User, Calendar, FileText, MessageSquare, Settings as SettingsIcon, Bell, Shield, Activity, Heart, TrendingUp, Clock, CheckCircle, AlertTriangle, Users, Stethoscope, ClipboardList } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Tabs, TabsContent, TabsList, TabsTrigger, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useToast, Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
 
+// @ts-ignore;
+import { Brain, Users, Activity, Database, Shield, BarChart3, Calendar, AlertTriangle, CheckCircle, TrendingUp, Clock, Zap, Target, FileText, Heart, Stethoscope, Pill, Microscope, Building, CreditCard, BookOpen, Search, Filter, Download, Upload, RefreshCw, Plus, Edit, Trash2, Eye, ChevronRight, Globe, Lock, Key, UserCheck, Server, Cpu, HardDrive, Wifi, Battery, Thermometer, Wind, Handshake, DollarSign, FileContract, Route, MapPin, Timeline, GanttChart, GitBranch, Layers, Network, PieChart, LineChart, AreaChart, ScatterChart, RadarChart, TreePine, Package, Code, Terminal, Monitor, Smartphone, Tablet, Cloud, Bell, BellRing, BellOff, Volume2, VolumeX, Play, Pause, SkipForward, SkipBack, Repeat, Shuffle, Mic, MicOff, Video, VideoOff, Phone, PhoneOff, Mail, MailOpen, Send, Paperclip, PaperclipOff, Image, ImageOff, File, FilePlus, FileMinus, FileCheck, FileX, FileSearch, FileSignature, FileInput, FileOutput, FileDown, FileUp, FileCopy, FileMove, FileRename, FileDelete, FileArchive, FileUnarchive, FileLock, FileUnlock, FileQuestion, FileWarning, FileError, FileDone, FilePending, FileProcessing, FileUploading, FileDownloading, FileSync, FileSyncing, FileRefresh, FileRefreshCw, FileRefreshCcw, FileRotate, FileRotateCw, FileRotateCcw, FileFlip, FileFlipHorizontal, FileFlipVertical, FileZoomIn, FileZoomOut, FileMaximize, FileMinimize, FileExpand, FileShrink, FileFull, FileEmpty, Home, Grid, List, MoreHorizontal, MoreVertical, Menu, X, ChevronLeft, ChevronDown, ChevronUp, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, ArrowDownRight, ArrowUpLeft, ArrowDownLeft, DoubleArrowUp, DoubleArrowDown, DoubleArrowLeft, DoubleArrowRight, Minimize, Maximize, Expand, Shrink, Fullscreen, ExitFullscreen, ZoomIn, ZoomOut, RotateCw, RotateCcw, Sun, Moon, CloudRain, CloudSnow, CloudDrizzle, CloudLightning, Umbrella, Droplets, Gauge, Fuel, Power, PowerOff, Plug, PlugZap, Unplug, Signal, SignalHigh, SignalLow, SignalMedium, SignalZero, Radio, RadioTower, Broadcast, Satellite, Radar, Waves, HeartPulse, HeartHandshake, Lungs, Bone, Ear, EarOff, EyeOff, Nose, Mouth, Smile, Frown, Meh, Angry, Dizzy, Confused, Surprised, Kiss, Grin, Laugh, Wink, FrownOpen, Grimace, Tongue, TongueWink, Star, StarHalf, StarOff, HeartOff, ThumbsUp, ThumbsDown, MessageSquare, MessageCircle, MessageSquarePlus, MessageSquareMinus, MessageSquareQuote, MessageSquareDashed, MessageSquareText, MessageSquareCode, MessageSquareShare, MessageSquareMore, Reply, ReplyAll, Forward, Forwarded, Share, Share2, SendToBack, BringToFront, AlignLeft, AlignCenter, AlignRight, AlignJustify, AlignStart, AlignEnd, Indent, Outdent, ListOrdered, ListChecks, ListTodo, ListMinus, ListPlus, ListX, ListVideo, ListMusic, ListEnd, ListStart, ListCollapse, ListFilter, ListFilterPlus, ListFilterMinus, ListFilterX, ListFilter2, ListFilter3, ListFilter4, ListFilter5, ListFilter6, ListFilter7, ListFilter8, ListFilter9, ListFilter0, ListFilterDot, ListFilterSquare, ListFilterCircle, ListFilterTriangle, ListFilterHexagon, ListFilterOctagon, ListFilterDiamond, ListFilterPentagon, ListFilterStar, ListFilterHeart, ListFilterFlower, ListFilterLeaf, ListFilterCloud, ListFilterSun, ListFilterMoon, ListFilterRain, ListFilterSnow, ListFilterLightning, ListFilterUmbrella, ListFilterDroplets, ListFilterGauge, ListFilterFuel, ListFilterZap, ListFilterBattery, ListFilterPower, ListFilterPlug, ListFilterWifi, ListFilterSignal, ListFilterRadio, ListFilterBroadcast, ListFilterSatellite, ListFilterRadar, ListFilterWaves, ListFilterActivity, ListFilterHeartPulse, ListFilterLungs, ListFilterBone, ListFilterEar, ListFilterNose, ListFilterMouth, ListFilterSmile, ListFilterFrown, ListFilterMeh, ListFilterAngry, ListFilterDizzy, ListFilterConfused, ListFilterSurprised, ListFilterKiss, ListFilterGrin, ListFilterLaugh, ListFilterWink, ListFilterTongue, ListFilterThumbs, ListFilterMessage, ListFilterReply, ListFilterForward, ListFilterShare, ListFilterSend, ListFilterAlign, ListFilterIndent, ListFilterList, ListFilterCollapse, ListFilterTree, ListFilterChevron, ListFilterArrow, ListFilterDoubleArrow, ListFilterMinimize, ListFilterMaximize, ListFilterExpand, ListFilterShrink, ListFilterFullscreen, ListFilterZoom, ListFilterRotate } from '@/components/Icons';
+import { Layout } from '@/components/Layout';
+import { TranslationProvider } from '@/components/TranslationProvider';
 import { Dashboard } from '@/components/Dashboard';
 import { Triage } from '@/components/Triage';
 import { Reports } from '@/components/Reports';
 import { Prescription } from '@/components/Prescription';
 import { Settings } from '@/components/Settings';
-
-// 医生翻译提供者组件
-function DoctorTranslationProvider({
-  children
-}) {
-  const translations = {
-    zh: {
-      welcome: '欢迎回来',
-      dashboard: '医生工作台',
-      triage: '分诊管理',
-      reports: '检查报告',
-      prescription: '处方管理',
-      settings: '个人设置',
-      patients: '患者管理',
-      appointments: '今日预约',
-      stats: '今日统计',
-      quickActions: '快捷操作',
-      viewPatients: '查看患者',
-      newAppointment: '新建预约',
-      writeReport: '撰写报告',
-      prescribe: '开具处方',
-      healthAlerts: '健康提醒',
-      systemStatus: '系统状态',
-      loading: '加载中...',
-      error: '加载失败',
-      retry: '重试',
-      noData: '暂无数据',
-      online: '在线',
-      offline: '离线',
-      busy: '忙碌'
-    },
-    en: {
-      welcome: 'Welcome Back',
-      dashboard: 'Doctor Dashboard',
-      triage: 'Triage Management',
-      reports: 'Lab Reports',
-      prescription: 'Prescription',
-      settings: 'Settings',
-      patients: 'Patient Management',
-      appointments: 'Today Appointments',
-      stats: 'Today Stats',
-      quickActions: 'Quick Actions',
-      viewPatients: 'View Patients',
-      newAppointment: 'New Appointment',
-      writeReport: 'Write Report',
-      prescribe: 'Prescribe',
-      healthAlerts: 'Health Alerts',
-      systemStatus: 'System Status',
-      loading: 'Loading...',
-      error: 'Load Failed',
-      retry: 'Retry',
-      noData: 'No Data',
-      online: 'Online',
-      offline: 'Offline',
-      busy: 'Busy'
-    }
-  };
-  const [language, setLanguage] = useState('zh');
-  const t = key => translations[language][key] || key;
-  return children({
-    t,
-    language,
-    setLanguage
-  });
-}
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { EmptyState } from '@/components/EmptyState';
+import { NotificationBell } from '@/components/NotificationBell';
+import { SearchBar } from '@/components/SearchBar';
+import { Pagination } from '@/components/Pagination';
+import { Modal } from '@/components/Modal';
+import { Toast } from '@/components/Toast';
+import { Tooltip } from '@/components/Tooltip';
+import { StatusBadge } from '@/components/StatusBadge';
+import { DataTable } from '@/components/DataTable';
+import { ChartContainer } from '@/components/ChartContainer';
+import { ActionMenu } from '@/components/ActionMenu';
+import { FormField } from '@/components/FormField';
+import { LoadingOverlay } from '@/components/LoadingOverlay';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 export default function DoctorPortal(props) {
-  const [doctorData, setDoctorData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('dashboard');
-
-  // 获取当前医生用户信息
-  const getCurrentUser = () => {
-    return props.$w?.auth?.currentUser || {
-      userId: 'doctor-001',
-      name: '李医生',
-      email: 'doctor@hospital.com',
-      avatarUrl: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=150&h=150&fit=crop&crop=face'
-    };
+  const {
+    $w,
+    style
+  } = props;
+  const {
+    toast
+  } = useToast();
+  const [activeTab, setActiveTab] = React.useState('dashboard');
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [notifications, setNotifications] = React.useState([{
+    id: 1,
+    title: '新患者预约',
+    message: '张三预约了明天的门诊',
+    time: '5分钟前',
+    read: false
+  }, {
+    id: 2,
+    title: '诊断报告完成',
+    message: '李四的AI诊断报告已生成',
+    time: '1小时前',
+    read: false
+  }, {
+    id: 3,
+    title: '系统通知',
+    message: 'AI模型已更新到最新版本',
+    time: '2小时前',
+    read: true
+  }]);
+  const handleTabChange = value => {
+    setActiveTab(value);
+    toast({
+      title: "页面切换",
+      description: `已切换到${value === 'dashboard' ? '仪表板' : value === 'triage' ? '分诊系统' : value === 'reports' ? '报告管理' : value === 'prescription' ? '处方管理' : '设置'}页面`
+    });
   };
-
-  // 获取医生数据
-  const fetchDoctorData = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const user = getCurrentUser();
-
-      // 从 doctor 数据模型获取医生信息
-      const result = await props.$w.cloud.callDataSource({
-        dataSourceName: 'doctor',
-        methodName: 'wedaGetRecordsV2',
-        params: {
-          filter: {
-            where: {
-              user_id: {
-                $eq: user.userId
-              }
-            }
-          },
-          select: {
-            $master: true
-          },
-          limit: 1
-        }
-      });
-      if (result.records && result.records.length > 0) {
-        const doctor = result.records[0];
-        setDoctorData({
-          id: doctor._id,
-          name: doctor.name || user.name,
-          email: doctor.email || user.email,
-          phone: doctor.phone || '',
-          department: doctor.department || '内科',
-          title: doctor.title || '主治医师',
-          license: doctor.license || 'MD-2024001',
-          specialization: doctor.specialization || ['内科', '心血管'],
-          experience: doctor.experience || 8,
-          avatarUrl: user.avatarUrl,
-          status: doctor.status || 'online',
-          todayAppointments: doctor.today_appointments || 12,
-          completedAppointments: doctor.completed_appointments || 8,
-          pendingReports: doctor.pending_reports || 5,
-          activePatients: doctor.active_patients || 156
-        });
-      } else {
-        // 如果没有找到医生记录，创建默认数据
-        setDoctorData({
-          id: user.userId,
-          name: user.name,
-          email: user.email,
-          phone: '13800138000',
-          department: '内科',
-          title: '主治医师',
-          license: 'MD-2024001',
-          specialization: ['内科', '心血管'],
-          experience: 8,
-          avatarUrl: user.avatarUrl,
-          status: 'online',
-          todayAppointments: 12,
-          completedAppointments: 8,
-          pendingReports: 5,
-          activePatients: 156
-        });
-      }
-    } catch (err) {
-      console.error('Error fetching doctor data:', err);
-      setError(err.message || 'Failed to load doctor data');
-    } finally {
-      setLoading(false);
-    }
+  const handleSearch = query => {
+    setSearchQuery(query);
+    toast({
+      title: "搜索",
+      description: `正在搜索: ${query}`
+    });
   };
-  useEffect(() => {
-    fetchDoctorData();
-  }, []);
-  if (loading) {
-    return <DoctorTranslationProvider>
-        {({
-        t
-      }) => <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600">{t('loading')}</p>
-            </div>
-          </div>}
-      </DoctorTranslationProvider>;
-  }
-  if (error) {
-    return <DoctorTranslationProvider>
-        {({
-        t
-      }) => <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-            <div className="text-center">
-              <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <p className="text-red-600 mb-4">{error}</p>
-              <Button onClick={fetchDoctorData} className="bg-blue-600 hover:bg-blue-700">
-                {t('retry')}
-              </Button>
-            </div>
-          </div>}
-      </DoctorTranslationProvider>;
-  }
-  return <DoctorTranslationProvider>
-      {({
-      t
-    }) => <div className="min-h-screen bg-gray-50">
-          {/* 顶部导航 */}
-          <header className="bg-white shadow-sm border-b">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex justify-between items-center h-16">
-                <div className="flex items-center">
-                  <Stethoscope className="w-8 h-8 text-blue-600 mr-3" />
-                  <div>
-                    <h1 className="text-2xl font-bold text-gray-900">{t('welcome')}</h1>
-                    <p className="text-sm text-gray-500">{doctorData?.name} - {doctorData?.title}</p>
+  const handleNotificationClick = notification => {
+    setNotifications(prev => prev.map(n => n.id === notification.id ? {
+      ...n,
+      read: true
+    } : n));
+    toast({
+      title: "通知",
+      description: notification.message
+    });
+  };
+  const unreadCount = notifications.filter(n => !n.read).length;
+  return <div style={style} className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <ErrorBoundary>
+        <TranslationProvider>
+          <Layout>
+            <div className="max-w-7xl mx-auto p-4">
+              {/* Header */}
+              <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-blue-600 rounded-lg">
+                      <Stethoscope className="h-8 w-8 text-white" />
+                    </div>
+                    <div>
+                      <h1 className="text-3xl font-bold text-gray-900">医生门户</h1>
+                      <p className="text-gray-600">智能医疗诊断与管理平台</p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2">
-                    <div className={`w-2 h-2 rounded-full ${doctorData?.status === 'online' ? 'bg-green-500' : doctorData?.status === 'busy' ? 'bg-yellow-500' : 'bg-gray-500'}`}></div>
-                    <span className="text-sm text-gray-600">
-                      {doctorData?.status === 'online' ? t('online') : doctorData?.status === 'busy' ? t('busy') : t('offline')}
-                    </span>
+                  <div className="flex items-center space-x-4">
+                    <SearchBar onSearch={handleSearch} placeholder="搜索患者、诊断记录..." />
+                    <NotificationBell notifications={notifications} onNotificationClick={handleNotificationClick} />
+                    <Button variant="outline" className="flex items-center space-x-2">
+                      <Settings className="h-4 w-4" />
+                      <span>设置</span>
+                    </Button>
                   </div>
-                  <Button variant="ghost" size="sm">
-                    <Bell className="w-4 h-4" />
-                  </Button>
-                  <Button variant="ghost" size="sm">
-                    <SettingsIcon className="w-4 h-4" />
-                  </Button>
                 </div>
               </div>
+
+              {/* Navigation Tabs */}
+              <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
+                <TabsList className="grid w-full grid-cols-5 bg-white p-1 rounded-lg shadow">
+                  <TabsTrigger value="dashboard" className="flex items-center space-x-2">
+                    <BarChart3 className="h-4 w-4" />
+                    <span>仪表板</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="triage" className="flex items-center space-x-2">
+                    <Activity className="h-4 w-4" />
+                    <span>分诊系统</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="reports" className="flex items-center space-x-2">
+                    <FileText className="h-4 w-4" />
+                    <span>报告管理</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="prescription" className="flex items-center space-x-2">
+                    <Pill className="h-4 w-4" />
+                    <span>处方管理</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="settings" className="flex items-center space-x-2">
+                    <Settings className="h-4 w-4" />
+                    <span>设置</span>
+                  </TabsTrigger>
+                </TabsList>
+
+                {/* Tab Contents */}
+                <TabsContent value="dashboard" className="space-y-6">
+                  {isLoading ? <LoadingOverlay /> : <Dashboard $w={$w} />}
+                </TabsContent>
+
+                <TabsContent value="triage" className="space-y-6">
+                  {isLoading ? <LoadingOverlay /> : <Triage $w={$w} />}
+                </TabsContent>
+
+                <TabsContent value="reports" className="space-y-6">
+                  {isLoading ? <LoadingOverlay /> : <Reports $w={$w} />}
+                </TabsContent>
+
+                <TabsContent value="prescription" className="space-y-6">
+                  {isLoading ? <LoadingOverlay /> : <Prescription $w={$w} />}
+                </TabsContent>
+
+                <TabsContent value="settings" className="space-y-6">
+                  {isLoading ? <LoadingOverlay /> : <Settings $w={$w} />}
+                </TabsContent>
+              </Tabs>
             </div>
-          </header>
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {/* 统计卡片 */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gray-600 flex items-center">
-                    <Calendar className="w-4 h-4 mr-2" />
-                    {t('appointments')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-blue-600">{doctorData?.todayAppointments}</div>
-                  <p className="text-xs text-gray-500">今日预约</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gray-600 flex items-center">
-                    <CheckCircle className="w-4 h-4 mr-2" />
-                    已完成
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-green-600">{doctorData?.completedAppointments}</div>
-                  <p className="text-xs text-gray-500">今日完成</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gray-600 flex items-center">
-                    <ClipboardList className="w-4 h-4 mr-2" />
-                    待处理
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-orange-600">{doctorData?.pendingReports}</div>
-                  <p className="text-xs text-gray-500">待处理报告</p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-sm font-medium text-gray-600 flex items-center">
-                    <Users className="w-4 h-4 mr-2" />
-                    {t('patients')}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold text-purple-600">{doctorData?.activePatients}</div>
-                  <p className="text-xs text-gray-500">活跃患者</p>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* 主要内容区域 */}
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-              <TabsList className="grid w-full grid-cols-5">
-                <TabsTrigger value="dashboard">{t('dashboard')}</TabsTrigger>
-                <TabsTrigger value="triage">{t('triage')}</TabsTrigger>
-                <TabsTrigger value="reports">{t('reports')}</TabsTrigger>
-                <TabsTrigger value="prescription">{t('prescription')}</TabsTrigger>
-                <TabsTrigger value="settings">{t('settings')}</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="dashboard">
-                <Dashboard doctorData={doctorData} t={t} />
-              </TabsContent>
-
-              <TabsContent value="triage">
-                <Triage doctorData={doctorData} t={t} />
-              </TabsContent>
-
-              <TabsContent value="reports">
-                <Reports doctorData={doctorData} t={t} />
-              </TabsContent>
-
-              <TabsContent value="prescription">
-                <Prescription doctorData={doctorData} t={t} />
-              </TabsContent>
-
-              <TabsContent value="settings">
-                <Settings doctorData={doctorData} t={t} />
-              </TabsContent>
-            </Tabs>
-          </div>
-        </div>}
-    </DoctorTranslationProvider>;
+          </Layout>
+        </TranslationProvider>
+      </ErrorBoundary>
+    </div>;
 }

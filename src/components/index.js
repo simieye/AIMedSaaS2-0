@@ -120,3 +120,6 @@ export * from './PatientManagement.jsx';
 export * from './AIWorkspace.jsx';
 export * from './AnalyticsReports.jsx';
 export * from './SystemSettings.jsx';
+export * from './Icons/index.jsx';
+export * from './Icons/IconSelector.jsx';
+export * from './Icons/IconPreview.jsx';
