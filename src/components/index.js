@@ -115,3 +115,8 @@ export * from './ReportGeneration.jsx';
 export * from './HallucinationAlerts.jsx';
 export * from './ApprovalWorkflow.jsx';
 export * from './ROIAnalysisDashboard.jsx';
+export * from './MedAIDashboard.jsx';
+export * from './PatientManagement.jsx';
+export * from './AIWorkspace.jsx';
+export * from './AnalyticsReports.jsx';
+export * from './SystemSettings.jsx';
