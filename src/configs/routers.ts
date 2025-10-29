@@ -13,6 +13,7 @@ import AGREEMENTMANAGEMENT from '../pages/AgreementManagement.jsx';
 import PHARMASPONSORSHIPMANAGEMENT from '../pages/PharmaSponsorshipManagement.jsx';
 import RAGSYSTEMMANAGEMENT from '../pages/RAGSystemManagement.jsx';
 import AROUNDROADMAP from '../pages/ARoundRoadmap.jsx';
+import ONCOPILOTDASHBOARD from '../pages/OncoPilotDashboard.jsx';
 export const routers = [{
   id: "DoctorPortal",
   component: DOCTORPORTAL
@@ -58,4 +59,7 @@ export const routers = [{
 }, {
   id: "ARoundRoadmap",
   component: AROUNDROADMAP
+}, {
+  id: "OncoPilotDashboard",
+  component: ONCOPILOTDASHBOARD
 }]
