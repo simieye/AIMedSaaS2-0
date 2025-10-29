@@ -18,38 +18,39 @@ export function AgreementDetails({
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('basic');
   const mockAgreement = {
-    id: 'AGR001',
-    hospitalName: '北京协和医院',
-    hospitalId: 'H001',
+    _id: 'AGR001',
+    name: '北京协和医院AI诊断系统合作协议',
+    partner_id: 'partner_001',
+    partner_name: '北京协和医院',
     status: 'active',
-    startDate: '2024-01-01',
-    endDate: '2024-12-31',
+    start_date: '2024-01-01',
+    end_date: '2024-12-31',
     type: 'strategic_cooperation',
     value: 5000000,
-    responsiblePerson: '张主任',
-    contactEmail: 'zhang@xiehe.com',
-    contactPhone: '010-12345678',
+    responsible_person: '张主任',
+    contact_email: 'zhang@xiehe.com',
+    contact_phone: '010-12345678',
     description: '战略合作协议，包含AI诊断系统部署和技术支持',
     documents: [{
       id: 'DOC001',
       name: '主协议.pdf',
       type: 'main_agreement',
       size: '2.5MB',
-      uploadDate: '2024-01-01 10:00:00',
+      upload_date: '2024-01-01 10:00:00',
       url: '/documents/main_agreement.pdf'
     }, {
       id: 'DOC002',
       name: '技术附件.pdf',
       type: 'technical_attachment',
       size: '1.8MB',
-      uploadDate: '2024-01-01 10:15:00',
+      upload_date: '2024-01-01 10:15:00',
       url: '/documents/technical_attachment.pdf'
     }, {
       id: 'DOC003',
       name: '保密协议.pdf',
       type: 'confidentiality_agreement',
       size: '856KB',
-      uploadDate: '2024-01-01 10:30:00',
+      upload_date: '2024-01-01 10:30:00',
       url: '/documents/confidentiality_agreement.pdf'
     }],
     terms: {
@@ -81,7 +82,7 @@ export function AgreementDetails({
           date: '2024-06-30'
         }]
       },
-      dataSharing: {
+      data_sharing: {
         scope: '脱敏医疗数据',
         purpose: 'AI模型训练和优化',
         security: '符合HIPAA和GDPR标准',
@@ -98,8 +99,8 @@ export function AgreementDetails({
         consequences: '系统停用、数据返还、赔偿'
       }
     },
-    createdAt: '2024-01-01 10:00:00',
-    updatedAt: '2024-01-15 14:30:00'
+    created_at: '2024-01-01 10:00:00',
+    updated_at: '2024-01-15 14:30:00'
   };
   useEffect(() => {
     setTimeout(() => {
@@ -211,9 +212,9 @@ export function AgreementDetails({
                 <Building2 className="w-8 h-8 text-blue-600" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">{agreement.hospitalName}</h1>
+                <h1 className="text-2xl font-bold text-gray-900">{agreement.name}</h1>
                 <div className="flex items-center space-x-3 mt-1">
-                  <span className="text-gray-600">协议ID: {agreement.id}</span>
+                  <span className="text-gray-600">协议ID: {agreement._id}</span>
                   {getTypeBadge(agreement.type)}
                   {getStatusBadge(agreement.status)}
                 </div>
@@ -251,11 +252,11 @@ export function AgreementDetails({
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600">开始日期</span>
-                  <span className="font-medium">{agreement.startDate}</span>
+                  <span className="font-medium">{agreement.start_date}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">结束日期</span>
-                  <span className="font-medium">{agreement.endDate}</span>
+                  <span className="font-medium">{agreement.end_date}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">合作期限</span>
@@ -301,15 +302,15 @@ export function AgreementDetails({
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-gray-600">负责人</span>
-                  <span className="font-medium">{agreement.responsiblePerson}</span>
+                  <span className="font-medium">{agreement.responsible_person}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">邮箱</span>
-                  <span className="font-medium text-sm">{agreement.contactEmail}</span>
+                  <span className="font-medium text-sm">{agreement.contact_email}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">电话</span>
-                  <span className="font-medium">{agreement.contactPhone}</span>
+                  <span className="font-medium">{agreement.contact_phone}</span>
                 </div>
               </div>
             </CardContent>
@@ -486,19 +487,19 @@ export function AgreementDetails({
                   <div className="space-y-4">
                     <div>
                       <h4 className="font-medium text-gray-900 mb-2">数据范围</h4>
-                      <p className="text-gray-700">{agreement.terms.dataSharing.scope}</p>
+                      <p className="text-gray-700">{agreement.terms.data_sharing.scope}</p>
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-2">使用目的</h4>
-                      <p className="text-gray-700">{agreement.terms.dataSharing.purpose}</p>
+                      <p className="text-gray-700">{agreement.terms.data_sharing.purpose}</p>
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-2">安全标准</h4>
-                      <p className="text-gray-700">{agreement.terms.dataSharing.security}</p>
+                      <p className="text-gray-700">{agreement.terms.data_sharing.security}</p>
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900 mb-2">数据保留</h4>
-                      <p className="text-gray-700">{agreement.terms.dataSharing.retention}</p>
+                      <p className="text-gray-700">{agreement.terms.data_sharing.retention}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -555,7 +556,7 @@ export function AgreementDetails({
                             <h4 className="font-medium text-gray-900">{document.name}</h4>
                             <div className="flex items-center space-x-4 text-sm text-gray-500">
                               <span>{document.size}</span>
-                              <span>上传于 {document.uploadDate}</span>
+                              <span>上传于 {document.upload_date}</span>
                             </div>
                           </div>
                         </div>

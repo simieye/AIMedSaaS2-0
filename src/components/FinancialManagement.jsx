@@ -1,10 +1,13 @@
 // @ts-ignore;
 import React, { useState, useEffect } from 'react';
 // @ts-ignore;
-import { Card, CardContent, CardHeader, CardTitle, Button, Input, Select, Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useToast, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
+import { Button, useToast } from '@/components/ui';
 // @ts-ignore;
-import { Search, Filter, Download, Plus, Eye, Edit, DollarSign, FileText, Calendar, CheckCircle, Clock, AlertCircle, Receipt, CreditCard } from 'lucide-react';
+import { Download, Plus } from 'lucide-react';
 
+import { BillTable } from '@/components/BillTable';
+import { FinancialStats } from '@/components/FinancialStats';
+import { FinancialSearchFilter } from '@/components/FinancialSearchFilter';
 export function FinancialManagement({
   $w,
   className,
@@ -118,31 +121,29 @@ export function FinancialManagement({
     const statusConfig = {
       paid: {
         color: 'bg-green-100 text-green-800',
-        icon: CheckCircle,
+        icon: 'CheckCircle',
         text: '已付款'
       },
       pending: {
         color: 'bg-yellow-100 text-yellow-800',
-        icon: Clock,
+        icon: 'Clock',
         text: '待付款'
       },
       overdue: {
         color: 'bg-red-100 text-red-800',
-        icon: AlertCircle,
+        icon: 'AlertCircle',
         text: '逾期'
       },
       cancelled: {
         color: 'bg-gray-100 text-gray-800',
-        icon: AlertCircle,
+        icon: 'AlertCircle',
         text: '已取消'
       }
     };
     const config = statusConfig[status] || statusConfig.pending;
-    const Icon = config.icon;
-    return <Badge className={config.color}>
-        <Icon className="w-3 h-3 mr-1" />
+    return <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${config.color}`}>
         {config.text}
-      </Badge>;
+      </span>;
   };
   const getTypeBadge = type => {
     const typeConfig = {
@@ -164,7 +165,9 @@ export function FinancialManagement({
       }
     };
     const config = typeConfig[type] || typeConfig.sponsorship_fee;
-    return <Badge className={config.color}>{config.text}</Badge>;
+    return <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${config.color}`}>
+        {config.text}
+      </span>;
   };
   const formatCurrency = amount => {
     return new Intl.NumberFormat('zh-CN', {
@@ -208,14 +211,17 @@ export function FinancialManagement({
       description: "正在导出财务数据..."
     });
   };
+  const handleCreateBill = () => {
+    toast({
+      title: "创建账单",
+      description: "正在打开账单创建界面"
+    });
+  };
   const filteredBills = bills.filter(bill => {
     const matchesSearch = bill.projectName.toLowerCase().includes(searchTerm.toLowerCase()) || bill.sponsorName.toLowerCase().includes(searchTerm.toLowerCase()) || bill.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = selectedStatus === 'all' || bill.status === selectedStatus;
     return matchesSearch && matchesStatus;
   });
-  const totalRevenue = bills.filter(b => b.status === 'paid').reduce((sum, b) => sum + b.totalAmount, 0);
-  const pendingRevenue = bills.filter(b => b.status === 'pending').reduce((sum, b) => sum + b.totalAmount, 0);
-  const overdueRevenue = bills.filter(b => b.status === 'overdue').reduce((sum, b) => sum + b.totalAmount, 0);
   return <div className={className} style={style}>
       <div className="space-y-6">
         {/* 头部 */}
@@ -229,7 +235,7 @@ export function FinancialManagement({
               <Download className="w-4 h-4 mr-2" />
               导出报表
             </Button>
-            <Button>
+            <Button onClick={handleCreateBill}>
               <Plus className="w-4 h-4 mr-2" />
               创建账单
             </Button>
@@ -237,179 +243,15 @@ export function FinancialManagement({
         </div>
 
         {/* 筛选器 */}
-        <Card>
-          <CardContent className="p-4">
-            <div className="grid grid-cols-3 gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input placeholder="搜索项目名称、赞助商或发票号..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
-              </div>
-              
-              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-                <SelectTrigger>
-                  <SelectValue placeholder="选择状态" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">全部状态</SelectItem>
-                  <SelectItem value="paid">已付款</SelectItem>
-                  <SelectItem value="pending">待付款</SelectItem>
-                  <SelectItem value="overdue">逾期</SelectItem>
-                  <SelectItem value="cancelled">已取消</SelectItem>
-                </SelectContent>
-              </Select>
-
-              <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
-                <SelectTrigger>
-                  <SelectValue placeholder="选择时间范围" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">全部时间</SelectItem>
-                  <SelectItem value="current_month">本月</SelectItem>
-                  <SelectItem value="last_month">上月</SelectItem>
-                  <SelectItem value="current_quarter">本季度</SelectItem>
-                  <SelectItem value="current_year">本年</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* 统计卡片 */}
-        <div className="grid grid-cols-4 gap-4">
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <DollarSign className="w-6 h-6 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">已收款</p>
-                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(totalRevenue)}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-yellow-100 rounded-lg">
-                  <Clock className="w-6 h-6 text-yellow-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">待收款</p>
-                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(pendingRevenue)}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-red-100 rounded-lg">
-                  <AlertCircle className="w-6 h-6 text-red-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">逾期款项</p>
-                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(overdueRevenue)}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Receipt className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">总账单数</p>
-                  <p className="text-2xl font-bold text-gray-900">{bills.length}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        <div className="bg-white rounded-lg shadow-sm p-4">
+          <FinancialSearchFilter searchTerm={searchTerm} onSearchChange={setSearchTerm} selectedStatus={selectedStatus} onStatusChange={setSelectedStatus} selectedPeriod={selectedPeriod} onPeriodChange={setSelectedPeriod} onExport={handleExport} onCreateBill={handleCreateBill} />
         </div>
 
+        {/* 统计卡片 */}
+        <FinancialStats bills={bills} />
+
         {/* 账单列表 */}
-        <Card>
-          <CardHeader>
-            <CardTitle>账单列表</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>账单ID</TableHead>
-                  <TableHead>项目名称</TableHead>
-                  <TableHead>赞助商</TableHead>
-                  <TableHead>类型</TableHead>
-                  <TableHead>金额</TableHead>
-                  <TableHead>开票日期</TableHead>
-                  <TableHead>到期日期</TableHead>
-                  <TableHead>付款日期</TableHead>
-                  <TableHead>状态</TableHead>
-                  <TableHead>操作</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredBills.map(bill => <TableRow key={bill.id}>
-                    <TableCell>
-                      <div>
-                        <div className="font-medium text-gray-900">{bill.id}</div>
-                        <div className="text-sm text-gray-500">{bill.invoiceNumber}</div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="font-medium text-gray-900">{bill.projectName}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-gray-900">{bill.sponsorName}</div>
-                    </TableCell>
-                    <TableCell>
-                      {getTypeBadge(bill.type)}
-                    </TableCell>
-                    <TableCell>
-                      <div>
-                        <div className="font-medium text-gray-900">{formatCurrency(bill.amount)}</div>
-                        <div className="text-sm text-gray-500">含税: {formatCurrency(bill.totalAmount)}</div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-gray-900">{bill.issueDate}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-gray-900">{bill.dueDate}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-gray-900">{bill.paidDate || '-'}</div>
-                    </TableCell>
-                    <TableCell>
-                      {getStatusBadge(bill.status)}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <Button variant="ghost" size="sm" onClick={() => handleViewDetails(bill.id)}>
-                          <Eye className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleEdit(bill.id)}>
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        {bill.status === 'pending' && <Button variant="ghost" size="sm" onClick={() => handleSendInvoice(bill.id)}>
-                            <FileText className="w-4 h-4" />
-                          </Button>}
-                        {bill.status === 'pending' && <Button variant="ghost" size="sm" onClick={() => handleMarkAsPaid(bill.id)}>
-                            <CheckCircle className="w-4 h-4" />
-                          </Button>}
-                      </div>
-                    </TableCell>
-                  </TableRow>)}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
+        <BillTable bills={filteredBills} onViewDetails={handleViewDetails} onEdit={handleEdit} onSendInvoice={handleSendInvoice} onMarkAsPaid={handleMarkAsPaid} getStatusBadge={getStatusBadge} getTypeBadge={getTypeBadge} formatCurrency={formatCurrency} />
       </div>
     </div>;
 }

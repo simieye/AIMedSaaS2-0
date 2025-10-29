@@ -12,7 +12,6 @@ import DEPARTMENTALAIDIAGNOSIS from '../pages/DepartmentalAIDiagnosis.jsx';
 import AGREEMENTMANAGEMENT from '../pages/AgreementManagement.jsx';
 import PHARMASPONSORSHIPMANAGEMENT from '../pages/PharmaSponsorshipManagement.jsx';
 import RAGSYSTEMMANAGEMENT from '../pages/RAGSystemManagement.jsx';
-import AROUNDROADMAP from '../pages/ARoundRoadmap.jsx';
 export const routers = [{
   id: "DoctorPortal",
   component: DOCTORPORTAL
@@ -55,7 +54,4 @@ export const routers = [{
 }, {
   id: "RAGSystemManagement",
   component: RAGSYSTEMMANAGEMENT
-}, {
-  id: "ARoundRoadmap",
-  component: AROUNDROADMAP
 }]
