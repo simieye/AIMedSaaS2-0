@@ -1,0 +1,230 @@
+
+{
+  "name": "analytics",
+  "title": "分析数据",
+  "schemas": [
+    {
+      "name": "analytics_id",
+      "title": "分析数据ID",
+      "type": "String"
+    },
+    {
+      "name": "metric_type",
+      "title": "指标类型",
+      "type": "String"
+    },
+    {
+      "name": "metric_name",
+      "title": "指标名称",
+      "type": "String"
+    },
+    {
+      "name": "value",
+      "title": "指标值",
+      "type": "Object"
+    },
+    {
+      "name": "value_type",
+      "title": "值类型",
+      "type": "String"
+    },
+    {
+      "name": "dimension",
+      "title": "维度信息",
+      "type": "Object"
+    },
+    {
+      "name": "timestamp",
+      "title": "时间戳",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "date",
+      "title": "日期",
+      "type": "Date",
+      "format": "date"
+    },
+    {
+      "name": "hour",
+      "title": "小时",
+      "type": "Number"
+    },
+    {
+      "name": "source",
+      "title": "数据来源",
+      "type": "String"
+    },
+    {
+      "name": "category",
+      "title": "数据分类",
+      "type": "String"
+    },
+    {
+      "name": "subcategory",
+      "title": "数据子分类",
+      "type": "String"
+    },
+    {
+      "name": "granularity",
+      "title": "数据粒度",
+      "type": "String"
+    },
+    {
+      "name": "unit",
+      "title": "计量单位",
+      "type": "String"
+    },
+    {
+      "name": "metadata",
+      "title": "元数据",
+      "type": "Object"
+    },
+    {
+      "name": "tags",
+      "title": "标签",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "user_context",
+      "title": "用户上下文",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "user_id",
+          "title": "用户ID",
+          "type": "String"
+        },
+        {
+          "name": "user_type",
+          "title": "用户类型",
+          "type": "String"
+        },
+        {
+          "name": "role",
+          "title": "角色",
+          "type": "String"
+        },
+        {
+          "name": "organization",
+          "title": "组织",
+          "type": "String"
+        },
+        {
+          "name": "location",
+          "title": "位置",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "system_context",
+      "title": "系统上下文",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "environment",
+          "title": "环境",
+          "type": "String"
+        },
+        {
+          "name": "version",
+          "title": "版本",
+          "type": "String"
+        },
+        {
+          "name": "region",
+          "title": "区域",
+          "type": "String"
+        },
+        {
+          "name": "instance_id",
+          "title": "实例ID",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "quality_score",
+      "title": "数据质量评分",
+      "type": "Number"
+    },
+    {
+      "name": "anomaly_flags",
+      "title": "异常标记",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "aggregation_level",
+      "title": "聚合级别",
+      "type": "String"
+    },
+    {
+      "name": "window_size",
+      "title": "时间窗口",
+      "type": "String"
+    },
+    {
+      "name": "baseline_value",
+      "title": "基线值",
+      "type": "Object"
+    },
+    {
+      "name": "trend_direction",
+      "title": "趋势方向",
+      "type": "String"
+    },
+    {
+      "name": "confidence_interval",
+      "title": "置信区间",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "lower",
+          "title": "下限",
+          "type": "Number"
+        },
+        {
+          "name": "upper",
+          "title": "上限",
+          "type": "Number"
+        },
+        {
+          "name": "confidence",
+          "title": "置信度",
+          "type": "Number"
+        }
+      ]
+    },
+    {
+      "name": "created_at",
+      "title": "创建时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "updated_at",
+      "title": "更新时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "processed_at",
+      "title": "处理时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "expiry_at",
+      "title": "过期时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    }
+  ]
+}

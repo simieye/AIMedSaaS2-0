@@ -1,0 +1,123 @@
+
+[
+  {
+    "_id": "agreement_001",
+    "agreement_id": "AGR20240115001",
+    "partner_id": "PARTNER001",
+    "agreement_type": "data_usage",
+    "agreement_name": "数据使用协议",
+    "version": "v2.1",
+    "content": "本协议规定了合作伙伴在使用医疗数据时的权利和义务，包括数据安全、隐私保护、使用范围等条款。",
+    "status": "signed",
+    "signed_at": 1704067200000,
+    "signed_by": "张经理",
+    "effective_date": "2024-01-01",
+    "expiry_date": "2024-12-31",
+    "renewal_date": "2024-12-01",
+    "terms": [
+      {
+        "term_id": "TERM001",
+        "term_title": "数据安全",
+        "term_content": "合作伙伴必须采取适当的技术和管理措施保护医疗数据安全",
+        "is_required": true
+      },
+      {
+        "term_id": "TERM002",
+        "term_title": "隐私保护",
+        "term_content": "严格遵守HIPAA和GDPR等隐私保护法规",
+        "is_required": true
+      },
+      {
+        "term_id": "TERM003",
+        "term_title": "使用范围",
+        "term_content": "数据仅用于约定的医疗服务和研究目的",
+        "is_required": true
+      }
+    ],
+    "attachments": [
+      {
+        "file_name": "数据安全规范.pdf",
+        "file_url": "https://example.com/docs/data_security.pdf",
+        "file_size": 1024000,
+        "upload_date": "2024-01-01"
+      }
+    ],
+    "signatures": {
+      "digital_signature": "sha256:abc123...",
+      "ip_address": "192.168.1.100",
+      "user_agent": "Mozilla/5.0..."
+    },
+    "created_at": 1704067200000,
+    "updated_at": 1704067200000
+  },
+  {
+    "_id": "agreement_002",
+    "agreement_id": "AGR20240115002",
+    "partner_id": "PARTNER001",
+    "agreement_type": "privacy",
+    "agreement_name": "隐私保护协议",
+    "version": "v1.3",
+    "content": "本协议详细说明了患者隐私数据的收集、使用、存储和共享规则。",
+    "status": "signed",
+    "signed_at": 1704153600000,
+    "signed_by": "张经理",
+    "effective_date": "2024-01-15",
+    "expiry_date": "2025-01-15",
+    "renewal_date": "2024-12-15",
+    "terms": [
+      {
+        "term_id": "TERM004",
+        "term_title": "数据收集",
+        "term_content": "明确告知用户数据收集的目的和范围",
+        "is_required": true
+      },
+      {
+        "term_id": "TERM005",
+        "term_title": "数据共享",
+        "term_content": "未经用户同意不得向第三方共享个人数据",
+        "is_required": true
+      }
+    ],
+    "attachments": [],
+    "signatures": {
+      "digital_signature": "sha256:def456...",
+      "ip_address": "192.168.1.101",
+      "user_agent": "Mozilla/5.0..."
+    },
+    "created_at": 1704153600000,
+    "updated_at": 1704153600000
+  },
+  {
+    "_id": "agreement_003",
+    "agreement_id": "AGR20240115003",
+    "partner_id": "PARTNER002",
+    "agreement_type": "sla",
+    "agreement_name": "服务等级协议",
+    "version": "v1.0",
+    "content": "本协议定义了服务可用性、响应时间、支持等级等服务质量标准。",
+    "status": "pending",
+    "signed_at": null,
+    "signed_by": null,
+    "effective_date": null,
+    "expiry_date": null,
+    "renewal_date": null,
+    "terms": [
+      {
+        "term_id": "TERM006",
+        "term_title": "服务可用性",
+        "term_content": "保证99.9%的服务可用性",
+        "is_required": true
+      },
+      {
+        "term_id": "TERM007",
+        "term_title": "响应时间",
+        "term_content": "API响应时间不超过500ms",
+        "is_required": true
+      }
+    ],
+    "attachments": [],
+    "signatures": {},
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000
+  }
+]

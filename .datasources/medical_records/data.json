@@ -1,0 +1,42 @@
+
+[
+  {
+    "_id": "record_001",
+    "record_id": "MR202401150001",
+    "patient_id": "patient_001",
+    "doctor_id": "doctor_001",
+    "department": "cardiology",
+    "record_type": "outpatient",
+    "chief_complaint": "胸闷气短1周，加重2天",
+    "present_illness": "患者1周前无明显诱因出现胸闷气短，活动后加重，休息后缓解。2天前症状加重，伴有心悸。",
+    "past_history": "高血压病史2年，规律服药；否认糖尿病、冠心病史。",
+    "physical_exam": {
+      "blood_pressure": "140/90mmHg",
+      "heart_rate": "88次/分",
+      "respiratory_rate": "18次/分",
+      "temperature": "36.8℃",
+      "heart_sounds": "心音有力，未闻及杂音"
+    },
+    "diagnosis": {
+      "primary": "高血压病2级",
+      "secondary": ["胸闷待查", "心悸"],
+      "icd10": ["I10", "R06.02", "R00.2"]
+    },
+    "treatment": {
+      "medications": [
+        {
+          "name": "氨氯地平",
+          "dosage": "5mg",
+          "frequency": "每日一次"
+        }
+      ],
+      "recommendations": ["低盐饮食", "适量运动", "定期复查"]
+    },
+    "ai_analysis": {
+      "risk_score": 0.65,
+      "suggestions": ["建议心电图检查", "监测血压变化", "考虑心脏超声"]
+    },
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000
+  }
+]

@@ -1,0 +1,832 @@
+
+{
+  "name": "patient",
+  "title": "患者信息",
+  "schemas": [
+    {
+      "name": "patient_id",
+      "title": "患者ID",
+      "type": "String"
+    },
+    {
+      "name": "name",
+      "title": "姓名",
+      "type": "String"
+    },
+    {
+      "name": "gender",
+      "title": "性别",
+      "type": "String"
+    },
+    {
+      "name": "dob",
+      "title": "出生日期",
+      "type": "Date",
+      "format": "date"
+    },
+    {
+      "name": "contact",
+      "title": "联系信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "phone",
+          "title": "手机号码",
+          "type": "String"
+        },
+        {
+          "name": "email",
+          "title": "邮箱地址",
+          "type": "Email"
+        },
+        {
+          "name": "emergency_contact",
+          "title": "紧急联系人",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "name",
+              "title": "联系人姓名",
+              "type": "String"
+            },
+            {
+              "name": "relationship",
+              "title": "关系",
+              "type": "String"
+            },
+            {
+              "name": "phone",
+              "title": "联系电话",
+              "type": "String"
+            }
+          ]
+        },
+        {
+          "name": "address",
+          "title": "地址信息",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "street",
+              "title": "街道地址",
+              "type": "String"
+            },
+            {
+              "name": "city",
+              "title": "城市",
+              "type": "String"
+            },
+            {
+              "name": "state",
+              "title": "省份",
+              "type": "String"
+            },
+            {
+              "name": "postal_code",
+              "title": "邮编",
+              "type": "String"
+            },
+            {
+              "name": "country",
+              "title": "国家",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "medical_history",
+      "title": "病史信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "allergies",
+          "title": "过敏史",
+          "type": "Array",
+          "items": {
+            "type": "String"
+          }
+        },
+        {
+          "name": "chronic_conditions",
+          "title": "慢性疾病",
+          "type": "Array",
+          "items": {
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "condition",
+                "title": "疾病名称",
+                "type": "String"
+              },
+              {
+                "name": "diagnosis_date",
+                "title": "确诊日期",
+                "type": "Date",
+                "format": "date"
+              },
+              {
+                "name": "status",
+                "title": "当前状态",
+                "type": "String"
+              },
+              {
+                "name": "medications",
+                "title": "用药情况",
+                "type": "Array",
+                "items": {
+                  "type": "Object",
+                  "schemas": [
+                    {
+                      "name": "drug_name",
+                      "title": "药品名称",
+                      "type": "String"
+                    },
+                    {
+                      "name": "dosage",
+                      "title": "剂量",
+                      "type": "String"
+                    },
+                    {
+                      "name": "frequency",
+                      "title": "用药频次",
+                      "type": "String"
+                    },
+                    {
+                      "name": "start_date",
+                      "title": "开始日期",
+                      "type": "Date",
+                      "format": "date"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "surgeries",
+          "title": "手术史",
+          "type": "Array",
+          "items": {
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "procedure",
+                "title": "手术名称",
+                "type": "String"
+              },
+              {
+                "name": "date",
+                "title": "手术日期",
+                "type": "Date",
+                "format": "date"
+              },
+              {
+                "name": "hospital",
+                "title": "医院",
+                "type": "String"
+              },
+              {
+                "name": "notes",
+                "title": "备注",
+                "type": "String"
+              }
+            ]
+          }
+        },
+        {
+          "name": "family_history",
+          "title": "家族病史",
+          "type": "Array",
+          "items": {
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "condition",
+                "title": "疾病名称",
+                "type": "String"
+              },
+              {
+                "name": "relationship",
+                "title": "亲属关系",
+                "type": "String"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "nutrition_logs",
+      "title": "营养记录",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "log_id",
+            "title": "记录ID",
+            "type": "String"
+          },
+          {
+            "name": "date",
+            "title": "记录日期",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "meal_type",
+            "title": "餐次类型",
+            "type": "String"
+          },
+          {
+            "name": "foods",
+            "title": "食物列表",
+            "type": "Array",
+            "items": {
+              "type": "Object",
+              "schemas": [
+                {
+                  "name": "food_name",
+                  "title": "食物名称",
+                  "type": "String"
+                },
+                {
+                  "name": "quantity",
+                  "title": "数量",
+                  "type": "Number"
+                },
+                {
+                  "name": "unit",
+                  "title": "单位",
+                  "type": "String"
+                },
+                {
+                  "name": "calories",
+                  "title": "热量",
+                  "type": "Number"
+                },
+                {
+                  "name": "protein",
+                  "title": "蛋白质",
+                  "type": "Number"
+                },
+                {
+                  "name": "carbs",
+                  "title": "碳水化合物",
+                  "type": "Number"
+                },
+                {
+                  "name": "fat",
+                  "title": "脂肪",
+                  "type": "Number"
+                }
+              ]
+            }
+          },
+          {
+            "name": "total_calories",
+            "title": "总热量",
+            "type": "Number"
+          },
+          {
+            "name": "ai_analysis",
+            "title": "AI分析",
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "nutritional_score",
+                "title": "营养评分",
+                "type": "Number"
+              },
+              {
+                "name": "recommendations",
+                "title": "建议",
+                "type": "Array",
+                "items": {
+                  "type": "String"
+                }
+              },
+              {
+                "name": "deficiencies",
+                "title": "营养缺乏",
+                "type": "Array",
+                "items": {
+                  "type": "String"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "rehab_plans",
+      "title": "康复计划",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "plan_id",
+            "title": "计划ID",
+            "type": "String"
+          },
+          {
+            "name": "plan_name",
+            "title": "计划名称",
+            "type": "String"
+          },
+          {
+            "name": "condition",
+            "title": "康复目标",
+            "type": "String"
+          },
+          {
+            "name": "start_date",
+            "title": "开始日期",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "end_date",
+            "title": "结束日期",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "exercises",
+            "title": "运动计划",
+            "type": "Array",
+            "items": {
+              "type": "Object",
+              "schemas": [
+                {
+                  "name": "exercise_name",
+                  "title": "运动名称",
+                  "type": "String"
+                },
+                {
+                  "name": "frequency",
+                  "title": "频率",
+                  "type": "String"
+                },
+                {
+                  "name": "duration",
+                  "title": "时长",
+                  "type": "Number"
+                },
+                {
+                  "name": "intensity",
+                  "title": "强度",
+                  "type": "String"
+                },
+                {
+                  "name": "instructions",
+                  "title": "指导说明",
+                  "type": "String"
+                }
+              ]
+            }
+          },
+          {
+            "name": "progress_tracking",
+            "title": "进度跟踪",
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "current_stage",
+                "title": "当前阶段",
+                "type": "String"
+              },
+              {
+                "name": "completion_percentage",
+                "title": "完成百分比",
+                "type": "Number"
+              },
+              {
+                "name": "milestones",
+                "title": "里程碑",
+                "type": "Array",
+                "items": {
+                  "type": "Object",
+                  "schemas": [
+                    {
+                      "name": "milestone_name",
+                      "title": "里程碑名称",
+                      "type": "String"
+                    },
+                    {
+                      "name": "target_date",
+                      "title": "目标日期",
+                      "type": "Date",
+                      "format": "date"
+                    },
+                    {
+                      "name": "achieved",
+                      "title": "是否达成",
+                      "type": "Boolean"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "qa_history",
+      "title": "问答历史",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "qa_id",
+            "title": "问答ID",
+            "type": "String"
+          },
+          {
+            "name": "question",
+            "title": "问题",
+            "type": "String"
+          },
+          {
+            "name": "answer",
+            "title": "回答",
+            "type": "String"
+          },
+          {
+            "name": "category",
+            "title": "问题类别",
+            "type": "String"
+          },
+          {
+            "name": "asked_at",
+            "title": "提问时间",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          },
+          {
+            "name": "answered_at",
+            "title": "回答时间",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          },
+          {
+            "name": "ai_confidence",
+            "title": "AI置信度",
+            "type": "Number"
+          },
+          {
+            "name": "follow_up_questions",
+            "title": "追问",
+            "type": "Array",
+            "items": {
+              "type": "Object",
+              "schemas": [
+                {
+                  "name": "question",
+                  "title": "追问内容",
+                  "type": "String"
+                },
+                {
+                  "name": "answer",
+                  "title": "追问回答",
+                  "type": "String"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "insurance_info",
+      "title": "医保信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "insurance_provider",
+          "title": "保险公司",
+          "type": "String"
+        },
+        {
+          "name": "policy_number",
+          "title": "保单号",
+          "type": "String"
+        },
+        {
+          "name": "policy_type",
+          "title": "保险类型",
+          "type": "String"
+        },
+        {
+          "name": "coverage_start",
+          "title": "保险开始日期",
+          "type": "Date",
+          "format": "date"
+        },
+        {
+          "name": "coverage_end",
+          "title": "保险结束日期",
+          "type": "Date",
+          "format": "date"
+        },
+        {
+          "name": "coverage_details",
+          "title": "保险详情",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "total_coverage",
+              "title": "总保额",
+              "type": "Number"
+            },
+            {
+              "name": "deductible",
+              "title": "免赔额",
+              "type": "Number"
+            },
+            {
+              "name": "copay_percentage",
+              "title": "自付比例",
+              "type": "Number"
+            },
+            {
+              "name": "covered_services",
+              "title": "覆盖服务",
+              "type": "Array",
+              "items": {
+                "type": "String"
+              }
+            },
+            {
+              "name": "excluded_services",
+              "title": "排除服务",
+              "type": "Array",
+              "items": {
+                "type": "String"
+              }
+            }
+          ]
+        },
+        {
+          "name": "balance_info",
+          "title": "余额信息",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "current_balance",
+              "title": "当前余额",
+              "type": "Number"
+            },
+            {
+              "name": "used_amount",
+              "title": "已使用金额",
+              "type": "Number"
+            },
+            {
+              "name": "remaining_amount",
+              "title": "剩余金额",
+              "type": "Number"
+            }
+          ]
+        },
+        {
+          "name": "claims_history",
+          "title": "理赔历史",
+          "type": "Array",
+          "items": {
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "claim_id",
+                "title": "理赔ID",
+                "type": "String"
+              },
+              {
+                "name": "service_date",
+                "title": "服务日期",
+                "type": "Date",
+                "format": "date"
+              },
+              {
+                "name": "service_type",
+                "title": "服务类型",
+                "type": "String"
+              },
+              {
+                "name": "amount_claimed",
+                "title": "理赔金额",
+                "type": "Number"
+              },
+              {
+                "name": "amount_approved",
+                "title": "批准金额",
+                "type": "Number"
+              },
+              {
+                "name": "status",
+                "title": "理赔状态",
+                "type": "String"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "health_metrics",
+      "title": "健康指标",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "height",
+          "title": "身高",
+          "type": "Number"
+        },
+        {
+          "name": "weight",
+          "title": "体重",
+          "type": "Number"
+        },
+        {
+          "name": "bmi",
+          "title": "BMI指数",
+          "type": "Number"
+        },
+        {
+          "name": "blood_pressure",
+          "title": "血压",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "systolic",
+              "title": "收缩压",
+              "type": "Number"
+            },
+            {
+              "name": "diastolic",
+              "title": "舒张压",
+              "type": "Number"
+            }
+          ]
+        },
+        {
+          "name": "blood_sugar",
+          "title": "血糖",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "fasting",
+              "title": "空腹血糖",
+              "type": "Number"
+            },
+            {
+              "name": "post_meal",
+              "title": "餐后血糖",
+              "type": "Number"
+            },
+            {
+              "name": "hba1c",
+              "title": "糖化血红蛋白",
+              "type": "Number"
+            }
+          ]
+        },
+        {
+          "name": "vital_signs",
+          "title": "生命体征",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "heart_rate",
+              "title": "心率",
+              "type": "Number"
+            },
+            {
+              "name": "temperature",
+              "title": "体温",
+              "type": "Number"
+            },
+            {
+              "name": "oxygen_saturation",
+              "title": "血氧饱和度",
+              "type": "Number"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "preferences",
+      "title": "个人偏好",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "language",
+          "title": "语言偏好",
+          "type": "String"
+        },
+        {
+          "name": "notification_settings",
+          "title": "通知设置",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "email_notifications",
+              "title": "邮件通知",
+              "type": "Boolean"
+            },
+            {
+              "name": "sms_notifications",
+              "title": "短信通知",
+              "type": "Boolean"
+            },
+            {
+              "name": "push_notifications",
+              "title": "推送通知",
+              "type": "Boolean"
+            }
+          ]
+        },
+        {
+          "name": "privacy_settings",
+          "title": "隐私设置",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "share_data_with_doctors",
+              "title": "与医生共享数据",
+              "type": "Boolean"
+            },
+            {
+              "name": "share_data_with_partners",
+              "title": "与合作伙伴共享数据",
+              "type": "Boolean"
+            },
+            {
+              "name": "allow_research_participation",
+              "title": "允许参与研究",
+              "type": "Boolean"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "emergency_info",
+      "title": "紧急信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "blood_type",
+          "title": "血型",
+          "type": "String"
+        },
+        {
+          "name": "emergency_contacts",
+          "title": "紧急联系人",
+          "type": "Array",
+          "items": {
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "name",
+                "title": "姓名",
+                "type": "String"
+              },
+              {
+                "name": "relationship",
+                "title": "关系",
+                "type": "String"
+              },
+              {
+                "name": "phone",
+                "title": "电话",
+                "type": "String"
+              },
+              {
+                "name": "email",
+                "title": "邮箱",
+                "type": "Email"
+              }
+            ]
+          }
+        },
+        {
+          "name": "medical_alerts",
+          "title": "医疗警示",
+          "type": "Array",
+          "items": {
+            "type": "String"
+          }
+        }
+      ]
+    }
+  ]
+}

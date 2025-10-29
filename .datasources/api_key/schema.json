@@ -1,0 +1,137 @@
+
+{
+  "name": "api_key",
+  "title": "API密钥管理",
+  "schemas": [
+    {
+      "name": "key_id",
+      "title": "密钥ID",
+      "type": "String"
+    },
+    {
+      "name": "partner_id",
+      "title": "合作伙伴ID",
+      "type": "String"
+    },
+    {
+      "name": "key_name",
+      "title": "密钥名称",
+      "type": "String"
+    },
+    {
+      "name": "key",
+      "title": "API密钥",
+      "type": "String"
+    },
+    {
+      "name": "key_type",
+      "title": "密钥类型",
+      "type": "String"
+    },
+    {
+      "name": "status",
+      "title": "密钥状态",
+      "type": "String"
+    },
+    {
+      "name": "permissions",
+      "title": "权限范围",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "usage",
+      "title": "使用量",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "current_usage",
+          "title": "当前使用量",
+          "type": "Number"
+        },
+        {
+          "name": "daily_usage",
+          "title": "日使用量",
+          "type": "Number"
+        },
+        {
+          "name": "monthly_usage",
+          "title": "月使用量",
+          "type": "Number"
+        },
+        {
+          "name": "last_used_at",
+          "title": "最后使用时间",
+          "type": "DateTime",
+          "format": "timestamp-ms"
+        }
+      ]
+    },
+    {
+      "name": "quota",
+      "title": "配额限制",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "daily_limit",
+          "title": "日限制",
+          "type": "Number"
+        },
+        {
+          "name": "monthly_limit",
+          "title": "月限制",
+          "type": "Number"
+        },
+        {
+          "name": "total_limit",
+          "title": "总限制",
+          "type": "Number"
+        }
+      ]
+    },
+    {
+      "name": "ip_whitelist",
+      "title": "IP白名单",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "rate_limit",
+      "title": "频率限制",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "requests_per_minute",
+          "title": "每分钟请求数",
+          "type": "Number"
+        },
+        {
+          "name": "requests_per_hour",
+          "title": "每小时请求数",
+          "type": "Number"
+        }
+      ]
+    },
+    {
+      "name": "created_at",
+      "title": "创建时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "expires_at",
+      "title": "过期时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "created_by",
+      "title": "创建人",
+      "type": "String"
+    }
+  ]
+}

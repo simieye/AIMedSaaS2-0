@@ -1,0 +1,41 @@
+
+[
+  {
+    "_id": "ai_diag_001",
+    "diagnosis_id": "AID202401150001",
+    "patient_id": "patient_001",
+    "doctor_id": "doctor_001",
+    "department": "cardiology",
+    "symptoms": ["胸闷", "气短", "心悸"],
+    "medical_data": {
+      "age": 34,
+      "gender": "男",
+      "blood_pressure": "140/90",
+      "heart_rate": 88,
+      "medical_history": ["高血压"]
+    },
+    "ai_model": {
+      "name": "cardio_diagnosis_v2.1",
+      "version": "2.1.0",
+      "type": "ensemble",
+      "training_data": "cardio_dataset_v3"
+    },
+    "diagnosis_result": {
+      "primary": "高血压性心脏病",
+      "probability": 0.78,
+      "differential": [
+        {"condition": "冠心病", "probability": 0.15},
+        {"condition": "心肌炎", "probability": 0.07}
+      ]
+    },
+    "confidence_score": 0.85,
+    "recommendations": [
+      "建议进行心电图检查",
+      "考虑心脏超声检查",
+      "监测血压变化",
+      "调整降压药物"
+    ],
+    "status": "completed",
+    "created_at": 1705737600000
+  }
+]

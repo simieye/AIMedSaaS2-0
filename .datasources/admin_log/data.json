@@ -1,0 +1,367 @@
+
+[
+  {
+    "_id": "log_001",
+    "log_id": "LOG20240115001",
+    "admin_id": "ADMIN001",
+    "admin_name": "系统管理员",
+    "admin_role": "超级管理员",
+    "action": "create_user",
+    "action_category": "user_management",
+    "target_type": "patient",
+    "target_id": "P2024001001",
+    "target_name": "张三",
+    "timestamp": 1705737600000,
+    "pccp_version": "v2.1.0",
+    "ip": "192.168.1.100",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "result": "success",
+    "result_code": "200",
+    "error_message": null,
+    "request_data": {
+      "name": "张三",
+      "email": "zhangsan@example.com",
+      "phone": "13800138001"
+    },
+    "response_data": {
+      "patient_id": "P2024001001",
+      "status": "created"
+    },
+    "session_id": "sess_abc123",
+    "browser_info": {
+      "browser_name": "Chrome",
+      "browser_version": "120.0.0.0",
+      "os_name": "Windows",
+      "os_version": "10",
+      "device_type": "desktop"
+    },
+    "location_info": {
+      "country": "中国",
+      "region": "北京",
+      "city": "北京",
+      "latitude": 39.9042,
+      "longitude": 116.4074
+    },
+    "risk_level": "low",
+    "risk_factors": [],
+    "audit_trail": [
+      {
+        "action": "validate_input",
+        "timestamp": 1705737595000,
+        "details": {
+          "validation": "passed"
+        }
+      },
+      {
+        "action": "create_record",
+        "timestamp": 1705737600000,
+        "details": {
+          "record_type": "patient",
+          "record_id": "P2024001001"
+        }
+      }
+    ],
+    "metadata": {
+      "source_system": "admin_portal",
+      "trace_id": "trace_001",
+      "correlation_id": "corr_001"
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000,
+    "owner": "ADMIN001",
+    "createBy": "ADMIN001",
+    "updateBy": "ADMIN001"
+  },
+  {
+    "_id": "log_002",
+    "log_id": "LOG20240115002",
+    "admin_id": "ADMIN002",
+    "admin_name": "数据管理员",
+    "admin_role": "数据管理员",
+    "action": "update_patient",
+    "action_category": "data_management",
+    "target_type": "patient",
+    "target_id": "P2024001002",
+    "target_name": "李四",
+    "timestamp": 1705744800000,
+    "pccp_version": "v2.1.0",
+    "ip": "192.168.1.101",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+    "result": "success",
+    "result_code": "200",
+    "error_message": null,
+    "request_data": {
+      "medical_history": {
+        "allergies": ["花粉", "尘螨", "青霉素"]
+      }
+    },
+    "response_data": {
+      "patient_id": "P2024001002",
+      "updated_fields": ["medical_history"]
+    },
+    "session_id": "sess_def456",
+    "browser_info": {
+      "browser_name": "Safari",
+      "browser_version": "17.1",
+      "os_name": "macOS",
+      "os_version": "14.1",
+      "device_type": "desktop"
+    },
+    "location_info": {
+      "country": "中国",
+      "region": "上海",
+      "city": "上海",
+      "latitude": 31.2304,
+      "longitude": 121.4737
+    },
+    "risk_level": "medium",
+    "risk_factors": ["sensitive_data_update"],
+    "audit_trail": [
+      {
+        "action": "validate_permissions",
+        "timestamp": 1705744795000,
+        "details": {
+          "permission_check": "passed"
+        }
+      },
+      {
+        "action": "update_record",
+        "timestamp": 1705744800000,
+        "details": {
+          "record_type": "patient",
+          "record_id": "P2024001002",
+          "fields_updated": ["medical_history"]
+        }
+      }
+    ],
+    "metadata": {
+      "source_system": "admin_portal",
+      "trace_id": "trace_002",
+      "correlation_id": "corr_002"
+    },
+    "createdAt": 1705744800000,
+    "updatedAt": 1705744800000,
+    "owner": "ADMIN002",
+    "createBy": "ADMIN002",
+    "updateBy": "ADMIN002"
+  },
+  {
+    "_id": "log_003",
+    "log_id": "LOG20240115003",
+    "admin_id": "ADMIN003",
+    "admin_name": "系统审计员",
+    "admin_role": "审计管理员",
+    "action": "delete_report",
+    "action_category": "data_deletion",
+    "target_type": "report",
+    "target_id": "RPT20240115001",
+    "target_name": "胸部CT报告",
+    "timestamp": 1705752000000,
+    "pccp_version": "v2.1.0",
+    "ip": "192.168.1.102",
+    "user_agent": "Mozilla/5.0 (Linux; Android 10; SM-G973F) AppleWebKit/537.36",
+    "result": "failed",
+    "result_code": "403",
+    "error_message": "权限不足，无法删除已完成的报告",
+    "request_data": {
+      "report_id": "RPT20240115001",
+      "reason": "数据错误"
+    },
+    "response_data": {
+      "error": "insufficient_permissions"
+    },
+    "session_id": "sess_ghi789",
+    "browser_info": {
+      "browser_name": "Chrome Mobile",
+      "browser_version": "120.0.0.0",
+      "os_name": "Android",
+      "os_version": "10",
+      "device_type": "mobile"
+    },
+    "location_info": {
+      "country": "中国",
+      "region": "广东",
+      "city": "深圳",
+      "latitude": 22.3193,
+      "longitude": 114.1694
+    },
+    "risk_level": "high",
+    "risk_factors": ["unauthorized_deletion_attempt", "permission_violation"],
+    "audit_trail": [
+      {
+        "action": "check_permissions",
+        "timestamp": 1705751995000,
+        "details": {
+          "permission_check": "failed",
+          "required_role": "超级管理员"
+        }
+      },
+      {
+        "action": "deny_operation",
+        "timestamp": 1705752000000,
+        "details": {
+          "reason": "insufficient_permissions"
+        }
+      }
+    ],
+    "metadata": {
+      "source_system": "admin_portal",
+      "trace_id": "trace_003",
+      "correlation_id": "corr_003"
+    },
+    "createdAt": 1705752000000,
+    "updatedAt": 1705752000000,
+    "owner": "ADMIN003",
+    "createBy": "ADMIN003",
+    "updateBy": "ADMIN003"
+  },
+  {
+    "_id": "log_004",
+    "log_id": "LOG20240115004",
+    "admin_id": "ADMIN001",
+    "admin_name": "系统管理员",
+    "admin_role": "超级管理员",
+    "action": "create_partner",
+    "action_category": "partner_management",
+    "target_type": "partner",
+    "target_id": "PARTNER003",
+    "target_name": "远程医疗网络有限公司",
+    "timestamp": 1705759200000,
+    "pccp_version": "v2.1.0",
+    "ip": "192.168.1.100",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    "result": "success",
+    "result_code": "201",
+    "error_message": null,
+    "request_data": {
+      "org_name": "远程医疗网络有限公司",
+      "contact": {
+        "contact_person": "王总",
+        "contact_phone": "13700137003",
+        "contact_email": "wang.ceo@telemed.com"
+      },
+      "tier": "basic"
+    },
+    "response_data": {
+      "partner_id": "PARTNER003",
+      "status": "pending"
+    },
+    "session_id": "sess_jkl012",
+    "browser_info": {
+      "browser_name": "Chrome",
+      "browser_version": "120.0.0.0",
+      "os_name": "Windows",
+      "os_version": "10",
+      "device_type": "desktop"
+    },
+    "location_info": {
+      "country": "中国",
+      "region": "北京",
+      "city": "北京",
+      "latitude": 39.9042,
+      "longitude": 116.4074
+    },
+    "risk_level": "low",
+    "risk_factors": [],
+    "audit_trail": [
+      {
+        "action": "validate_input",
+        "timestamp": 1705759195000,
+        "details": {
+          "validation": "passed"
+        }
+      },
+      {
+        "action": "create_partner",
+        "timestamp": 1705759200000,
+        "details": {
+          "partner_id": "PARTNER003",
+          "tier": "basic"
+        }
+      }
+    ],
+    "metadata": {
+      "source_system": "admin_portal",
+      "trace_id": "trace_004",
+      "correlation_id": "corr_004"
+    },
+    "createdAt": 1705759200000,
+    "updatedAt": 1705759200000,
+    "owner": "ADMIN001",
+    "createBy": "ADMIN001",
+    "updateBy": "ADMIN001"
+  },
+  {
+    "_id": "log_005",
+    "log_id": "LOG20240115005",
+    "admin_id": "ADMIN004",
+    "admin_name": "安全管理员",
+    "admin_role": "安全管理员",
+    "action": "update_api_key",
+    "action_category": "security_management",
+    "target_type": "api_key",
+    "target_id": "KEY20240115001",
+    "target_name": "生产环境密钥",
+    "timestamp": 1705766400000,
+    "pccp_version": "v2.1.0",
+    "ip": "192.168.1.103",
+    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36",
+    "result": "success",
+    "result_code": "200",
+    "error_message": null,
+    "request_data": {
+      "permissions": ["read", "write", "delete", "analytics", "ai_services", "admin_access"],
+      "rate_limit": {
+        "requests_per_minute": 2000
+      }
+    },
+    "response_data": {
+      "key_id": "KEY20240115001",
+      "updated_fields": ["permissions", "rate_limit"]
+    },
+    "session_id": "sess_mno345",
+    "browser_info": {
+      "browser_name": "Firefox",
+      "browser_version": "121.0",
+      "os_name": "Ubuntu",
+      "os_version": "20.04",
+      "device_type": "desktop"
+    },
+    "location_info": {
+      "country": "中国",
+      "region": "北京",
+      "city": "北京",
+      "latitude": 39.9042,
+      "longitude": 116.4074
+    },
+    "risk_level": "medium",
+    "risk_factors": ["elevated_permissions"],
+    "audit_trail": [
+      {
+        "action": "validate_security_policy",
+        "timestamp": 1705766395000,
+        "details": {
+          "policy_check": "passed"
+        }
+      },
+      {
+        "action": "update_permissions",
+        "timestamp": 1705766400000,
+        "details": {
+          "key_id": "KEY20240115001",
+          "new_permissions": ["read", "write", "delete", "analytics", "ai_services", "admin_access"]
+        }
+      }
+    ],
+    "metadata": {
+      "source_system": "admin_portal",
+      "trace_id": "trace_005",
+      "correlation_id": "corr_005"
+    },
+    "createdAt": 1705766400000,
+    "updatedAt": 1705766400000,
+    "owner": "ADMIN004",
+    "createBy": "ADMIN004",
+    "updateBy": "ADMIN004"
+  }
+]

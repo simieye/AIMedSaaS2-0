@@ -1,0 +1,327 @@
+
+{
+  "name": "wearable_devices",
+  "title": "智能穿戴设备",
+  "description": "存储和管理智能穿戴设备信息，包括设备注册、数据流配置、健康指标监控，支持FHIR标准",
+  "schemas": [
+    {
+      "name": "device_id",
+      "title": "设备ID",
+      "type": "String",
+      "description": "设备唯一标识符"
+    },
+    {
+      "name": "user_id",
+      "title": "用户ID",
+      "type": "String",
+      "description": "关联用户表，支持医生、患者、合作伙伴"
+    },
+    {
+      "name": "device_type",
+      "title": "设备类型",
+      "type": "String",
+      "description": "smartwatch|fitness_tracker|smart_ring|smart_band|medical_device"
+    },
+    {
+      "name": "mac_address",
+      "title": "MAC地址",
+      "type": "String",
+      "description": "设备物理地址"
+    },
+    {
+      "name": "last_sync_at",
+      "title": "最后同步时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "data_schema",
+      "title": "数据模式",
+      "type": "Object",
+      "description": "设备数据结构和格式定义",
+      "schemas": [
+        {
+          "name": "metrics",
+          "title": "健康指标",
+          "type": "Array",
+          "items": {
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "metric_name",
+                "title": "指标名称",
+                "type": "String"
+              },
+              {
+                "name": "unit",
+                "title": "单位",
+                "type": "String"
+              },
+              {
+                "name": "frequency",
+                "title": "采集频率",
+                "type": "String"
+              },
+              {
+                "name": "range",
+                "title": "正常范围",
+                "type": "Object",
+                "schemas": [
+                  {
+                    "name": "min",
+                    "title": "最小值",
+                    "type": "Number"
+                  },
+                  {
+                    "name": "max",
+                    "title": "最大值",
+                    "type": "Number"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "data_format",
+          "title": "数据格式",
+          "type": "String"
+        },
+        {
+          "name": "api_version",
+          "title": "API版本",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "title": "设备状态",
+      "type": "String",
+      "description": "active|inactive|error|maintenance|disconnected"
+    },
+    {
+      "name": "registered_at",
+      "title": "注册时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "device_info",
+      "title": "设备信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "brand",
+          "title": "品牌",
+          "type": "String"
+        },
+        {
+          "name": "model",
+          "title": "型号",
+          "type": "String"
+        },
+        {
+          "name": "serial_number",
+          "title": "序列号",
+          "type": "String"
+        },
+        {
+          "name": "firmware_version",
+          "title": "固件版本",
+          "type": "String"
+        },
+        {
+          "name": "battery_level",
+          "title": "电池电量",
+          "type": "Number"
+        }
+      ]
+    },
+    {
+      "name": "health_data",
+      "title": "健康数据",
+      "type": "Object",
+      "description": "最新健康指标数据",
+      "schemas": [
+        {
+          "name": "heart_rate",
+          "title": "心率",
+          "type": "Number"
+        },
+        {
+          "name": "blood_pressure",
+          "title": "血压",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "systolic",
+              "title": "收缩压",
+              "type": "Number"
+            },
+            {
+              "name": "diastolic",
+              "title": "舒张压",
+              "type": "Number"
+            }
+          ]
+        },
+        {
+          "name": "temperature",
+          "title": "体温",
+          "type": "Number"
+        },
+        {
+          "name": "steps",
+          "title": "步数",
+          "type": "Number"
+        },
+        {
+          "name": "sleep_hours",
+          "title": "睡眠时长",
+          "type": "Number"
+        },
+        {
+          "name": "spo2",
+          "title": "血氧饱和度",
+          "type": "Number"
+        }
+      ]
+    },
+    {
+      "name": "sync_config",
+      "title": "同步配置",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "sync_interval",
+          "title": "同步间隔",
+          "type": "Number"
+        },
+        {
+          "name": "batch_size",
+          "title": "批次大小",
+          "type": "Number"
+        },
+        {
+          "name": "retry_attempts",
+          "title": "重试次数",
+          "type": "Number"
+        },
+        {
+          "name": "compression_enabled",
+          "title": "压缩启用",
+          "type": "Boolean"
+        }
+      ]
+    },
+    {
+      "name": "permissions",
+      "title": "权限配置",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "data_sharing",
+          "title": "数据共享",
+          "type": "Boolean"
+        },
+        {
+          "name": "third_party_access",
+          "title": "第三方访问",
+          "type": "Array",
+          "items": {
+            "type": "String"
+          }
+        },
+        {
+          "name": "privacy_level",
+          "title": "隐私级别",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "alerts",
+      "title": "健康警报",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "alert_type",
+            "title": "警报类型",
+            "type": "String"
+          },
+          {
+            "name": "severity",
+            "title": "严重程度",
+            "type": "String"
+          },
+          {
+            "name": "threshold_value",
+            "title": "阈值",
+            "type": "Number"
+          },
+          {
+            "name": "triggered_at",
+            "title": "触发时间",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          },
+          {
+            "name": "message",
+            "title": "警报消息",
+            "type": "String"
+          }
+        ]
+      }
+    },
+    {
+      "name": "location",
+      "title": "位置信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "latitude",
+          "title": "纬度",
+          "type": "Number"
+        },
+        {
+          "name": "longitude",
+          "title": "经度",
+          "type": "Number"
+        },
+        {
+          "name": "address",
+          "title": "地址",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "metadata",
+      "title": "元数据",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "source",
+          "title": "数据来源",
+          "type": "String"
+        },
+        {
+          "name": "version",
+          "title": "版本",
+          "type": "String"
+        },
+        {
+          "name": "tags",
+          "title": "标签",
+          "type": "Array",
+          "items": {
+            "type": "String"
+          }
+        }
+      ]
+    }
+  ]
+}

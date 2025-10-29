@@ -1,0 +1,456 @@
+
+[
+  {
+    "_id": "doctor_001",
+    "doctor_id": "D2024001001",
+    "name": "王医生",
+    "specialty": "心血管内科",
+    "license_no": "MD2024001001",
+    "title": "主任医师",
+    "department": "心血管内科",
+    "hospital": "北京协和医院",
+    "qualifications": [
+      {
+        "certificate_name": "心血管内科专业医师资格证",
+        "issuing_authority": "国家卫生健康委员会",
+        "issue_date": "2015-06-01",
+        "expiry_date": "2025-06-01"
+      },
+      {
+        "certificate_name": "超声心动图医师资格证",
+        "issuing_authority": "中华医学会",
+        "issue_date": "2018-09-15",
+        "expiry_date": "2024-09-15"
+      }
+    ],
+    "experience": 15,
+    "education": [
+      {
+        "degree": "医学博士",
+        "university": "北京协和医学院",
+        "graduation_year": 2009
+      },
+      {
+        "degree": "医学硕士",
+        "university": "北京大学医学部",
+        "graduation_year": 2005
+      }
+    ],
+    "availability": {
+      "schedule": [
+        {
+          "day_of_week": "周一",
+          "start_time": "08:00",
+          "end_time": "12:00",
+          "slots": [
+            {
+              "start_time": "08:00",
+              "end_time": "08:30",
+              "duration": 30,
+              "max_patients": 1
+            },
+            {
+              "start_time": "08:30",
+              "end_time": "09:00",
+              "duration": 30,
+              "max_patients": 1
+            },
+            {
+              "start_time": "09:00",
+              "end_time": "09:30",
+              "duration": 30,
+              "max_patients": 1
+            }
+          ]
+        },
+        {
+          "day_of_week": "周三",
+          "start_time": "14:00",
+          "end_time": "17:00",
+          "slots": [
+            {
+              "start_time": "14:00",
+              "end_time": "14:30",
+              "duration": 30,
+              "max_patients": 1
+            },
+            {
+              "start_time": "14:30",
+              "end_time": "15:00",
+              "duration": 30,
+              "max_patients": 1
+            }
+          ]
+        }
+      ],
+      "holidays": [
+        {
+          "date": "2024-02-10",
+          "reason": "春节"
+        },
+        {
+          "date": "2024-02-11",
+          "reason": "春节"
+        }
+      ]
+    },
+    "appointments": [
+      {
+        "appointment_id": "APT20240115001",
+        "patient_id": "P2024001001",
+        "time": 1705737600000,
+        "status": "confirmed",
+        "notes": "胸痛、呼吸困难，需要优先处理",
+        "type": "urgent",
+        "duration": 30,
+        "priority": "high",
+        "patient_info": {
+          "name": "张三",
+          "age": 34,
+          "gender": "男",
+          "phone": "13800138001"
+        }
+      },
+      {
+        "appointment_id": "APT20240116001",
+        "patient_id": "P2024001002",
+        "time": 1705824000000,
+        "status": "cancelled",
+        "notes": "高血压复诊，患者临时有事取消",
+        "type": "routine",
+        "duration": 20,
+        "priority": "medium",
+        "patient_info": {
+          "name": "李四",
+          "age": 39,
+          "gender": "女",
+          "phone": "13900139002"
+        }
+      }
+    ],
+    "reports": [
+      {
+        "report_id": "RPT20240115001",
+        "patient_id": "P2024001001",
+        "diagnosis": "右下肺叶磨玻璃结节，考虑良性可能性大",
+        "pdf_url": "https://example.com/reports/RPT20240115001.pdf",
+        "report_type": "ct_scan",
+        "created_date": 1705737600000,
+        "status": "completed",
+        "findings": "右下肺叶后基底段见一磨玻璃结节，大小约8mm×6mm",
+        "recommendations": "建议3-6个月后复查胸部CT"
+      }
+    ],
+    "prescriptions": [
+      {
+        "prescription_id": "PRE20240115001",
+        "patient_id": "P2024001001",
+        "medications": [
+          {
+            "drug_name": "阿司匹林",
+            "dosage": "100mg",
+            "frequency": "每日一次",
+            "duration": "30天",
+            "instructions": "餐后服用，注意胃肠道反应"
+          },
+          {
+            "drug_name": "氨氯地平",
+            "dosage": "5mg",
+            "frequency": "每日一次",
+            "duration": "30天",
+            "instructions": "晨起服用，监测血压"
+          }
+        ],
+        "created_date": 1705737600000,
+        "valid_until": "2024-02-15",
+        "status": "active",
+        "notes": "心血管保护用药，定期复查"
+      }
+    ],
+    "contact_info": {
+      "phone": "010-67891234",
+      "email": "wang.doctor@hospital.com",
+      "office_address": "北京协和医院门诊楼3楼301诊室",
+      "consultation_hours": "周一、周三上午8:00-12:00"
+    },
+    "ratings": {
+      "average_rating": 4.8,
+      "total_reviews": 256,
+      "specialties": [
+        {
+          "specialty": "心血管内科",
+          "rating": 4.9
+        },
+        {
+          "specialty": "高血压管理",
+          "rating": 4.7
+        }
+      ]
+    },
+    "status": "active",
+    "created_date": 1705737600000,
+    "last_updated": 1705737600000
+  },
+  {
+    "_id": "doctor_002",
+    "doctor_id": "D2024001002",
+    "name": "李医生",
+    "specialty": "内分泌科",
+    "license_no": "MD2024001002",
+    "title": "副主任医师",
+    "department": "内分泌科",
+    "hospital": "北京协和医院",
+    "qualifications": [
+      {
+        "certificate_name": "内分泌科专业医师资格证",
+        "issuing_authority": "国家卫生健康委员会",
+        "issue_date": "2017-08-01",
+        "expiry_date": "2027-08-01"
+      },
+      {
+        "certificate_name": "糖尿病专科医师资格证",
+        "issuing_authority": "中华医学会",
+        "issue_date": "2019-12-10",
+        "expiry_date": "2025-12-10"
+      }
+    ],
+    "experience": 12,
+    "education": [
+      {
+        "degree": "医学博士",
+        "university": "北京协和医学院",
+        "graduation_year": 2012
+      }
+    ],
+    "availability": {
+      "schedule": [
+        {
+          "day_of_week": "周二",
+          "start_time": "08:30",
+          "end_time": "11:30",
+          "slots": [
+            {
+              "start_time": "08:30",
+              "end_time": "09:00",
+              "duration": 30,
+              "max_patients": 1
+            },
+            {
+              "start_time": "09:00",
+              "end_time": "09:30",
+              "duration": 30,
+              "max_patients": 1
+            }
+          ]
+        },
+        {
+          "day_of_week": "周四",
+          "start_time": "14:00",
+          "end_time": "17:00",
+          "slots": [
+            {
+              "start_time": "14:00",
+              "end_time": "14:30",
+              "duration": 30,
+              "max_patients": 1
+            },
+            {
+              "start_time": "14:30",
+              "end_time": "15:00",
+              "duration": 30,
+              "max_patients": 1
+            }
+          ]
+        }
+      ],
+      "holidays": []
+    },
+    "appointments": [
+      {
+        "appointment_id": "APT20240115002",
+        "patient_id": "P2024001002",
+        "time": 1705744800000,
+        "status": "scheduled",
+        "notes": "发热、咳嗽、咽痛，疑似上呼吸道感染",
+        "type": "routine",
+        "duration": 20,
+        "priority": "medium",
+        "patient_info": {
+          "name": "李四",
+          "age": 39,
+          "gender": "女",
+          "phone": "13900139002"
+        }
+      }
+    ],
+    "reports": [
+      {
+        "report_id": "RPT20240115002",
+        "patient_id": "P2024001002",
+        "diagnosis": "白细胞计数轻度升高，考虑细菌感染",
+        "pdf_url": "https://example.com/reports/RPT20240115002.pdf",
+        "report_type": "blood_test",
+        "created_date": 1705744800000,
+        "status": "completed",
+        "findings": "白细胞计数11.2×10^9/L，中性粒细胞比例78%",
+        "recommendations": "建议抗感染治疗，3天后复查血常规"
+      }
+    ],
+    "prescriptions": [
+      {
+        "prescription_id": "PRE20240115002",
+        "patient_id": "P2024001002",
+        "medications": [
+          {
+            "drug_name": "阿莫西林",
+            "dosage": "500mg",
+            "frequency": "每日三次",
+            "duration": "7天",
+            "instructions": "餐后服用，注意过敏反应"
+          }
+        ],
+        "created_date": 1705744800000,
+        "valid_until": "2024-01-22",
+        "status": "active",
+        "notes": "抗感染治疗，观察疗效"
+      }
+    ],
+    "contact_info": {
+      "phone": "010-67891235",
+      "email": "li.doctor@hospital.com",
+      "office_address": "北京协和医院门诊楼2楼205诊室",
+      "consultation_hours": "周二、周四上午8:30-11:30，下午14:00-17:00"
+    },
+    "ratings": {
+      "average_rating": 4.7,
+      "total_reviews": 189,
+      "specialties": [
+        {
+          "specialty": "内分泌科",
+          "rating": 4.8
+        },
+        {
+          "specialty": "糖尿病管理",
+          "rating": 4.9
+        }
+      ]
+    },
+    "status": "active",
+    "created_date": 1705744800000,
+    "last_updated": 1705744800000
+  },
+  {
+    "_id": "doctor_003",
+    "doctor_id": "D2024001003",
+    "name": "张医生",
+    "specialty": "消化内科",
+    "license_no": "MD2024001003",
+    "title": "主治医师",
+    "department": "消化内科",
+    "hospital": "北京协和医院",
+    "qualifications": [
+      {
+        "certificate_name": "消化内科专业医师资格证",
+        "issuing_authority": "国家卫生健康委员会",
+        "issue_date": "2020-05-01",
+        "expiry_date": "2030-05-01"
+      }
+    ],
+    "experience": 8,
+    "education": [
+      {
+        "degree": "医学硕士",
+        "university": "北京大学医学部",
+        "graduation_year": 2016
+      }
+    ],
+    "availability": {
+      "schedule": [
+        {
+          "day_of_week": "周五",
+          "start_time": "08:00",
+          "end_time": "12:00",
+          "slots": [
+            {
+              "start_time": "08:00",
+              "end_time": "08:30",
+              "duration": 30,
+              "max_patients": 1
+            },
+            {
+              "start_time": "08:30",
+              "end_time": "09:00",
+              "duration": 30,
+              "max_patients": 1
+            }
+          ]
+        }
+      ],
+      "holidays": []
+    },
+    "appointments": [
+      {
+        "appointment_id": "APT20240115003",
+        "patient_id": "P2024001001",
+        "time": 1705752000000,
+        "status": "completed",
+        "notes": "腹痛、恶心、呕吐，急性胃肠炎",
+        "type": "follow_up",
+        "duration": 15,
+        "priority": "low",
+        "patient_info": {
+          "name": "张三",
+          "age": 34,
+          "gender": "男",
+          "phone": "13800138001"
+        }
+      }
+    ],
+    "reports": [],
+    "prescriptions": [
+      {
+        "prescription_id": "PRE20240115003",
+        "patient_id": "P2024001001",
+        "medications": [
+          {
+            "drug_name": "蒙脱石散",
+            "dosage": "3g",
+            "frequency": "每日三次",
+            "duration": "3天",
+            "instructions": "饭前服用，注意补充水分"
+          },
+          {
+            "drug_name": "口服补液盐",
+            "dosage": "1包",
+            "frequency": "按需",
+            "duration": "3天",
+            "instructions": "腹泻时服用，预防脱水"
+          }
+        ],
+        "created_date": 1705752000000,
+        "valid_until": "2024-01-18",
+        "status": "active",
+        "notes": "对症治疗，注意饮食清淡"
+      }
+    ],
+    "contact_info": {
+      "phone": "010-67891236",
+      "email": "zhang.doctor@hospital.com",
+      "office_address": "北京协和医院门诊楼1楼消化科",
+      "consultation_hours": "周五上午8:00-12:00"
+    },
+    "ratings": {
+      "average_rating": 4.6,
+      "total_reviews": 98,
+      "specialties": [
+        {
+          "specialty": "消化内科",
+          "rating": 4.6
+        }
+      ]
+    },
+    "status": "active",
+    "created_date": 1705752000000,
+    "last_updated": 1705752000000
+  }
+]

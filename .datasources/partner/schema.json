@@ -1,0 +1,190 @@
+
+{
+  "name": "partner",
+  "title": "合作伙伴信息",
+  "schemas": [
+    {
+      "name": "partner_id",
+      "title": "合作伙伴ID",
+      "type": "String"
+    },
+    {
+      "name": "org_name",
+      "title": "组织名称",
+      "type": "String"
+    },
+    {
+      "name": "contact",
+      "title": "联系信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "contact_person",
+          "title": "联系人姓名",
+          "type": "String"
+        },
+        {
+          "name": "contact_phone",
+          "title": "联系电话",
+          "type": "String"
+        },
+        {
+          "name": "contact_email",
+          "title": "联系邮箱",
+          "type": "Email"
+        },
+        {
+          "name": "company_address",
+          "title": "公司地址",
+          "type": "String"
+        },
+        {
+          "name": "business_license",
+          "title": "营业执照号",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "tier",
+      "title": "服务等级",
+      "type": "String"
+    },
+    {
+      "name": "status",
+      "title": "合作伙伴状态",
+      "type": "String"
+    },
+    {
+      "name": "registration_date",
+      "title": "注册日期",
+      "type": "Date",
+      "format": "date"
+    },
+    {
+      "name": "review_status",
+      "title": "审核状态",
+      "type": "String"
+    },
+    {
+      "name": "review_date",
+      "title": "审核日期",
+      "type": "Date",
+      "format": "date"
+    },
+    {
+      "name": "review_notes",
+      "title": "审核备注",
+      "type": "String"
+    },
+    {
+      "name": "service_config",
+      "title": "服务配置",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "max_api_calls",
+          "title": "最大API调用次数",
+          "type": "Number"
+        },
+        {
+          "name": "max_storage_gb",
+          "title": "最大存储空间(GB)",
+          "type": "Number"
+        },
+        {
+          "name": "max_ai_requests",
+          "title": "最大AI请求次数",
+          "type": "Number"
+        },
+        {
+          "name": "support_level",
+          "title": "支持级别",
+          "type": "String"
+        },
+        {
+          "name": "features",
+          "title": "功能列表",
+          "type": "Array",
+          "items": {
+            "type": "String"
+          }
+        }
+      ]
+    },
+    {
+      "name": "billing_config",
+      "title": "计费配置",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "billing_cycle",
+          "title": "计费周期",
+          "type": "String"
+        },
+        {
+          "name": "payment_method",
+          "title": "支付方式",
+          "type": "String"
+        },
+        {
+          "name": "tax_info",
+          "title": "税务信息",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "tax_number",
+              "title": "税号",
+              "type": "String"
+            },
+            {
+              "name": "invoice_title",
+              "title": "发票抬头",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "usage_stats",
+      "title": "使用统计",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "total_api_calls",
+          "title": "总API调用次数",
+          "type": "Number"
+        },
+        {
+          "name": "total_storage_gb",
+          "title": "总存储使用量(GB)",
+          "type": "Number"
+        },
+        {
+          "name": "total_ai_requests",
+          "title": "总AI请求次数",
+          "type": "Number"
+        },
+        {
+          "name": "last_activity_date",
+          "title": "最后活动日期",
+          "type": "Date",
+          "format": "date"
+        }
+      ]
+    },
+    {
+      "name": "created_date",
+      "title": "创建日期",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "updated_date",
+      "title": "更新日期",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    }
+  ]
+}

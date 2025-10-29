@@ -1,0 +1,547 @@
+
+[
+  {
+    "_id": "config_001",
+    "config_id": "CFG20240115001",
+    "config_key": "ai_agent.default_personality",
+    "config_value": {
+      "name": "医疗助手小智",
+      "role": "专业医疗AI助手",
+      "personality": "友善、专业、耐心",
+      "greeting": "您好！我是您的医疗助手小智，很高兴为您服务。",
+      "language": "zh-CN",
+      "tone": "温和专业",
+      "avatar_url": "https://example.com/avatars/medical_assistant.png"
+    },
+    "value_type": "object",
+    "description": "AI代理默认人格配置，包括名称、角色、性格特征等",
+    "category": "ai_agent",
+    "subcategory": "personality",
+    "is_sensitive": false,
+    "is_encrypted": false,
+    "validation_rules": {
+      "type": "object",
+      "required": true,
+      "properties": {
+        "name": {"type": "string", "maxLength": 50},
+        "role": {"type": "string", "maxLength": 100},
+        "personality": {"type": "string", "maxLength": 200}
+      }
+    },
+    "environment": "all",
+    "scope": "global",
+    "tags": ["ai", "personality", "default"],
+    "dependencies": [],
+    "version": "1.0.0",
+    "updated_by": "ADMIN001",
+    "updated_at": 1705737600000,
+    "created_by": "ADMIN001",
+    "created_at": 1705737600000,
+    "change_history": [
+      {
+        "version": "1.0.0",
+        "old_value": null,
+        "new_value": {
+          "name": "医疗助手小智",
+          "role": "专业医疗AI助手",
+          "personality": "友善、专业、耐心"
+        },
+        "changed_by": "ADMIN001",
+        "changed_at": 1705737600000,
+        "change_reason": "初始配置创建"
+      }
+    ],
+    "metadata": {
+      "source": "admin_portal",
+      "last_sync_time": 1705737600000,
+      "sync_status": "synced"
+    }
+  },
+  {
+    "_id": "config_002",
+    "config_id": "CFG20240115002",
+    "config_key": "security.max_login_attempts",
+    "config_value": 5,
+    "value_type": "number",
+    "description": "用户登录最大尝试次数，超过后账户将被锁定",
+    "category": "security",
+    "subcategory": "authentication",
+    "is_sensitive": false,
+    "is_encrypted": false,
+    "validation_rules": {
+      "type": "number",
+      "min": 3,
+      "max": 10,
+      "required": true
+    },
+    "environment": "all",
+    "scope": "global",
+    "tags": ["security", "login", "authentication"],
+    "dependencies": ["security.lockout_duration"],
+    "version": "1.2.0",
+    "updated_by": "ADMIN002",
+    "updated_at": 1705744800000,
+    "created_by": "ADMIN002",
+    "created_at": 1705737600000,
+    "change_history": [
+      {
+        "version": "1.0.0",
+        "old_value": null,
+        "new_value": 3,
+        "changed_by": "ADMIN002",
+        "changed_at": 1705737600000,
+        "change_reason": "初始配置"
+      },
+      {
+        "version": "1.1.0",
+        "old_value": 3,
+        "new_value": 5,
+        "changed_by": "ADMIN002",
+        "changed_at": 1705744800000,
+        "change_reason": "根据安全评估调整登录尝试次数"
+      }
+    ],
+    "metadata": {
+      "source": "admin_portal",
+      "last_sync_time": 1705744800000,
+      "sync_status": "synced"
+    }
+  },
+  {
+    "_id": "config_003",
+    "config_id": "CFG20240115003",
+    "config_key": "api.rate_limit.default",
+    "config_value": {
+      "requests_per_minute": 1000,
+      "requests_per_hour": 50000,
+      "burst_limit": 100
+    },
+    "value_type": "object",
+    "description": "API默认频率限制配置",
+    "category": "api",
+    "subcategory": "rate_limiting",
+    "is_sensitive": false,
+    "is_encrypted": false,
+    "validation_rules": {
+      "type": "object",
+      "required": true,
+      "properties": {
+        "requests_per_minute": {"type": "number", "min": 100, "max": 10000},
+        "requests_per_hour": {"type": "number", "min": 1000, "max": 1000000},
+        "burst_limit": {"type": "number", "min": 10, "max": 1000}
+      }
+    },
+    "environment": "all",
+    "scope": "global",
+    "tags": ["api", "rate_limit", "performance"],
+    "dependencies": [],
+    "version": "1.0.0",
+    "updated_by": "ADMIN003",
+    "updated_at": 1705752000000,
+    "created_by": "ADMIN003",
+    "created_at": 1705752000000,
+    "change_history": [
+      {
+        "version": "1.0.0",
+        "old_value": null,
+        "new_value": {
+          "requests_per_minute": 1000,
+          "requests_per_hour": 50000,
+          "burst_limit": 100
+        },
+        "changed_by": "ADMIN003",
+        "changed_at": 1705752000000,
+        "change_reason": "初始配置创建"
+      }
+    ],
+    "metadata": {
+      "source": "admin_portal",
+      "last_sync_time": 1705752000000,
+      "sync_status": "synced"
+    }
+  },
+  {
+    "_id": "config_004",
+    "config_id": "CFG20240115004",
+    "config_key": "notification.email.smtp",
+    "config_value": {
+      "host": "smtp.example.com",
+      "port": 587,
+      "secure": true,
+      "auth": {
+        "user": "noreply@example.com",
+        "pass": "encrypted_password"
+      },
+      "from_email": "noreply@example.com",
+      "from_name": "AI医智云"
+    },
+    "value_type": "object",
+    "description": "邮件通知SMTP配置",
+    "category": "notification",
+    "subcategory": "email",
+    "is_sensitive": true,
+    "is_encrypted": true,
+    "validation_rules": {
+      "type": "object",
+      "required": true,
+      "properties": {
+        "host": {"type": "string", "format": "hostname"},
+        "port": {"type": "number", "min": 1, "max": 65535},
+        "secure": {"type": "boolean"}
+      }
+    },
+    "environment": "production",
+    "scope": "global",
+    "tags": ["notification", "email", "smtp"],
+    "dependencies": [],
+    "version": "1.1.0",
+    "updated_by": "ADMIN004",
+    "updated_at": 1705759200000,
+    "created_by": "ADMIN004",
+    "created_at": 1705752000000,
+    "change_history": [
+      {
+        "version": "1.0.0",
+        "old_value": null,
+        "new_value": {
+          "host": "smtp.old.com",
+          "port": 587,
+          "secure": true
+        },
+        "changed_by": "ADMIN004",
+        "changed_at": 1705752000000,
+        "change_reason": "初始配置"
+      },
+      {
+        "version": "1.1.0",
+        "old_value": {
+          "host": "smtp.old.com"
+        },
+        "new_value": {
+          "host": "smtp.example.com"
+        },
+        "changed_by": "ADMIN004",
+        "changed_at": 1705759200000,
+        "change_reason": "更换邮件服务提供商"
+      }
+    ],
+    "metadata": {
+      "source": "admin_portal",
+      "last_sync_time": 1705759200000,
+      "sync_status": "synced"
+    }
+  },
+  {
+    "_id": "config_005",
+    "config_id": "CFG20240115005",
+    "config_key": "ai_agent.enabled",
+    "config_value": true,
+    "value_type": "boolean",
+    "description": "AI代理功能开关，控制是否启用AI助手功能",
+    "category": "ai_agent",
+    "subcategory": "feature_switch",
+    "is_sensitive": false,
+    "is_encrypted": false,
+    "validation_rules": {
+      "type": "boolean",
+      "required": true
+    },
+    "environment": "all",
+    "scope": "global",
+    "tags": ["ai", "feature_switch", "agent"],
+    "dependencies": [],
+    "version": "1.0.0",
+    "updated_by": "ADMIN001",
+    "updated_at": 1705766400000,
+    "created_by": "ADMIN001",
+    "created_at": 1705766400000,
+    "change_history": [
+      {
+        "version": "1.0.0",
+        "old_value": null,
+        "new_value": true,
+        "changed_by": "ADMIN001",
+        "changed_at": 1705766400000,
+        "change_reason": "启用AI代理功能"
+      }
+    ],
+    "metadata": {
+      "source": "admin_portal",
+      "last_sync_time": 1705766400000,
+      "sync_status": "synced"
+    }
+  },
+  {
+    "_id": "config_006",
+    "config_id": "CFG20240115006",
+    "config_key": "data_retention.policy",
+    "config_value": {
+      "patient_data_days": 2555,
+      "log_data_days": 90,
+      "audit_data_days": 365,
+      "backup_retention_days": 30
+    },
+    "value_type": "object",
+    "description": "数据保留策略配置，定义不同类型数据的保留期限",
+    "category": "data_management",
+    "subcategory": "retention",
+    "is_sensitive": false,
+    "is_encrypted": false,
+    "validation_rules": {
+      "type": "object",
+      "required": true,
+      "properties": {
+        "patient_data_days": {"type": "number", "min": 365, "max": 3650},
+        "log_data_days": {"type": "number", "min": 7, "max": 365},
+        "audit_data_days": {"type": "number", "min": 90, "max": 2555},
+        "backup_retention_days": {"type": "number", "min": 7, "max": 90}
+      }
+    },
+    "environment": "all",
+    "scope": "global",
+    "tags": ["data", "retention", "policy"],
+    "dependencies": [],
+    "version": "1.0.0",
+    "updated_by": "ADMIN002",
+    "updated_at": 1705773600000,
+    "created_by": "ADMIN002",
+    "created_at": 1705773600000,
+    "change_history": [
+      {
+        "version": "1.0.0",
+        "old_value": null,
+        "new_value": {
+          "patient_data_days": 2555,
+          "log_data_days": 90,
+          "audit_data_days": 365,
+          "backup_retention_days": 30
+        },
+        "changed_by": "ADMIN002",
+        "changed_at": 1705773600000,
+        "change_reason": "设置符合医疗法规的数据保留策略"
+      }
+    ],
+    "metadata": {
+      "source": "admin_portal",
+      "last_sync_time": 1705773600000,
+      "sync_status": "synced"
+    }
+  },
+  {
+    "_id": "config_007",
+    "config_id": "CFG20240115007",
+    "config_key": "monitoring.alerts.threshold",
+    "config_value": {
+      "cpu_threshold": 80,
+      "memory_threshold": 85,
+      "disk_threshold": 90,
+      "api_error_rate": 5,
+      "response_time_ms": 2000
+    },
+    "value_type": "object",
+    "description": "系统监控告警阈值配置",
+    "category": "monitoring",
+    "subcategory": "alerts",
+    "is_sensitive": false,
+    "is_encrypted": false,
+    "validation_rules": {
+      "type": "object",
+      "required": true,
+      "properties": {
+        "cpu_threshold": {"type": "number", "min": 50, "max": 100},
+        "memory_threshold": {"type": "number", "min": 50, "max": 100},
+        "disk_threshold": {"type": "number", "min": 50, "max": 100},
+        "api_error_rate": {"type": "number", "min": 1, "max": 20},
+        "response_time_ms": {"type": "number", "min": 500, "max": 10000}
+      }
+    },
+    "environment": "all",
+    "scope": "global",
+    "tags": ["monitoring", "alerts", "thresholds"],
+    "dependencies": [],
+    "version": "1.0.0",
+    "updated_by": "ADMIN003",
+    "updated_at": 1705780800000,
+    "created_by": "ADMIN003",
+    "created_at": 1705780800000,
+    "change_history": [
+      {
+        "version": "1.0.0",
+        "old_value": null,
+        "new_value": {
+          "cpu_threshold": 80,
+          "memory_threshold": 85,
+          "disk_threshold": 90,
+          "api_error_rate": 5,
+          "response_time_ms": 2000
+        },
+        "changed_by": "ADMIN003",
+        "changed_at": 1705780800000,
+        "change_reason": "设置系统监控告警阈值"
+      }
+    ],
+    "metadata": {
+      "source": "admin_portal",
+      "last_sync_time": 1705780800000,
+      "sync_status": "synced"
+    }
+  },
+  {
+    "_id": "config_008",
+    "config_id": "CFG20240115008",
+    "config_key": "ai_agent.roles.doctor_assistant",
+    "config_value": {
+      "name": "医生助手小医",
+      "role": "专业���疗诊断助手",
+      "personality": "严谨、专业、高效",
+      "capabilities": ["diagnosis_support", "treatment_recommendation", "drug_interaction_check", "medical_knowledge_base"],
+      "language_style": "专业术语优先",
+      "response_format": "结构化医疗报告",
+      "confidence_threshold": 0.85,
+      "fallback_behavior": "建议人工咨询"
+    },
+    "value_type": "object",
+    "description": "医生专用AI助手角色配置",
+    "category": "ai_agent",
+    "subcategory": "roles",
+    "is_sensitive": false,
+    "is_encrypted": false,
+    "validation_rules": {
+      "type": "object",
+      "required": true
+    },
+    "environment": "all",
+    "scope": "global",
+    "tags": ["ai", "roles", "doctor", "assistant"],
+    "dependencies": ["ai_agent.enabled"],
+    "version": "1.0.0",
+    "updated_by": "ADMIN001",
+    "updated_at": 1705788000000,
+    "created_by": "ADMIN001",
+    "created_at": 1705788000000,
+    "change_history": [
+      {
+        "version": "1.0.0",
+        "old_value": null,
+        "new_value": {
+          "name": "医生助手小医",
+          "role": "专业医疗诊断助手",
+          "personality": "严谨、专业、高效"
+        },
+        "changed_by": "ADMIN001",
+        "changed_at": 1705788000000,
+        "change_reason": "创建医生专用AI助手配置"
+      }
+    ],
+    "metadata": {
+      "source": "admin_portal",
+      "last_sync_time": 1705788000000,
+      "sync_status": "synced"
+    }
+  },
+  {
+    "_id": "config_009",
+    "config_id": "CFG20240115009",
+    "config_key": "backup.schedule",
+    "config_value": {
+      "enabled": true,
+      "frequency": "daily",
+      "time": "02:00",
+      "retention_days": 30,
+      "compression": true,
+      "encryption": true,
+      "destinations": ["s3", "local"]
+    },
+    "value_type": "object",
+    "description": "数据备份计划配置",
+    "category": "backup",
+    "subcategory": "schedule",
+    "is_sensitive": false,
+    "is_encrypted": false,
+    "validation_rules": {
+      "type": "object",
+      "required": true
+    },
+    "environment": "production",
+    "scope": "global",
+    "tags": ["backup", "schedule", "data_protection"],
+    "dependencies": [],
+    "version": "1.0.0",
+    "updated_by": "ADMIN004",
+    "updated_at": 1705795200000,
+    "created_by": "ADMIN004",
+    "created_at": 1705795200000,
+    "change_history": [
+      {
+        "version": "1.0.0",
+        "old_value": null,
+        "new_value": {
+          "enabled": true,
+          "frequency": "daily",
+          "time": "02:00",
+          "retention_days": 30
+        },
+        "changed_by": "ADMIN004",
+        "changed_at": 1705795200000,
+        "change_reason": "设置自动备份策略"
+      }
+    ],
+    "metadata": {
+      "source": "admin_portal",
+      "last_sync_time": 1705795200000,
+      "sync_status": "synced"
+    }
+  },
+  {
+    "_id": "config_010",
+    "config_id": "CFG20240115010",
+    "config_key": "compliance.audit_retention",
+    "config_value": {
+      "admin_logs_days": 2555,
+      "user_activity_days": 365,
+      "api_access_logs_days": 90,
+      "security_events_days": 2555,
+      "export_format": "json_csv",
+      "encryption_required": true
+    },
+    "value_type": "object",
+    "description": "合规审计日志保留策略配置",
+    "category": "compliance",
+    "subcategory": "audit",
+    "is_sensitive": false,
+    "is_encrypted": false,
+    "validation_rules": {
+      "type": "object",
+      "required": true
+    },
+    "environment": "all",
+    "scope": "global",
+    "tags": ["compliance", "audit", "retention", "gdpr", "hipaa"],
+    "dependencies": [],
+    "version": "1.0.0",
+    "updated_by": "ADMIN002",
+    "updated_at": 1705802400000,
+    "created_by": "ADMIN002",
+    "created_at": 1705802400000,
+    "change_history": [
+      {
+        "version": "1.0.0",
+        "old_value": null,
+        "new_value": {
+          "admin_logs_days": 2555,
+          "user_activity_days": 365,
+          "api_access_logs_days": 90,
+          "security_events_days": 2555
+        },
+        "changed_by": "ADMIN002",
+        "changed_at": 1705802400000,
+        "change_reason": "设置符合医疗合规要求的审计日志保留策略"
+      }
+    ],
+    "metadata": {
+      "source": "admin_portal",
+      "last_sync_time": 1705802400000,
+      "sync_status": "synced"
+    }
+  }
+]

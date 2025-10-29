@@ -1,0 +1,616 @@
+
+[
+  {
+    "_id": "chat_session_001",
+    "session_id": "CHAT202401150001",
+    "user_id": "patient_001",
+    "user_type": "patient",
+    "modality": "text",
+    "messages": [
+      {
+        "message_id": "msg_001",
+        "sender": "user",
+        "message_type": "text",
+        "content": {
+          "text": "医生，我最近总是感觉胸闷气短，特别是晚上睡觉的时候",
+          "media_url": null,
+          "media_type": "text",
+          "file_size": 0,
+          "duration": 0,
+          "thumbnail_url": null
+        },
+        "timestamp": 1705737600000,
+        "metadata": {
+          "emotion_score": -0.3,
+          "intent": "symptom_consultation",
+          "confidence": 0.85,
+          "processing_time": 120,
+          "is_edited": false,
+          "edited_at": null,
+          "is_deleted": false,
+          "read_status": "read"
+        }
+      },
+      {
+        "message_id": "msg_002",
+        "sender": "ai",
+        "message_type": "text",
+        "content": {
+          "text": "我理解您的担心。胸闷气短确实需要关注，特别是夜间症状。请问这种症状持续多久了？是否伴有其他症状如心悸、出汗？",
+          "media_url": null,
+          "media_type": "text",
+          "file_size": 0,
+          "duration": 0,
+          "thumbnail_url": null
+        },
+        "timestamp": 1705737605000,
+        "metadata": {
+          "emotion_score": 0.1,
+          "intent": "clarification",
+          "confidence": 0.92,
+          "processing_time": 80,
+          "is_edited": false,
+          "edited_at": null,
+          "is_deleted": false,
+          "read_status": "read"
+        }
+      },
+      {
+        "message_id": "msg_003",
+        "sender": "user",
+        "message_type": "text",
+        "content": {
+          "text": "大概有一周了，有时候会心悸，但没有出汗",
+          "media_url": null,
+          "media_type": "text",
+          "file_size": 0,
+          "duration": 0,
+          "thumbnail_url": null
+        },
+        "timestamp": 1705737610000,
+        "metadata": {
+          "emotion_score": -0.2,
+          "intent": "symptom_detail",
+          "confidence": 0.88,
+          "processing_time": 95,
+          "is_edited": false,
+          "edited_at": null,
+          "is_deleted": false,
+          "read_status": "read"
+        }
+      },
+      {
+        "message_id": "msg_004",
+        "sender": "ai",
+        "message_type": "text",
+        "content": {
+          "text": "根据您的描述，建议尽快到医院进行心电图检查。夜间胸闷伴心悸可能与心脏问题有关，需要专业医生面诊。我可以帮您预约心内科专家。",
+          "media_url": null,
+          "media_type": "text",
+          "file_size": 0,
+          "duration": 0,
+          "thumbnail_url": null
+        },
+        "timestamp": 1705737615000,
+        "metadata": {
+          "emotion_score": 0.0,
+          "intent": "medical_advice",
+          "confidence": 0.95,
+          "processing_time": 150,
+          "is_edited": false,
+          "edited_at": null,
+          "is_deleted": false,
+          "read_status": "read"
+        }
+      }
+    ],
+    "context_snapshot": {
+      "user_profile": {
+        "name": "张三",
+        "role": "patient",
+        "medical_history": "高血压病史2年，规律服药",
+        "preferences": {
+          "language": "zh-CN",
+          "notification_level": "normal"
+        }
+      },
+      "medical_context": {
+        "patient_id": "patient_001",
+        "condition": "胸闷气短伴心悸",
+        "urgency_level": "moderate",
+        "specialty": "cardiology"
+      },
+      "technical_context": {
+        "device_info": "iPhone 15 Pro",
+        "network_quality": "excellent",
+        "location": "北京市朝阳区",
+        "app_version": "2.1.0"
+      }
+    },
+    "emotion_score": -0.25,
+    "intent": "symptom_consultation",
+    "session_status": "completed",
+    "resolution": "escalated",
+    "duration": 4500,
+    "user_engagement": {
+      "message_count": {
+        "user_messages": 2,
+        "ai_messages": 2,
+        "system_messages": 0
+      },
+      "response_time": {
+        "avg_response_time": 111.25,
+        "first_response_time": 5000,
+        "last_response_time": 5000
+      },
+      "interaction_quality": {
+        "engagement_score": 0.85,
+        "satisfaction_score": 4.5,
+        "completion_rate": 1.0,
+        "bounce_rate": 0.0
+      },
+      "activity_metrics": {
+        "session_start_time": 1705737600000,
+        "last_activity_time": 1705737615000,
+        "idle_time": 0,
+        "interaction_frequency": 0.89
+      }
+    },
+    "quality_metrics": {
+      "response_time_avg": 111.25,
+      "user_satisfaction": 4.5,
+      "accuracy_score": 0.92,
+      "relevance_score": 0.88,
+      "helpfulness_score": 0.91
+    },
+    "session_metadata": {
+      "priority": "high",
+      "category": "medical",
+      "language": "zh-CN",
+      "timezone": "Asia/Shanghai",
+      "session_source": "mobile",
+      "referral_source": "app_home"
+    },
+    "tags": ["cardiology", "symptom_consultation", "urgent", "escalated"],
+    "audit_info": {
+      "ip_address": "192.168.1.100",
+      "user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X)",
+      "data_accessed": ["patient_basic_info", "medical_history", "cardiology_knowledge_base"],
+      "security_flags": ["hipaa_compliant", "encrypted"]
+    },
+    "feedback": {
+      "rating": 4,
+      "comment": "AI助手很专业，但希望能更快连接到人工医生",
+      "feedback_type": "service_quality",
+      "submitted_at": 1705737620000
+    },
+    "escalation_info": {
+      "escalated_to": "human_doctor",
+      "escalation_reason": "symptom_severity",
+      "escalation_time": 1705737615000,
+      "escalated_by": "ai_system"
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737620000
+  },
+  {
+    "_id": "chat_session_002",
+    "session_id": "CHAT202401150002",
+    "user_id": "doctor_001",
+    "user_type": "doctor",
+    "modality": "voice",
+    "messages": [
+      {
+        "message_id": "msg_005",
+        "sender": "user",
+        "message_type": "audio",
+        "content": {
+          "text": "请帮我查看一下患者李四的最新检查报告",
+          "media_url": null,
+          "media_type": "voice",
+          "file_size": 24567,
+          "duration": 3.2,
+          "thumbnail_url": null
+        },
+        "timestamp": 1705738200000,
+        "metadata": {
+          "emotion_score": 0.1,
+          "intent": "report_request",
+          "confidence": 0.95,
+          "processing_time": 200,
+          "is_edited": false,
+          "edited_at": null,
+          "is_deleted": false,
+          "read_status": "read"
+        }
+      },
+      {
+        "message_id": "msg_006",
+        "sender": "ai",
+        "message_type": "file",
+        "content": {
+          "text": "正在为您调取李四患者的最新检查报告...报告显示血常规正常，心电图显示窦性心律，建议关注血压指标。",
+          "media_url": "https://reports.medai.com/ecg_20240115.pdf",
+          "media_type": "pdf",
+          "file_size": 156789,
+          "duration": 0,
+          "thumbnail_url": "https://reports.medai.com/ecg_20240115_thumb.jpg"
+        },
+        "timestamp": 1705738205000,
+        "metadata": {
+          "emotion_score": 0.2,
+          "intent": "report_delivery",
+          "confidence": 0.98,
+          "processing_time": 180,
+          "is_edited": false,
+          "edited_at": null,
+          "is_deleted": false,
+          "read_status": "read"
+        }
+      }
+    ],
+    "context_snapshot": {
+      "user_profile": {
+        "name": "王医生",
+        "role": "doctor",
+        "medical_history": "心内科主治医师",
+        "preferences": {
+          "language": "zh-CN",
+          "notification_level": "urgent_only"
+        }
+      },
+      "medical_context": {
+        "patient_id": "patient_002",
+        "condition": "routine_checkup",
+        "urgency_level": "low",
+        "specialty": "cardiology"
+      },
+      "technical_context": {
+        "device_info": "Desktop Chrome",
+        "network_quality": "good",
+        "location": "医院办公室",
+        "app_version": "2.1.0"
+      }
+    },
+    "emotion_score": 0.15,
+    "intent": "report_request",
+    "session_status": "completed",
+    "resolution": "resolved",
+    "duration": 1200,
+    "user_engagement": {
+      "message_count": {
+        "user_messages": 1,
+        "ai_messages": 1,
+        "system_messages": 0
+      },
+      "response_time": {
+        "avg_response_time": 5000,
+        "first_response_time": 5000,
+        "last_response_time": 5000
+      },
+      "interaction_quality": {
+        "engagement_score": 0.92,
+        "satisfaction_score": 4.8,
+        "completion_rate": 1.0,
+        "bounce_rate": 0.0
+      },
+      "activity_metrics": {
+        "session_start_time": 1705738200000,
+        "last_activity_time": 1705738205000,
+        "idle_time": 0,
+        "interaction_frequency": 1.0
+      }
+    },
+    "quality_metrics": {
+      "response_time_avg": 190,
+      "user_satisfaction": 4.8,
+      "accuracy_score": 0.96,
+      "relevance_score": 0.94,
+      "helpfulness_score": 0.97
+    },
+    "session_metadata": {
+      "priority": "medium",
+      "category": "medical",
+      "language": "zh-CN",
+      "timezone": "Asia/Shanghai",
+      "session_source": "web",
+      "referral_source": "doctor_portal"
+    },
+    "tags": ["report_request", "doctor", "cardiology", "resolved"],
+    "audit_info": {
+      "ip_address": "192.168.1.50",
+      "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      "data_accessed": ["patient_reports", "medical_records", "ecg_reports"],
+      "security_flags": ["hipaa_compliant", "encrypted", "doctor_verified"]
+    },
+    "feedback": {
+      "rating": 5,
+      "comment": "报告调取很快，信息准确",
+      "feedback_type": "service_quality",
+      "submitted_at": 1705738210000
+    },
+    "escalation_info": null,
+    "createdAt": 1705738200000,
+    "updatedAt": 1705738210000
+  },
+  {
+    "_id": "chat_session_003",
+    "session_id": "CHAT202401150003",
+    "user_id": "partner_001",
+    "user_type": "partner",
+    "modality": "text",
+    "messages": [
+      {
+        "message_id": "msg_007",
+        "sender": "user",
+        "message_type": "text",
+        "content": {
+          "text": "我们的API调用量最近增长很快，想了解如何优化成本？",
+          "media_url": null,
+          "media_type": "text",
+          "file_size": 0,
+          "duration": 0,
+          "thumbnail_url": null
+        },
+        "timestamp": 1705738800000,
+        "metadata": {
+          "emotion_score": 0.0,
+          "intent": "business_inquiry",
+          "confidence": 0.9,
+          "processing_time": 100,
+          "is_edited": false,
+          "edited_at": null,
+          "is_deleted": false,
+          "read_status": "read"
+        }
+      },
+      {
+        "message_id": "msg_008",
+        "sender": "ai",
+        "message_type": "text",
+        "content": {
+          "text": "根据您的API使用数据，建议升级到企业版套餐，可以享受批量折扣。我可以为您安排商务经理详细讨论。",
+          "media_url": null,
+          "media_type": "text",
+          "file_size": 0,
+          "duration": 0,
+          "thumbnail_url": null
+        },
+        "timestamp": 1705738805000,
+        "metadata": {
+          "emotion_score": 0.1,
+          "intent": "business_solution",
+          "confidence": 0.93,
+          "processing_time": 120,
+          "is_edited": false,
+          "edited_at": null,
+          "is_deleted": false,
+          "read_status": "read"
+        }
+      }
+    ],
+    "context_snapshot": {
+      "user_profile": {
+        "name": "张总",
+        "role": "partner",
+        "medical_history": "健康科技合作伙伴",
+        "preferences": {
+          "language": "zh-CN",
+          "notification_level": "business_hours"
+        }
+      },
+      "medical_context": {
+        "patient_id": null,
+        "condition": "business_consultation",
+        "urgency_level": "low",
+        "specialty": null
+      },
+      "technical_context": {
+        "device_info": "MacBook Pro",
+        "network_quality": "excellent",
+        "location": "公司办公室",
+        "app_version": "2.1.0"
+      }
+    },
+    "emotion_score": 0.05,
+    "intent": "business_inquiry",
+    "session_status": "completed",
+    "resolution": "follow_up_required",
+    "duration": 800,
+    "user_engagement": {
+      "message_count": {
+        "user_messages": 1,
+        "ai_messages": 1,
+        "system_messages": 0
+      },
+      "response_time": {
+        "avg_response_time": 5000,
+        "first_response_time": 5000,
+        "last_response_time": 5000
+      },
+      "interaction_quality": {
+        "engagement_score": 0.78,
+        "satisfaction_score": 4.3,
+        "completion_rate": 0.8,
+        "bounce_rate": 0.0
+      },
+      "activity_metrics": {
+        "session_start_time": 1705738800000,
+        "last_activity_time": 1705738805000,
+        "idle_time": 0,
+        "interaction_frequency": 1.0
+      }
+    },
+    "quality_metrics": {
+      "response_time_avg": 110,
+      "user_satisfaction": 4.3,
+      "accuracy_score": 0.89,
+      "relevance_score": 0.85,
+      "helpfulness_score": 0.87
+    },
+    "session_metadata": {
+      "priority": "medium",
+      "category": "business",
+      "language": "zh-CN",
+      "timezone": "Asia/Shanghai",
+      "session_source": "web",
+      "referral_source": "partner_portal"
+    },
+    "tags": ["business", "partner", "api_optimization", "follow_up"],
+    "audit_info": {
+      "ip_address": "192.168.1.200",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36",
+      "data_accessed": ["partner_usage_stats", "pricing_info", "business_contact"],
+      "security_flags": ["encrypted", "partner_verified"]
+    },
+    "feedback": {
+      "rating": 4,
+      "comment": "回复及时，但希望有更详细的成本分析",
+      "feedback_type": "service_quality",
+      "submitted_at": 1705738810000
+    },
+    "escalation_info": null,
+    "createdAt": 1705738800000,
+    "updatedAt": 1705738810000
+  },
+  {
+    "_id": "chat_session_004",
+    "session_id": "CHAT202401150004",
+    "user_id": "patient_003",
+    "user_type": "patient",
+    "modality": "mixed",
+    "messages": [
+      {
+        "message_id": "msg_009",
+        "sender": "user",
+        "message_type": "image",
+        "content": {
+          "text": "医生，请看看我手臂上的这个红疹",
+          "media_url": "https://patient.medai.com/images/rash_20240115.jpg",
+          "media_type": "image",
+          "file_size": 234567,
+          "duration": 0,
+          "thumbnail_url": "https://patient.medai.com/images/rash_20240115_thumb.jpg"
+        },
+        "timestamp": 1705739400000,
+        "metadata": {
+          "emotion_score": -0.1,
+          "intent": "symptom_visual",
+          "confidence": 0.92,
+          "processing_time": 250,
+          "is_edited": false,
+          "edited_at": null,
+          "is_deleted": false,
+          "read_status": "read"
+        }
+      },
+      {
+        "message_id": "msg_010",
+        "sender": "ai",
+        "message_type": "text",
+        "content": {
+          "text": "我已经看到了您手臂上的红疹图片。从图片来看，这可能是过敏性皮炎。建议您避免抓挠，可以使用温和的止痒药膏。如果症状持续或加重，请及时就医。",
+          "media_url": null,
+          "media_type": "text",
+          "file_size": 0,
+          "duration": 0,
+          "thumbnail_url": null
+        },
+        "timestamp": 1705739405000,
+        "metadata": {
+          "emotion_score": 0.1,
+          "intent": "diagnosis_suggestion",
+          "confidence": 0.88,
+          "processing_time": 180,
+          "is_edited": false,
+          "edited_at": null,
+          "is_deleted": false,
+          "read_status": "read"
+        }
+      }
+    ],
+    "context_snapshot": {
+      "user_profile": {
+        "name": "李四",
+        "role": "patient",
+        "medical_history": "过敏体质，对某些药物过敏",
+        "preferences": {
+          "language": "zh-CN",
+          "notification_level": "normal"
+        }
+      },
+      "medical_context": {
+        "patient_id": "patient_003",
+        "condition": "皮肤红疹",
+        "urgency_level": "low",
+        "specialty": "dermatology"
+      },
+      "technical_context": {
+        "device_info": "Android 13",
+        "network_quality": "good",
+        "location": "上海市浦东新区",
+        "app_version": "2.1.0"
+      }
+    },
+    "emotion_score": 0.0,
+    "intent": "symptom_visual",
+    "session_status": "completed",
+    "resolution": "resolved",
+    "duration": 600,
+    "user_engagement": {
+      "message_count": {
+        "user_messages": 1,
+        "ai_messages": 1,
+        "system_messages": 0
+      },
+      "response_time": {
+        "avg_response_time": 5000,
+        "first_response_time": 5000,
+        "last_response_time": 5000
+      },
+      "interaction_quality": {
+        "engagement_score": 0.85,
+        "satisfaction_score": 4.2,
+        "completion_rate": 1.0,
+        "bounce_rate": 0.0
+      },
+      "activity_metrics": {
+        "session_start_time": 1705739400000,
+        "last_activity_time": 1705739405000,
+        "idle_time": 0,
+        "interaction_frequency": 1.0
+      }
+    },
+    "quality_metrics": {
+      "response_time_avg": 215,
+      "user_satisfaction": 4.2,
+      "accuracy_score": 0.85,
+      "relevance_score": 0.90,
+      "helpfulness_score": 0.88
+    },
+    "session_metadata": {
+      "priority": "low",
+      "category": "medical",
+      "language": "zh-CN",
+      "timezone": "Asia/Shanghai",
+      "session_source": "mobile",
+      "referral_source": "app_home"
+    },
+    "tags": ["dermatology", "visual_diagnosis", "allergy", "resolved"],
+    "audit_info": {
+      "ip_address": "192.168.1.150",
+      "user_agent": "Mozilla/5.0 (Linux; Android 13; SM-G991B) AppleWebKit/537.36",
+      "data_accessed": ["patient_basic_info", "allergy_history", "dermatology_knowledge_base"],
+      "security_flags": ["hipaa_compliant", "encrypted", "image_processed"]
+    },
+    "feedback": {
+      "rating": 4,
+      "comment": "AI能识别图片很棒，建议更准确",
+      "feedback_type": "service_quality",
+      "submitted_at": 1705739410000
+    },
+    "escalation_info": null,
+    "createdAt": 1705739400000,
+    "updatedAt": 1705739410000
+  }
+]

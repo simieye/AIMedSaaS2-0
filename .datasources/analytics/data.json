@@ -1,0 +1,526 @@
+
+[
+  {
+    "_id": "analytics_001",
+    "analytics_id": "ANALYTICS20240115001",
+    "metric_type": "user_engagement",
+    "metric_name": "daily_active_users",
+    "value": 1250,
+    "value_type": "number",
+    "dimension": {
+      "platform": "web",
+      "user_type": "patient",
+      "region": "beijing"
+    },
+    "timestamp": 1705737600000,
+    "date": "2024-01-15",
+    "hour": 14,
+    "source": "user_activity_tracker",
+    "category": "user_metrics",
+    "subcategory": "engagement",
+    "granularity": "hourly",
+    "unit": "users",
+    "metadata": {
+      "calculation_method": "unique_users",
+      "data_source": "login_events"
+    },
+    "tags": ["daily", "active_users", "patient"],
+    "user_context": {
+      "user_type": "patient",
+      "role": "end_user"
+    },
+    "system_context": {
+      "environment": "production",
+      "version": "v2.1.0",
+      "region": "cn-north-1"
+    },
+    "quality_score": 0.98,
+    "anomaly_flags": [],
+    "aggregation_level": "hourly",
+    "window_size": "1h",
+    "baseline_value": 1200,
+    "trend_direction": "up",
+    "confidence_interval": {
+      "lower": 1180,
+      "upper": 1320,
+      "confidence": 0.95
+    },
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000,
+    "processed_at": 1705737600000,
+    "expiry_at": 1708416000000
+  },
+  {
+    "_id": "analytics_002",
+    "analytics_id": "ANALYTICS20240115002",
+    "metric_type": "system_performance",
+    "metric_name": "api_response_time",
+    "value": 245,
+    "value_type": "number",
+    "dimension": {
+      "endpoint": "/api/v1/patients",
+      "method": "GET",
+      "status_code": 200
+    },
+    "timestamp": 1705737600000,
+    "date": "2024-01-15",
+    "hour": 14,
+    "source": "api_gateway",
+    "category": "performance_metrics",
+    "subcategory": "response_time",
+    "granularity": "minute",
+    "unit": "milliseconds",
+    "metadata": {
+      "percentile": 95,
+      "sample_size": 1250
+    },
+    "tags": ["api", "performance", "response_time"],
+    "user_context": {},
+    "system_context": {
+      "environment": "production",
+      "version": "v2.1.0",
+      "region": "cn-north-1"
+    },
+    "quality_score": 0.99,
+    "anomaly_flags": [],
+    "aggregation_level": "minute",
+    "window_size": "1m",
+    "baseline_value": 200,
+    "trend_direction": "up",
+    "confidence_interval": {
+      "lower": 220,
+      "upper": 270,
+      "confidence": 0.95
+    },
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000,
+    "processed_at": 1705737600000,
+    "expiry_at": 1708416000000
+  },
+  {
+    "_id": "analytics_003",
+    "analytics_id": "ANALYTICS20240115003",
+    "metric_type": "business_metrics",
+    "metric_name": "appointment_conversion_rate",
+    "value": 0.78,
+    "value_type": "number",
+    "dimension": {
+      "doctor_specialty": "cardiology",
+      "appointment_type": "follow_up",
+      "channel": "web"
+    },
+    "timestamp": 1705737600000,
+    "date": "2024-01-15",
+    "hour": 14,
+    "source": "appointment_system",
+    "category": "business_metrics",
+    "subcategory": "conversion",
+    "granularity": "daily",
+    "unit": "percentage",
+    "metadata": {
+      "total_bookings": 156,
+      "total_attempts": 200,
+      "calculation_period": "24h"
+    },
+    "tags": ["conversion", "appointment", "cardiology"],
+    "user_context": {
+      "user_type": "patient",
+      "role": "end_user"
+    },
+    "system_context": {
+      "environment": "production",
+      "version": "v2.1.0",
+      "region": "cn-north-1"
+    },
+    "quality_score": 0.97,
+    "anomaly_flags": [],
+    "aggregation_level": "daily",
+    "window_size": "24h",
+    "baseline_value": 0.75,
+    "trend_direction": "up",
+    "confidence_interval": {
+      "lower": 0.72,
+      "upper": 0.84,
+      "confidence": 0.95
+    },
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000,
+    "processed_at": 1705737600000,
+    "expiry_at": 1708416000000
+  },
+  {
+    "_id": "analytics_004",
+    "analytics_id": "ANALYTICS20240115004",
+    "metric_type": "error_metrics",
+    "metric_name": "api_error_rate",
+    "value": 0.023,
+    "value_type": "number",
+    "dimension": {
+      "endpoint": "/api/v1/prescriptions",
+      "error_type": "validation_error",
+      "http_status": 400
+    },
+    "timestamp": 1705737600000,
+    "date": "2024-01-15",
+    "hour": 14,
+    "source": "error_tracker",
+    "category": "error_metrics",
+    "subcategory": "api_errors",
+    "granularity": "hourly",
+    "unit": "percentage",
+    "metadata": {
+      "total_requests": 500,
+      "error_count": 12,
+      "error_details": [
+        {
+          "error_code": "INVALID_PRESCRIPTION",
+          "count": 8
+        },
+        {
+          "error_code": "MISSING_REQUIRED_FIELD",
+          "count": 4
+        }
+      ]
+    },
+    "tags": ["error", "api", "validation"],
+    "user_context": {},
+    "system_context": {
+      "environment": "production",
+      "version": "v2.1.0",
+      "region": "cn-north-1"
+    },
+    "quality_score": 0.96,
+    "anomaly_flags": ["elevated_error_rate"],
+    "aggregation_level": "hourly",
+    "window_size": "1h",
+    "baseline_value": 0.015,
+    "trend_direction": "up",
+    "confidence_interval": {
+      "lower": 0.018,
+      "upper": 0.028,
+      "confidence": 0.95
+    },
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000,
+    "processed_at": 1705737600000,
+    "expiry_at": 1708416000000
+  },
+  {
+    "_id": "analytics_005",
+    "analytics_id": "ANALYTICS20240115005",
+    "metric_type": "user_behavior",
+    "metric_name": "feature_usage",
+    "value": {
+      "total_usage": 450,
+      "unique_users": 89,
+      "avg_session_duration": 180,
+      "bounce_rate": 0.12
+    },
+    "value_type": "object",
+    "dimension": {
+      "feature": "ai_diagnosis",
+      "platform": "mobile",
+      "user_segment": "premium"
+    },
+    "timestamp": 1705737600000,
+    "date": "2024-01-15",
+    "hour": 14,
+    "source": "feature_tracker",
+    "category": "user_behavior",
+    "subcategory": "feature_usage",
+    "granularity": "daily",
+    "unit": "usage_stats",
+    "metadata": {
+      "feature_version": "v1.2.0",
+      "tracking_events": ["feature_open", "feature_close", "diagnosis_complete"]
+    },
+    "tags": ["feature", "ai_diagnosis", "mobile", "premium"],
+    "user_context": {
+      "user_type": "patient",
+      "role": "premium_user"
+    },
+    "system_context": {
+      "environment": "production",
+      "version": "v2.1.0",
+      "region": "cn-north-1"
+    },
+    "quality_score": 0.98,
+    "anomaly_flags": [],
+    "aggregation_level": "daily",
+    "window_size": "24h",
+    "baseline_value": {
+      "total_usage": 400,
+      "unique_users": 80,
+      "avg_session_duration": 165
+    },
+    "trend_direction": "up",
+    "confidence_interval": {
+      "lower": 0.95,
+      "upper": 1.05,
+      "confidence": 0.95
+    },
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000,
+    "processed_at": 1705737600000,
+    "expiry_at": 1708416000000
+  },
+  {
+    "_id": "analytics_006",
+    "analytics_id": "ANALYTICS20240115006",
+    "metric_type": "system_health",
+    "metric_name": "database_connection_pool",
+    "value": {
+      "active_connections": 45,
+      "idle_connections": 15,
+      "max_connections": 100,
+      "connection_wait_time": 5
+    },
+    "value_type": "object",
+    "dimension": {
+      "database": "primary",
+      "instance": "db-01",
+      "environment": "production"
+    },
+    "timestamp": 1705737600000,
+    "date": "2024-01-15",
+    "hour": 14,
+    "source": "database_monitor",
+    "category": "system_health",
+    "subcategory": "database",
+    "granularity": "minute",
+    "unit": "connection_stats",
+    "metadata": {
+      "database_type": "PostgreSQL",
+      "version": "14.5"
+    },
+    "tags": ["database", "connection_pool", "health"],
+    "user_context": {},
+    "system_context": {
+      "environment": "production",
+      "version": "v2.1.0",
+      "region": "cn-north-1"
+    },
+    "quality_score": 0.99,
+    "anomaly_flags": [],
+    "aggregation_level": "minute",
+    "window_size": "1m",
+    "baseline_value": {
+      "active_connections": 40,
+      "idle_connections": 20,
+      "max_connections": 100
+    },
+    "trend_direction": "stable",
+    "confidence_interval": {
+      "lower": 0.9,
+      "upper": 1.1,
+      "confidence": 0.95
+    },
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000,
+    "processed_at": 1705737600000,
+    "expiry_at": 1708416000000
+  },
+  {
+    "_id": "analytics_007",
+    "analytics_id": "ANALYTICS20240115007",
+    "metric_type": "business_metrics",
+    "metric_name": "revenue",
+    "value": 12500.5,
+    "value_type": "number",
+    "dimension": {
+      "product": "premium_subscription",
+      "region": "asia_pacific",
+      "channel": "direct"
+    },
+    "timestamp": 1705737600000,
+    "date": "2024-01-15",
+    "hour": 14,
+    "source": "billing_system",
+    "category": "business_metrics",
+    "subcategory": "revenue",
+    "granularity": "daily",
+    "unit": "USD",
+    "metadata": {
+      "currency": "USD",
+      "tax_amount": 1250.05,
+      "net_amount": 11250.45,
+      "transaction_count": 25
+    },
+    "tags": ["revenue", "premium", "subscription"],
+    "user_context": {},
+    "system_context": {
+      "environment": "production",
+      "version": "v2.1.0",
+      "region": "cn-north-1"
+    },
+    "quality_score": 0.99,
+    "anomaly_flags": [],
+    "aggregation_level": "daily",
+    "window_size": "24h",
+    "baseline_value": 12000,
+    "trend_direction": "up",
+    "confidence_interval": {
+      "lower": 11800,
+      "upper": 13200,
+      "confidence": 0.95
+    },
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000,
+    "processed_at": 1705737600000,
+    "expiry_at": 1708416000000
+  },
+  {
+    "_id": "analytics_008",
+    "analytics_id": "ANALYTICS20240115008",
+    "metric_type": "security_metrics",
+    "metric_name": "failed_login_attempts",
+    "value": 23,
+    "value_type": "number",
+    "dimension": {
+      "ip_range": "192.168.1.0/24",
+      "user_type": "admin",
+      "failure_reason": "invalid_credentials"
+    },
+    "timestamp": 1705737600000,
+    "date": "2024-01-15",
+    "hour": 14,
+    "source": "security_monitor",
+    "category": "security_metrics",
+    "subcategory": "authentication",
+    "granularity": "hourly",
+    "unit": "attempts",
+    "metadata": {
+      "unique_ips": 5,
+      "blocked_accounts": 2,
+      "geographic_distribution": {
+        "CN": 20,
+        "US": 3
+      }
+    },
+    "tags": ["security", "login", "failed_attempts"],
+    "user_context": {},
+    "system_context": {
+      "environment": "production",
+      "version": "v2.1.0",
+      "region": "cn-north-1"
+    },
+    "quality_score": 0.97,
+    "anomaly_flags": ["elevated_failed_attempts"],
+    "aggregation_level": "hourly",
+    "window_size": "1h",
+    "baseline_value": 5,
+    "trend_direction": "up",
+    "confidence_interval": {
+      "lower": 18,
+      "upper": 28,
+      "confidence": 0.95
+    },
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000,
+    "processed_at": 1705737600000,
+    "expiry_at": 1708416000000
+  },
+  {
+    "_id": "analytics_009",
+    "analytics_id": "ANALYTICS20240115009",
+    "metric_type": "ai_performance",
+    "metric_name": "diagnosis_accuracy",
+    "value": 0.943,
+    "value_type": "number",
+    "dimension": {
+      "ai_model": "medical_diagnosis_v2.1",
+      "condition_type": "cardiovascular",
+      "validation_method": "expert_review"
+    },
+    "timestamp": 1705737600000,
+    "date": "2024-01-15",
+    "hour": 14,
+    "source": "ai_evaluation",
+    "category": "ai_performance",
+    "subcategory": "accuracy",
+    "granularity": "daily",
+    "unit": "percentage",
+    "metadata": {
+      "total_cases": 156,
+      "correct_predictions": 147,
+      "false_positives": 5,
+      "false_negatives": 4,
+      "confidence_threshold": 0.85
+    },
+    "tags": ["ai", "diagnosis", "accuracy", "cardiovascular"],
+    "user_context": {},
+    "system_context": {
+      "environment": "production",
+      "version": "v2.1.0",
+      "region": "cn-north-1"
+    },
+    "quality_score": 0.98,
+    "anomaly_flags": [],
+    "aggregation_level": "daily",
+    "window_size": "24h",
+    "baseline_value": 0.92,
+    "trend_direction": "up",
+    "confidence_interval": {
+      "lower": 0.92,
+      "upper": 0.96,
+      "confidence": 0.95
+    },
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000,
+    "processed_at": 1705737600000,
+    "expiry_at": 1708416000000
+  },
+  {
+    "_id": "analytics_010",
+    "analytics_id": "ANALYTICS20240115010",
+    "metric_type": "partner_metrics",
+    "metric_name": "api_usage_by_partner",
+    "value": 125430,
+    "value_type": "number",
+    "dimension": {
+      "partner_id": "PARTNER001",
+      "partner_tier": "enterprise",
+      "api_endpoint": "/api/v1/patients",
+      "method": "GET"
+    },
+    "timestamp": 1705737600000,
+    "date": "2024-01-15",
+    "hour": 14,
+    "source": "api_gateway",
+    "category": "partner_metrics",
+    "subcategory": "api_usage",
+    "granularity": "daily",
+    "unit": "requests",
+    "metadata": {
+      "quota_usage_percentage": 12.5,
+      "remaining_quota": 874570,
+      "rate_limit_violations": 0,
+      "error_rate": 0.002
+    },
+    "tags": ["partner", "api_usage", "enterprise"],
+    "user_context": {
+      "user_type": "partner",
+      "organization": "健康科技合作伙伴有限公司"
+    },
+    "system_context": {
+      "environment": "production",
+      "version": "v2.1.0",
+      "region": "cn-north-1"
+    },
+    "quality_score": 0.99,
+    "anomaly_flags": [],
+    "aggregation_level": "daily",
+    "window_size": "24h",
+    "baseline_value": 120000,
+    "trend_direction": "up",
+    "confidence_interval": {
+      "lower": 118000,
+      "upper": 132000,
+      "confidence": 0.95
+    },
+    "created_at": 1705737600000,
+    "updated_at": 1705737600000,
+    "processed_at": 1705737600000,
+    "expiry_at": 1708416000000
+  }
+]

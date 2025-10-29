@@ -1,0 +1,166 @@
+
+{
+  "name": "agreement",
+  "title": "协议管理",
+  "schemas": [
+    {
+      "name": "agreement_id",
+      "title": "协议ID",
+      "type": "String"
+    },
+    {
+      "name": "partner_id",
+      "title": "合作伙伴ID",
+      "type": "String"
+    },
+    {
+      "name": "agreement_type",
+      "title": "协议类型",
+      "type": "String"
+    },
+    {
+      "name": "agreement_name",
+      "title": "协议名称",
+      "type": "String"
+    },
+    {
+      "name": "version",
+      "title": "协议版本",
+      "type": "String"
+    },
+    {
+      "name": "content",
+      "title": "协议内容",
+      "type": "RichText"
+    },
+    {
+      "name": "status",
+      "title": "协议状态",
+      "type": "String"
+    },
+    {
+      "name": "signed_at",
+      "title": "签署时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "signed_by",
+      "title": "签署人",
+      "type": "String"
+    },
+    {
+      "name": "effective_date",
+      "title": "生效日期",
+      "type": "Date",
+      "format": "date"
+    },
+    {
+      "name": "expiry_date",
+      "title": "到期日期",
+      "type": "Date",
+      "format": "date"
+    },
+    {
+      "name": "renewal_date",
+      "title": "续签日期",
+      "type": "Date",
+      "format": "date"
+    },
+    {
+      "name": "terms",
+      "title": "协议条款",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "term_id",
+            "title": "条款ID",
+            "type": "String"
+          },
+          {
+            "name": "term_title",
+            "title": "条款标题",
+            "type": "String"
+          },
+          {
+            "name": "term_content",
+            "title": "条款内容",
+            "type": "String"
+          },
+          {
+            "name": "is_required",
+            "title": "是否必需",
+            "type": "Boolean"
+          }
+        ]
+      }
+    },
+    {
+      "name": "attachments",
+      "title": "附件",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "file_name",
+            "title": "文件名",
+            "type": "String"
+          },
+          {
+            "name": "file_url",
+            "title": "文件地址",
+            "type": "Url"
+          },
+          {
+            "name": "file_size",
+            "title": "文件大小",
+            "type": "Number"
+          },
+          {
+            "name": "upload_date",
+            "title": "上传日期",
+            "type": "Date",
+            "format": "date"
+          }
+        ]
+      }
+    },
+    {
+      "name": "signatures",
+      "title": "签署信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "digital_signature",
+          "title": "数字签名",
+          "type": "String"
+        },
+        {
+          "name": "ip_address",
+          "title": "签署IP地址",
+          "type": "String"
+        },
+        {
+          "name": "user_agent",
+          "title": "用户代理",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "created_at",
+      "title": "创建时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "updated_at",
+      "title": "更新时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    }
+  ]
+}

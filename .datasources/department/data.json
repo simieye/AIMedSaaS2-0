@@ -1,0 +1,55 @@
+
+[
+  {
+    "_id": "dept_001",
+    "department_id": "DEPT001",
+    "name": "心血管内科",
+    "code": "CARDIO",
+    "specialty": "心血管疾病诊疗",
+    "description": "专门诊治高血压、冠心病、心律失常、心力衰竭等心血管疾病",
+    "ai_config": {
+      "enabled_models": ["cardio_diagnosis_v2.1", "ecg_analysis_v1.5"],
+      "confidence_threshold": 0.8,
+      "auto_triage": true,
+      "risk_assessment": true
+    },
+    "diagnostic_criteria": [
+      "高血压诊断标准",
+      "冠心病诊断标准",
+      "心律失常分类标准"
+    ],
+    "treatment_protocols": [
+      "高血压治疗指南",
+      "冠心病介入治疗规范",
+      "心力衰竭管理方案"
+    ],
+    "status": "active",
+    "created_at": 1705737600000
+  },
+  {
+    "_id": "dept_002",
+    "department_id": "DEPT002",
+    "name": "肿瘤科",
+    "code": "ONCOLOGY",
+    "specialty": "肿瘤疾病诊疗",
+    "description": "专门诊治各种恶性肿瘤，提供化疗、放疗、靶向治疗等综合治疗",
+    "ai_config": {
+      "enabled_models": ["cancer_detection_v3.0", "tumor_classification_v2.2"],
+      "confidence_threshold": 0.85,
+      "auto_triage": true,
+      "risk_assessment": true
+    },
+    "diagnostic_criteria": [
+      "肿瘤分期标准",
+      "病理诊断规范",
+      "分子诊断指南"
+    ],
+    "treatment_protocols": [
+      "化疗方案标准",
+      "靶向治疗规范",
+      "免疫治疗方案"
+    ],
+    "status": "active",
+    "created_at": 1705737600000
+  }
+]

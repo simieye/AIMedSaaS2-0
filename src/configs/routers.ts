@@ -1,0 +1,45 @@
+import DOCTORPORTAL from '../pages/DoctorPortal.jsx';
+import PARTNERPORTAL from '../pages/PartnerPortal.jsx';
+import PATIENTPORTAL from '../pages/PatientPortal.jsx';
+import ADMINDASHBOARD from '../pages/AdminDashboard.jsx';
+import AIAGENTCONFIG from '../pages/AIAgentConfig.jsx';
+import MEDAIPLATFORM from '../pages/MedAIPlatform.jsx';
+import UNIFIEDPORTAL from '../pages/UnifiedPortal.jsx';
+import PATIENTMANAGEMENT from '../pages/PatientManagement.jsx';
+import DOCTORMANAGEMENT from '../pages/DoctorManagement.jsx';
+import APIKEYMANAGEMENT from '../pages/ApiKeyManagement.jsx';
+import DEPARTMENTALAIDIAGNOSIS from '../pages/DepartmentalAIDiagnosis.jsx';
+export const routers = [{
+  id: "DoctorPortal",
+  component: DOCTORPORTAL
+}, {
+  id: "PartnerPortal",
+  component: PARTNERPORTAL
+}, {
+  id: "PatientPortal",
+  component: PATIENTPORTAL
+}, {
+  id: "AdminDashboard",
+  component: ADMINDASHBOARD
+}, {
+  id: "AIAgentConfig",
+  component: AIAGENTCONFIG
+}, {
+  id: "MedAIPlatform",
+  component: MEDAIPLATFORM
+}, {
+  id: "UnifiedPortal",
+  component: UNIFIEDPORTAL
+}, {
+  id: "PatientManagement",
+  component: PATIENTMANAGEMENT
+}, {
+  id: "DoctorManagement",
+  component: DOCTORMANAGEMENT
+}, {
+  id: "ApiKeyManagement",
+  component: APIKEYMANAGEMENT
+}, {
+  id: "DepartmentalAIDiagnosis",
+  component: DEPARTMENTALAIDIAGNOSIS
+}]

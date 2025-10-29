@@ -1,0 +1,209 @@
+
+{
+  "name": "system_config",
+  "title": "系统配置",
+  "schemas": [
+    {
+      "name": "config_id",
+      "title": "配置ID",
+      "type": "String"
+    },
+    {
+      "name": "config_key",
+      "title": "配置键",
+      "type": "String"
+    },
+    {
+      "name": "config_value",
+      "title": "配置值",
+      "type": "Object"
+    },
+    {
+      "name": "value_type",
+      "title": "值类型",
+      "type": "String"
+    },
+    {
+      "name": "description",
+      "title": "配置描述",
+      "type": "String"
+    },
+    {
+      "name": "category",
+      "title": "配置分类",
+      "type": "String"
+    },
+    {
+      "name": "subcategory",
+      "title": "配置子分类",
+      "type": "String"
+    },
+    {
+      "name": "is_sensitive",
+      "title": "是否敏感配置",
+      "type": "Boolean"
+    },
+    {
+      "name": "is_encrypted",
+      "title": "是否加密存储",
+      "type": "Boolean"
+    },
+    {
+      "name": "validation_rules",
+      "title": "验证规则",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "type",
+          "title": "验证类型",
+          "type": "String"
+        },
+        {
+          "name": "min",
+          "title": "最小值",
+          "type": "Number"
+        },
+        {
+          "name": "max",
+          "title": "最大值",
+          "type": "Number"
+        },
+        {
+          "name": "pattern",
+          "title": "正则表达式",
+          "type": "String"
+        },
+        {
+          "name": "required",
+          "title": "是否必需",
+          "type": "Boolean"
+        },
+        {
+          "name": "options",
+          "title": "选项列表",
+          "type": "Array",
+          "items": {
+            "type": "String"
+          }
+        }
+      ]
+    },
+    {
+      "name": "environment",
+      "title": "适用环境",
+      "type": "String"
+    },
+    {
+      "name": "scope",
+      "title": "作用域",
+      "type": "String"
+    },
+    {
+      "name": "tags",
+      "title": "标签",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "dependencies",
+      "title": "依赖配置",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "version",
+      "title": "配置版本",
+      "type": "String"
+    },
+    {
+      "name": "updated_by",
+      "title": "更新人",
+      "type": "String"
+    },
+    {
+      "name": "updated_at",
+      "title": "更新时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "created_by",
+      "title": "创建人",
+      "type": "String"
+    },
+    {
+      "name": "created_at",
+      "title": "创建时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "change_history",
+      "title": "变更历史",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "version",
+            "title": "版本",
+            "type": "String"
+          },
+          {
+            "name": "old_value",
+            "title": "旧值",
+            "type": "Object"
+          },
+          {
+            "name": "new_value",
+            "title": "新值",
+            "type": "Object"
+          },
+          {
+            "name": "changed_by",
+            "title": "修改人",
+            "type": "String"
+          },
+          {
+            "name": "changed_at",
+            "title": "修改时间",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          },
+          {
+            "name": "change_reason",
+            "title": "修改原因",
+            "type": "String"
+          }
+        ]
+      }
+    },
+    {
+      "name": "metadata",
+      "title": "元数据",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "source",
+          "title": "配置来源",
+          "type": "String"
+        },
+        {
+          "name": "last_sync_time",
+          "title": "最后同步时间",
+          "type": "DateTime",
+            "format": "timestamp-ms"
+        },
+        {
+          "name": "sync_status",
+          "title": "同步状态",
+          "type": "String"
+        }
+      ]
+    }
+  ]
+}

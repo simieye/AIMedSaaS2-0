@@ -1,0 +1,547 @@
+
+{
+  "name": "chat_sessions",
+  "title": "AI对话会话",
+  "description": "存储用户与AI助手的多模态对话会话记录，支持文字、语音、图片、视频等多种交互方式，包含情绪分析、上下文管理和用户参与度分析",
+  "schemas": [
+    {
+      "name": "session_id",
+      "title": "会话ID",
+      "type": "String",
+      "description": "会话唯一标识符"
+    },
+    {
+      "name": "user_id",
+      "title": "用户ID",
+      "type": "String",
+      "description": "关联用户表，支持医生、患者、合作伙伴等多角色"
+    },
+    {
+      "name": "user_type",
+      "title": "用户类型",
+      "type": "String",
+      "description": "doctor|patient|partner|admin"
+    },
+    {
+      "name": "modality",
+      "title": "交互模态",
+      "type": "String",
+      "description": "text|voice|image|video|avatar|phone_call|mixed"
+    },
+    {
+      "name": "messages",
+      "title": "消息历史",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "message_id",
+            "title": "消息ID",
+            "type": "String"
+          },
+          {
+            "name": "sender",
+            "title": "发送者",
+            "type": "String",
+            "description": "user|ai|system"
+          },
+          {
+            "name": "message_type",
+            "title": "消息类型",
+            "type": "String",
+            "description": "text|image|audio|video|file|emoji|reaction|system_notification"
+          },
+          {
+            "name": "content",
+            "title": "消息内容",
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "text",
+                "title": "文本内容",
+                "type": "String"
+              },
+              {
+                "name": "media_url",
+                "title": "媒体文件URL",
+                "type": "Url"
+              },
+              {
+                "name": "media_type",
+                "title": "媒体类型",
+                "type": "String"
+              },
+              {
+                "name": "file_size",
+                "title": "文件大小",
+                "type": "Number"
+              },
+              {
+                "name": "duration",
+                "title": "时长",
+                "type": "Number"
+              },
+              {
+                "name": "thumbnail_url",
+                "title": "缩略图URL",
+                "type": "Url"
+              }
+            ]
+          },
+          {
+            "name": "timestamp",
+            "title": "时间戳",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          },
+          {
+            "name": "metadata",
+            "title": "消息元数据",
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "emotion_score",
+                "title": "情绪得分",
+                "type": "Number"
+              },
+              {
+                "name": "intent",
+                "title": "意图识别",
+                "type": "String"
+              },
+              {
+                "name": "confidence",
+                "title": "置信度",
+                "type": "Number"
+              },
+              {
+                "name": "processing_time",
+                "title": "处理时间",
+                "type": "Number"
+              },
+              {
+                "name": "is_edited",
+                "title": "是否编辑",
+                "type": "Boolean"
+              },
+              {
+                "name": "edited_at",
+                "title": "编辑时间",
+                "type": "DateTime",
+                "format": "timestamp-ms"
+              },
+              {
+                "name": "is_deleted",
+                "title": "是否删除",
+                "type": "Boolean"
+              },
+              {
+                "name": "read_status",
+                "title": "阅读状态",
+                "type": "String",
+                "description": "sent|delivered|read|failed"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "context_snapshot",
+      "title": "上下文快照",
+      "type": "Object",
+      "description": "会话时的完整上下文信息",
+      "schemas": [
+        {
+          "name": "user_profile",
+          "title": "用户档案",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "name",
+              "title": "姓名",
+              "type": "String"
+            },
+            {
+              "name": "role",
+              "title": "角色",
+              "type": "String"
+            },
+            {
+              "name": "medical_history",
+              "title": "病史",
+              "type": "String"
+            },
+            {
+              "name": "preferences",
+              "title": "用户偏好",
+              "type": "Object"
+            }
+          ]
+        },
+        {
+          "name": "medical_context",
+          "title": "医疗上下文",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "patient_id",
+              "title": "患者ID",
+              "type": "String"
+            },
+            {
+              "name": "condition",
+              "title": "当前症状",
+              "type": "String"
+            },
+            {
+              "name": "urgency_level",
+              "title": "紧急程度",
+              "type": "String"
+            },
+            {
+              "name": "specialty",
+              "title": "专科",
+              "type": "String"
+            }
+          ]
+        },
+        {
+          "name": "technical_context",
+          "title": "技术上下文",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "device_info",
+              "title": "设备信息",
+              "type": "String"
+            },
+            {
+              "name": "network_quality",
+              "title": "网络质量",
+              "type": "String"
+            },
+            {
+              "name": "location",
+              "title": "位置",
+              "type": "String"
+            },
+            {
+              "name": "app_version",
+              "title": "应用版本",
+              "type": "String"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "emotion_score",
+      "title": "整体情绪得分",
+      "type": "Number",
+      "description": "-1到1的浮点数，-1表示非常负面，1表示非常正面"
+    },
+    {
+      "name": "intent",
+      "title": "会话意图",
+      "type": "String",
+      "description": "咨询|诊断|预约|报告解读|用药指导|紧急求助|技术支持|商务咨询"
+    },
+    {
+      "name": "session_status",
+      "title": "会话状态",
+      "type": "String",
+      "description": "active|completed|abandoned|escalated|paused|transferred|archived"
+    },
+    {
+      "name": "resolution",
+      "title": "解决状态",
+      "type": "String",
+      "description": "resolved|pending|escalated|follow_up_required|cancelled|timeout"
+    },
+    {
+      "name": "duration",
+      "title": "会话时长",
+      "type": "Number",
+      "description": "会话持续时间（秒）"
+    },
+    {
+      "name": "user_engagement",
+      "title": "用户参与度",
+      "type": "Object",
+      "description": "用户参与度分析指标",
+      "schemas": [
+        {
+          "name": "message_count",
+          "title": "消息数量",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "user_messages",
+              "title": "用户消息数",
+              "type": "Number"
+            },
+            {
+              "name": "ai_messages",
+              "title": "AI消息数",
+              "type": "Number"
+            },
+            {
+              "name": "system_messages",
+              "title": "系统消息数",
+              "type": "Number"
+            }
+          ]
+        },
+        {
+          "name": "response_time",
+          "title": "响应时间",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "avg_response_time",
+              "title": "平均响应时间",
+              "type": "Number"
+            },
+            {
+              "name": "first_response_time",
+              "title": "首次响应时间",
+              "type": "Number"
+            },
+            {
+              "name": "last_response_time",
+              "title": "最后响应时间",
+              "type": "Number"
+            }
+          ]
+        },
+        {
+          "name": "interaction_quality",
+          "title": "交互质量",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "engagement_score",
+              "title": "参与度评分",
+              "type": "Number"
+            },
+            {
+              "name": "satisfaction_score",
+              "title": "满意度评分",
+              "type": "Number"
+            },
+            {
+              "name": "completion_rate",
+              "title": "完成率",
+              "type": "Number"
+            },
+            {
+              "name": "bounce_rate",
+              "title": "跳出率",
+              "type": "Number"
+            }
+          ]
+        },
+        {
+          "name": "activity_metrics",
+          "title": "活动指标",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "session_start_time",
+              "title": "会话开始时间",
+              "type": "DateTime",
+              "format": "timestamp-ms"
+            },
+            {
+              "name": "last_activity_time",
+              "title": "最后活动时间",
+              "type": "DateTime",
+              "format": "timestamp-ms"
+            },
+            {
+              "name": "idle_time",
+              "title": "空闲时间",
+              "type": "Number"
+            },
+            {
+              "name": "interaction_frequency",
+              "title": "交互频率",
+              "type": "Number"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "quality_metrics",
+      "title": "质量指标",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "response_time_avg",
+          "title": "平均响应时间",
+          "type": "Number"
+        },
+        {
+          "name": "user_satisfaction",
+          "title": "用户满意度",
+          "type": "Number"
+        },
+        {
+          "name": "accuracy_score",
+          "title": "准确性评分",
+          "type": "Number"
+        },
+        {
+          "name": "relevance_score",
+          "title": "相关性评分",
+          "type": "Number"
+        },
+        {
+          "name": "helpfulness_score",
+          "title": "有用性评分",
+          "type": "Number"
+        }
+      ]
+    },
+    {
+      "name": "session_metadata",
+      "title": "会话元数据",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "priority",
+          "title": "优先级",
+          "type": "String",
+          "description": "low|medium|high|urgent|critical"
+        },
+        {
+          "name": "category",
+          "title": "分类",
+          "type": "String",
+          "description": "medical|technical|business|general|emergency"
+        },
+        {
+          "name": "language",
+          "title": "语言",
+          "type": "String"
+        },
+        {
+          "name": "timezone",
+          "title": "时区",
+          "type": "String"
+        },
+        {
+          "name": "session_source",
+          "title": "会话来源",
+          "type": "String",
+          "description": "web|mobile|api|widget|email"
+        },
+        {
+          "name": "referral_source",
+          "title": "推荐来源",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "title": "标签",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "audit_info",
+      "title": "审计信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "ip_address",
+          "title": "IP地址",
+          "type": "String"
+        },
+        {
+          "name": "user_agent",
+          "title": "用户代理",
+          "type": "String"
+        },
+        {
+          "name": "data_accessed",
+          "title": "访问数据",
+          "type": "Array",
+          "items": {
+            "type": "String"
+          }
+        },
+        {
+          "name": "security_flags",
+          "title": "安全标记",
+          "type": "Array",
+          "items": {
+            "type": "String"
+          }
+        }
+      ]
+    },
+    {
+      "name": "feedback",
+      "title": "用户反馈",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "rating",
+          "title": "评分",
+          "type": "Number"
+        },
+        {
+          "name": "comment",
+          "title": "评论",
+          "type": "String"
+        },
+        {
+          "name": "feedback_type",
+          "title": "反馈类型",
+          "type": "String"
+        },
+        {
+          "name": "submitted_at",
+          "title": "提交时间",
+          "type": "DateTime",
+          "format": "timestamp-ms"
+        }
+      ]
+    },
+    {
+      "name": "escalation_info",
+      "title": "升级信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "escalated_to",
+          "title": "升级到",
+          "type": "String"
+        },
+        {
+          "name": "escalation_reason",
+          "title": "升级原因",
+          "type": "String"
+        },
+        {
+          "name": "escalation_time",
+          "title": "升级时间",
+          "type": "DateTime",
+          "format": "timestamp-ms"
+        },
+        {
+          "name": "escalated_by",
+          "title": "升级人",
+          "type": "String"
+        }
+      ]
+    }
+  ]
+}

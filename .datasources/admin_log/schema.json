@@ -1,0 +1,228 @@
+
+{
+  "name": "admin_log",
+  "title": "管理员操作日志",
+  "schemas": [
+    {
+      "name": "log_id",
+      "title": "日志ID",
+      "type": "String"
+    },
+    {
+      "name": "admin_id",
+      "title": "管理员ID",
+      "type": "String"
+    },
+    {
+      "name": "admin_name",
+      "title": "管理员姓名",
+      "type": "String"
+    },
+    {
+      "name": "admin_role",
+      "title": "管理员角色",
+      "type": "String"
+    },
+    {
+      "name": "action",
+      "title": "操作类型",
+      "type": "String"
+    },
+    {
+      "name": "action_category",
+      "title": "操作分类",
+      "type": "String"
+    },
+    {
+      "name": "target_type",
+      "title": "目标类型",
+      "type": "String"
+    },
+    {
+      "name": "target_id",
+      "title": "目标ID",
+      "type": "String"
+    },
+    {
+      "name": "target_name",
+      "title": "目标名称",
+      "type": "String"
+    },
+    {
+      "name": "timestamp",
+      "title": "操作时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "pccp_version",
+      "title": "PCCP版本",
+      "type": "String"
+    },
+    {
+      "name": "ip",
+      "title": "IP地址",
+      "type": "String"
+    },
+    {
+      "name": "user_agent",
+      "title": "用户代理",
+      "type": "String"
+    },
+    {
+      "name": "result",
+      "title": "操作结果",
+      "type": "String"
+    },
+    {
+      "name": "result_code",
+      "title": "结果代码",
+      "type": "String"
+    },
+    {
+      "name": "error_message",
+      "title": "错误信息",
+      "type": "String"
+    },
+    {
+      "name": "request_data",
+      "title": "请求数据",
+      "type": "Object"
+    },
+    {
+      "name": "response_data",
+      "title": "响应数据",
+      "type": "Object"
+    },
+    {
+      "name": "session_id",
+      "title": "会话ID",
+      "type": "String"
+    },
+    {
+      "name": "browser_info",
+      "title": "浏览器信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "browser_name",
+          "title": "浏览器名称",
+          "type": "String"
+        },
+        {
+          "name": "browser_version",
+          "title": "浏览器版本",
+          "type": "String"
+        },
+        {
+          "name": "os_name",
+          "title": "操作系统",
+          "type": "String"
+        },
+        {
+          "name": "os_version",
+          "title": "操作系统版本",
+          "type": "String"
+        },
+        {
+          "name": "device_type",
+          "title": "设备类型",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "location_info",
+      "title": "位置信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "country",
+          "title": "国家",
+          "type": "String"
+        },
+        {
+          "name": "region",
+          "title": "地区",
+          "type": "String"
+        },
+        {
+          "name": "city",
+          "title": "城市",
+          "type": "String"
+        },
+        {
+          "name": "latitude",
+          "title": "纬度",
+          "type": "Number"
+        },
+        {
+          "name": "longitude",
+          "title": "经度",
+          "type": "Number"
+        }
+      ]
+    },
+    {
+      "name": "risk_level",
+      "title": "风险等级",
+      "type": "String"
+    },
+    {
+      "name": "risk_factors",
+      "title": "风险因素",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "audit_trail",
+      "title": "审计追踪",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "action",
+            "title": "操作",
+            "type": "String"
+          },
+          {
+            "name": "timestamp",
+            "title": "时间戳",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          },
+          {
+            "name": "details",
+            "title": "详情",
+            "type": "Object"
+          }
+        ]
+      }
+    },
+    {
+      "name": "metadata",
+      "title": "元数据",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "source_system",
+          "title": "来源系统",
+          "type": "String"
+        },
+        {
+          "name": "trace_id",
+          "title": "追踪ID",
+          "type": "String"
+        },
+        {
+          "name": "correlation_id",
+          "title": "关联ID",
+          "type": "String"
+        }
+      ]
+    }
+  ]
+}

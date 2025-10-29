@@ -1,0 +1,479 @@
+
+{
+  "name": "doctor",
+  "title": "医生信息",
+  "schemas": [
+    {
+      "name": "doctor_id",
+      "title": "医生ID",
+      "type": "String"
+    },
+    {
+      "name": "name",
+      "title": "姓名",
+      "type": "String"
+    },
+    {
+      "name": "specialty",
+      "title": "专业领域",
+      "type": "String"
+    },
+    {
+      "name": "license_no",
+      "title": "执业证书号",
+      "type": "String"
+    },
+    {
+      "name": "title",
+      "title": "职称",
+      "type": "String"
+    },
+    {
+      "name": "department",
+      "title": "科室",
+      "type": "String"
+    },
+    {
+      "name": "hospital",
+      "title": "所属医院",
+      "type": "String"
+    },
+    {
+      "name": "qualifications",
+      "title": "资质证书",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "certificate_name",
+            "title": "证书名称",
+            "type": "String"
+          },
+          {
+            "name": "issuing_authority",
+            "title": "颁发机构",
+            "type": "String"
+          },
+          {
+            "name": "issue_date",
+            "title": "颁发日期",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "expiry_date",
+            "title": "有效期至",
+            "type": "Date",
+            "format": "date"
+          }
+        ]
+      }
+    },
+    {
+      "name": "experience",
+      "title": "从业经验",
+      "type": "Number"
+    },
+    {
+      "name": "education",
+      "title": "教育背景",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "degree",
+            "title": "学位",
+            "type": "String"
+          },
+          {
+            "name": "university",
+            "title": "院校",
+            "type": "String"
+          },
+          {
+            "name": "graduation_year",
+            "title": "毕业年份",
+            "type": "Number"
+          }
+        ]
+      }
+    },
+    {
+      "name": "availability",
+      "title": "可预约时间",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "schedule",
+          "title": "排班表",
+          "type": "Array",
+          "items": {
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "day_of_week",
+                "title": "星期",
+                "type": "String"
+              },
+              {
+                "name": "start_time",
+                "title": "开始时间",
+                "type": "String"
+              },
+              {
+                "name": "end_time",
+                "title": "结束时间",
+                "type": "String"
+              },
+              {
+                "name": "slots",
+                "title": "时段",
+                "type": "Array",
+                "items": {
+                  "type": "Object",
+                  "schemas": [
+                    {
+                      "name": "start_time",
+                      "title": "开始时间",
+                      "type": "String"
+                    },
+                    {
+                      "name": "end_time",
+                      "title": "结束时间",
+                      "type": "String"
+                    },
+                    {
+                      "name": "duration",
+                      "title": "时长",
+                      "type": "Number"
+                    },
+                    {
+                      "name": "max_patients",
+                      "title": "最大患者数",
+                      "type": "Number"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "holidays",
+          "title": "节假日",
+          "type": "Array",
+          "items": {
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "date",
+                "title": "日期",
+                "type": "Date",
+                "format": "date"
+              },
+              {
+                "name": "reason",
+                "title": "原因",
+                "type": "String"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "appointments",
+      "title": "预约记录",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "appointment_id",
+            "title": "预约ID",
+            "type": "String"
+          },
+          {
+            "name": "patient_id",
+            "title": "患者ID",
+            "type": "String"
+          },
+          {
+            "name": "time",
+            "title": "预约时间",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          },
+          {
+            "name": "status",
+            "title": "预约状态",
+            "type": "String"
+          },
+          {
+            "name": "notes",
+            "title": "备注",
+            "type": "String"
+          },
+          {
+            "name": "type",
+            "title": "预约类型",
+            "type": "String"
+          },
+          {
+            "name": "duration",
+            "title": "预约时长",
+            "type": "Number"
+          },
+          {
+            "name": "priority",
+            "title": "优先级",
+            "type": "String"
+          },
+          {
+            "name": "patient_info",
+            "title": "患者信息",
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "name",
+                "title": "患者姓名",
+                "type": "String"
+              },
+              {
+                "name": "age",
+                "title": "年龄",
+                "type": "Number"
+              },
+              {
+                "name": "gender",
+                "title": "性别",
+                "type": "String"
+              },
+              {
+                "name": "phone",
+                "title": "联系电话",
+                "type": "String"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "reports",
+      "title": "诊断报告",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "report_id",
+            "title": "报告ID",
+            "type": "String"
+          },
+          {
+            "name": "patient_id",
+            "title": "患者ID",
+            "type": "String"
+          },
+          {
+            "name": "diagnosis",
+            "title": "诊断结果",
+            "type": "String"
+          },
+          {
+            "name": "pdf_url",
+            "title": "PDF文件地址",
+            "type": "Url"
+          },
+          {
+            "name": "report_type",
+            "title": "报告类型",
+            "type": "String"
+          },
+          {
+            "name": "created_date",
+            "title": "创建日期",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          },
+          {
+            "name": "status",
+            "title": "报告状态",
+            "type": "String"
+          },
+          {
+            "name": "findings",
+            "title": "检查发现",
+            "type": "String"
+          },
+          {
+            "name": "recommendations",
+            "title": "建议",
+            "type": "String"
+          }
+        ]
+      }
+    },
+    {
+      "name": "prescriptions",
+      "title": "处方记录",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "prescription_id",
+            "title": "处方ID",
+            "type": "String"
+          },
+          {
+            "name": "patient_id",
+            "title": "患者ID",
+            "type": "String"
+          },
+          {
+            "name": "medications",
+            "title": "药品列表",
+            "type": "Array",
+            "items": {
+              "type": "Object",
+              "schemas": [
+                {
+                  "name": "drug_name",
+                  "title": "药品名称",
+                  "type": "String"
+                },
+                {
+                  "name": "dosage",
+                  "title": "剂量",
+                  "type": "String"
+                },
+                {
+                  "name": "frequency",
+                  "title": "用药频次",
+                  "type": "String"
+                },
+                {
+                  "name": "duration",
+                  "title": "用药时长",
+                  "type": "String"
+                },
+                {
+                  "name": "instructions",
+                  "title": "用药说明",
+                  "type": "String"
+                }
+              ]
+            }
+          },
+          {
+            "name": "created_date",
+            "title": "创建日期",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          },
+          {
+            "name": "valid_until",
+            "title": "有效期至",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "status",
+            "title": "处方状态",
+            "type": "String"
+          },
+          {
+            "name": "notes",
+            "title": "备注",
+            "type": "String"
+          }
+        ]
+      }
+    },
+    {
+      "name": "contact_info",
+      "title": "联系信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "phone",
+          "title": "联系电话",
+          "type": "String"
+        },
+        {
+          "name": "email",
+          "title": "邮箱",
+          "type": "Email"
+        },
+        {
+          "name": "office_address",
+          "title": "办公地址",
+          "type": "String"
+        },
+        {
+          "name": "consultation_hours",
+          "title": "门诊时间",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "name": "ratings",
+      "title": "评价信息",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "average_rating",
+          "title": "平均评分",
+          "type": "Number"
+        },
+        {
+          "name": "total_reviews",
+          "title": "总评价数",
+          "type": "Number"
+        },
+        {
+          "name": "specialties",
+          "title": "专业评分",
+          "type": "Array",
+          "items": {
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "specialty",
+                "title": "专业",
+                "type": "String"
+              },
+              {
+                "name": "rating",
+                "title": "评分",
+                "type": "Number"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "title": "医生状态",
+      "type": "String"
+    },
+    {
+      "name": "created_date",
+      "title": "创建日期",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "last_updated",
+      "title": "最后更新",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    }
+  ]
+}

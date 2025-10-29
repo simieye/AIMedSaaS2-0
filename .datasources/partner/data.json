@@ -1,0 +1,126 @@
+
+[
+  {
+    "_id": "partner_001",
+    "partner_id": "PARTNER001",
+    "org_name": "健康科技合作伙伴有限公司",
+    "contact": {
+      "contact_person": "张经理",
+      "contact_phone": "13800138001",
+      "contact_email": "zhang.manager@healthtech.com",
+      "company_address": "北京市朝阳区建国门外大街1号",
+      "business_license": "91110000MA01XYZ123"
+    },
+    "tier": "enterprise",
+    "status": "active",
+    "registration_date": "2024-01-01",
+    "review_status": "approved",
+    "review_date": "2024-01-05",
+    "review_notes": "企业资质齐全，审核通过",
+    "service_config": {
+      "max_api_calls": 1000000,
+      "max_storage_gb": 100,
+      "max_ai_requests": 50000,
+      "support_level": "premium",
+      "features": ["api_access", "data_analytics", "ai_services", "priority_support", "custom_integration"]
+    },
+    "billing_config": {
+      "billing_cycle": "monthly",
+      "payment_method": "bank_transfer",
+      "tax_info": {
+        "tax_number": "91110000MA01XYZ123",
+        "invoice_title": "健康科技合作伙伴有限公司"
+      }
+    },
+    "usage_stats": {
+      "total_api_calls": 125430,
+      "total_storage_gb": 25.5,
+      "total_ai_requests": 8920,
+      "last_activity_date": "2024-01-15"
+    },
+    "created_date": 1704067200000,
+    "updated_date": 1705737600000
+  },
+  {
+    "_id": "partner_002",
+    "partner_id": "PARTNER002",
+    "org_name": "智慧医疗科技有限公司",
+    "contact": {
+      "contact_person": "陈总监",
+      "contact_phone": "13900139002",
+      "contact_email": "chen.director@smartmed.com",
+      "company_address": "上海市浦东新区世纪大道100号",
+      "business_license": "91110000MA02ABC456"
+    },
+    "tier": "professional",
+    "status": "active",
+    "registration_date": "2024-01-10",
+    "review_status": "approved",
+    "review_date": "2024-01-12",
+    "review_notes": "审核通过，已开通专业版服务",
+    "service_config": {
+      "max_api_calls": 500000,
+      "max_storage_gb": 50,
+      "max_ai_requests": 25000,
+      "support_level": "standard",
+      "features": ["api_access", "data_analytics", "ai_services", "email_support"]
+    },
+    "billing_config": {
+      "billing_cycle": "monthly",
+      "payment_method": "alipay",
+      "tax_info": {
+        "tax_number": "91110000MA02ABC456",
+        "invoice_title": "智慧医疗科技有限公司"
+      }
+    },
+    "usage_stats": {
+      "total_api_calls": 67890,
+      "total_storage_gb": 12.3,
+      "total_ai_requests": 3456,
+      "last_activity_date": "2024-01-14"
+    },
+    "created_date": 1704854400000,
+    "updated_date": 1705651200000
+  },
+  {
+    "_id": "partner_003",
+    "partner_id": "PARTNER003",
+    "org_name": "远程医疗网络有限公司",
+    "contact": {
+      "contact_person": "王总",
+      "contact_phone": "13700137003",
+      "contact_email": "wang.ceo@telemed.com",
+      "company_address": "深圳市南山区科技园",
+      "business_license": "91110000MA03DEF789"
+    },
+    "tier": "basic",
+    "status": "pending",
+    "registration_date": "2024-01-15",
+    "review_status": "pending",
+    "review_date": null,
+    "review_notes": "等待企业资质审核",
+    "service_config": {
+      "max_api_calls": 100000,
+      "max_storage_gb": 10,
+      "max_ai_requests": 5000,
+      "support_level": "basic",
+      "features": ["api_access", "basic_analytics"]
+    },
+    "billing_config": {
+      "billing_cycle": "monthly",
+      "payment_method": "wechat_pay",
+      "tax_info": {
+        "tax_number": "91110000MA03DEF789",
+        "invoice_title": "远程医疗网络有限公司"
+      }
+    },
+    "usage_stats": {
+      "total_api_calls": 0,
+      "total_storage_gb": 0,
+      "total_ai_requests": 0,
+      "last_activity_date": null
+    },
+    "created_date": 1705737600000,
+    "updated_date": 1705737600000
+  }
+]

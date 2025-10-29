@@ -1,0 +1,311 @@
+
+[
+  {
+    "_id": "exp_001",
+    "experiment_id": "EXP202401150001",
+    "agent_id": "AGENT001",
+    "dataset_id": "DATASET_CARDIO_V1",
+    "experiment_name": "心脏病诊断模型优化实验",
+    "description": "基于新的心电图数据集对心脏病诊断AI模型进行优化，提升诊断准确率",
+    "config": {
+      "model_config": {
+        "model_type": "transformer",
+        "model_version": "v2.1.0",
+        "architecture": "ECG-Transformer",
+        "pretrained_model": "medical-bert-base"
+      },
+      "training_config": {
+        "epochs": 100,
+        "batch_size": 32,
+        "learning_rate": 0.001,
+        "optimizer": "AdamW",
+        "loss_function": "CrossEntropyLoss",
+        "validation_split": 0.2
+      },
+      "data_config": {
+        "data_augmentation": true,
+        "normalization": true,
+        "validation_strategy": "k-fold"
+      },
+      "hyperparameters": {
+        "dropout_rate": 0.1,
+        "attention_heads": 8,
+        "hidden_dim": 512
+      },
+      "environment": "production-gpu-v100"
+    },
+    "metrics": {
+      "training_metrics": {
+        "loss": {
+          "training_loss": 0.234,
+          "validation_loss": 0.267,
+          "test_loss": 0.245
+        },
+        "accuracy": {
+          "training_accuracy": 0.923,
+          "validation_accuracy": 0.894,
+          "test_accuracy": 0.912
+        },
+        "additional_metrics": {
+          "precision": 0.915,
+          "recall": 0.908,
+          "f1_score": 0.911,
+          "auc_roc": 0.945,
+          "confusion_matrix": [[85, 5], [8, 92]]
+        }
+      },
+      "performance_metrics": {
+        "inference_time": 45.2,
+        "memory_usage": 2048,
+        "model_size": 156.7,
+        "throughput": 22.1
+      },
+      "business_metrics": {
+        "cost": 125.5,
+        "efficiency": 0.89,
+        "user_satisfaction": 4.6
+      }
+    },
+    "status": "completed",
+    "progress": {
+      "current_epoch": 100,
+      "total_epochs": 100,
+      "progress_percentage": 100,
+      "estimated_completion": 1705737600000,
+      "start_time": 1705647600000,
+      "end_time": 1705737600000
+    },
+    "created_by": "user_001",
+    "pccp_log_id": "PCCP202401150001",
+    "published_version": "v2.1.0-stable",
+    "experiment_type": "training",
+    "priority": "high",
+    "tags": ["cardiology", "ecg", "diagnosis", "production"],
+    "notes": "实验成功完成，模型性能达到预期目标，建议部署到生产环境",
+    "artifacts": {
+      "model_files": ["model_v2.1.0.pth", "config.json", "tokenizer.json"],
+      "logs": ["training.log", "validation.log", "test.log"],
+      "checkpoints": ["checkpoint_epoch_50.pth", "checkpoint_epoch_100.pth"],
+      "reports": ["performance_report.pdf", "compliance_report.pdf"]
+    },
+    "compliance": {
+      "approval_status": "approved",
+      "risk_level": "low",
+      "reviewer": "dr_wang",
+      "review_date": 1705737600000,
+      "compliance_score": 0.95
+    },
+    "resource_usage": {
+      "gpu_hours": 48.5,
+      "cpu_hours": 12.3,
+      "memory_gb": 2048,
+      "storage_gb": 15.6
+    },
+    "createdAt": 1705647600000,
+    "updatedAt": 1705737600000
+  },
+  {
+    "_id": "exp_002",
+    "experiment_id": "EXP202401150002",
+    "agent_id": "AGENT002",
+    "dataset_id": "DATASET_DIABETES_V2",
+    "experiment_name": "糖尿病预测模型微调实验",
+    "description": "基于迁移学习对糖尿病预测模型进行微调，适应新的患者群体特征",
+    "config": {
+      "model_config": {
+        "model_type": "cnn",
+        "model_version": "v1.3.0",
+        "architecture": "ResNet50",
+        "pretrained_model": "imagenet"
+      },
+      "training_config": {
+        "epochs": 50,
+        "batch_size": 64,
+        "learning_rate": 0.0001,
+        "optimizer": "SGD",
+        "loss_function": "BCEWithLogitsLoss",
+        "validation_split": 0.15
+      },
+      "data_config": {
+        "data_augmentation": false,
+        "normalization": true,
+        "validation_strategy": "stratified"
+      },
+      "hyperparameters": {
+        "momentum": 0.9,
+        "weight_decay": 0.0001
+      },
+      "environment": "staging-gpu-t4"
+    },
+    "metrics": {
+      "training_metrics": {
+        "loss": {
+          "training_loss": 0.156,
+          "validation_loss": 0.189,
+          "test_loss": 0.167
+        },
+        "accuracy": {
+          "training_accuracy": 0.945,
+          "validation_accuracy": 0.923,
+          "test_accuracy": 0.934
+        },
+        "additional_metrics": {
+          "precision": 0.931,
+          "recall": 0.937,
+          "f1_score": 0.934,
+          "auc_roc": 0.968
+        }
+      },
+      "performance_metrics": {
+        "inference_time": 23.8,
+        "memory_usage": 1024,
+        "model_size": 89.3,
+        "throughput": 41.7
+      },
+      "business_metrics": {
+        "cost": 67.8,
+        "efficiency": 0.92,
+        "user_satisfaction": 4.7
+      }
+    },
+    "status": "running",
+    "progress": {
+      "current_epoch": 35,
+      "total_epochs": 50,
+      "progress_percentage": 70,
+      "estimated_completion": 1705824000000,
+      "start_time": 1705737600000,
+      "end_time": null
+    },
+    "created_by": "user_002",
+    "pccp_log_id": "PCCP202401150002",
+    "published_version": null,
+    "experiment_type": "fine_tuning",
+    "priority": "medium",
+    "tags": ["diabetes", "prediction", "fine_tuning", "staging"],
+    "notes": "正在进行第35轮训练，目前指标表现良好",
+    "artifacts": {
+      "model_files": [],
+      "logs": ["training.log", "validation.log"],
+      "checkpoints": ["checkpoint_epoch_25.pth"],
+      "reports": []
+    },
+    "compliance": {
+      "approval_status": "pending",
+      "risk_level": "medium",
+      "reviewer": null,
+      "review_date": null,
+      "compliance_score": 0.85
+    },
+    "resource_usage": {
+      "gpu_hours": 24.5,
+      "cpu_hours": 6.2,
+      "memory_gb": 1024,
+      "storage_gb": 8.9
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705780800000
+  },
+  {
+    "_id": "exp_003",
+    "experiment_id": "EXP202401150003",
+    "agent_id": "AGENT003",
+    "dataset_id": "DATASET_LUNG_CANCER_V1",
+    "experiment_name": "肺癌早期筛查A/B测试",
+    "description": "对比两个不同架构的肺癌早期筛查模型性能",
+    "config": {
+      "model_config": {
+        "model_type": "ensemble",
+        "model_version": "v1.0.0",
+        "architecture": "Ensemble-Voting",
+        "pretrained_model": "medical-ensemble-base"
+      },
+      "training_config": {
+        "epochs": 75,
+        "batch_size": 16,
+        "learning_rate": 0.0005,
+        "optimizer": "Adam",
+        "loss_function": "FocalLoss",
+        "validation_split": 0.25
+      },
+      "data_config": {
+        "data_augmentation": true,
+        "normalization": true,
+        "validation_strategy": "stratified_k-fold"
+      },
+      "hyperparameters": {
+        "ensemble_size": 5,
+        "voting_strategy": "soft"
+      },
+      "environment": "research-gpu-a100"
+    },
+    "metrics": {
+      "training_metrics": {
+        "loss": {
+          "training_loss": 0.198,
+          "validation_loss": 0.234,
+          "test_loss": 0.215
+        },
+        "accuracy": {
+          "training_accuracy": 0.912,
+          "validation_accuracy": 0.887,
+          "test_accuracy": 0.899
+        },
+        "additional_metrics": {
+          "precision": 0.894,
+          "recall": 0.923,
+          "f1_score": 0.908,
+          "auc_roc": 0.934
+        }
+      },
+      "performance_metrics": {
+        "inference_time": 156.3,
+        "memory_usage": 4096,
+        "model_size": 234.5,
+        "throughput": 6.4
+      },
+      "business_metrics": {
+        "cost": 234.7,
+        "efficiency": 0.78,
+        "user_satisfaction": 4.3
+      }
+    },
+    "status": "failed",
+    "progress": {
+      "current_epoch": 45,
+      "total_epochs": 75,
+      "progress_percentage": 60,
+      "estimated_completion": null,
+      "start_time": 1705651200000,
+      "end_time": 1705734000000
+    },
+    "created_by": "user_003",
+    "pccp_log_id": "PCCP202401150003",
+    "published_version": null,
+    "experiment_type": "ab_test",
+    "priority": "high",
+    "tags": ["lung_cancer", "early_detection", "ab_test", "failed"],
+    "notes": "实验在第45轮时因内存不足失败，需要优化内存使用",
+    "artifacts": {
+      "model_files": [],
+      "logs": ["error.log", "training.log"],
+      "checkpoints": ["checkpoint_epoch_40.pth"],
+      "reports": ["failure_analysis.pdf"]
+    },
+    "compliance": {
+      "approval_status": "rejected",
+      "risk_level": "high",
+      "reviewer": "dr_li",
+      "review_date": 1705734000000,
+      "compliance_score": 0.65
+    },
+    "resource_usage": {
+      "gpu_hours": 32.1,
+      "cpu_hours": 8.7,
+      "memory_gb": 4096,
+      "storage_gb": 23.4
+    },
+    "createdAt": 1705651200000,
+    "updatedAt": 1705734000000
+  }
+]

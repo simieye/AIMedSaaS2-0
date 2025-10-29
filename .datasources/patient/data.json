@@ -1,0 +1,500 @@
+
+[
+  {
+    "_id": "patient_001",
+    "patient_id": "P2024001001",
+    "name": "张三",
+    "gender": "男",
+    "dob": "1990-03-15",
+    "contact": {
+      "phone": "13800138001",
+      "email": "zhangsan@example.com",
+      "emergency_contact": {
+        "name": "张父",
+        "relationship": "父亲",
+        "phone": "13800138002"
+      },
+      "address": {
+        "street": "北京市朝阳区建国门外大街1号",
+        "city": "北京市",
+        "state": "北京市",
+        "postal_code": "100001",
+        "country": "中国"
+      }
+    },
+    "medical_history": {
+      "allergies": ["青霉素", "海鲜"],
+      "chronic_conditions": [
+        {
+          "condition": "2型糖尿病",
+          "diagnosis_date": "2020-05-10",
+          "status": "控制良好",
+          "medications": [
+            {
+              "drug_name": "二甲双胍",
+              "dosage": "500mg",
+              "frequency": "每日两次",
+              "start_date": "2020-05-15"
+            }
+          ]
+        },
+        {
+          "condition": "高血压",
+          "diagnosis_date": "2019-08-20",
+          "status": "控制中",
+          "medications": [
+            {
+              "drug_name": "氨氯地平",
+              "dosage": "5mg",
+              "frequency": "每日一次",
+              "start_date": "2019-08-25"
+            }
+          ]
+        }
+      ],
+      "surgeries": [
+        {
+          "procedure": "阑尾切除术",
+          "date": "2015-06-15",
+          "hospital": "北京协和医院",
+          "notes": "术后恢复良好"
+        }
+      ],
+      "family_history": [
+        {
+          "condition": "糖尿病",
+          "relationship": "父亲"
+        },
+        {
+          "condition": "高血压",
+          "relationship": "母亲"
+        }
+      ]
+    },
+    "nutrition_logs": [
+      {
+        "log_id": "NUT001",
+        "date": "2024-01-15",
+        "meal_type": "早餐",
+        "foods": [
+          {
+            "food_name": "燕麦粥",
+            "quantity": 50,
+            "unit": "g",
+            "calories": 180,
+            "protein": 6,
+            "carbs": 32,
+            "fat": 3
+          },
+          {
+            "food_name": "鸡蛋",
+            "quantity": 1,
+            "unit": "个",
+            "calories": 70,
+            "protein": 6,
+            "carbs": 0,
+            "fat": 5
+          }
+        ],
+        "total_calories": 250,
+        "ai_analysis": {
+          "nutritional_score": 85,
+          "recommendations": ["增加蔬菜摄入", "控制总热量"],
+          "deficiencies": ["维生素C不足"]
+        }
+      },
+      {
+        "log_id": "NUT002",
+        "date": "2024-01-15",
+        "meal_type": "午餐",
+        "foods": [
+          {
+            "food_name": "糙米饭",
+            "quantity": 100,
+            "unit": "g",
+            "calories": 130,
+            "protein": 3,
+            "carbs": 28,
+            "fat": 1
+          },
+          {
+            "food_name": "清蒸鲈鱼",
+            "quantity": 150,
+            "unit": "g",
+            "calories": 180,
+            "protein": 35,
+            "carbs": 0,
+            "fat": 8
+          },
+          {
+            "food_name": "西兰花",
+            "quantity": 100,
+            "unit": "g",
+            "calories": 35,
+            "protein": 3,
+            "carbs": 7,
+            "fat": 0
+          }
+        ],
+        "total_calories": 345,
+        "ai_analysis": {
+          "nutritional_score": 90,
+          "recommendations": ["继续保持均衡饮食"],
+          "deficiencies": []
+        }
+      }
+    ],
+    "rehab_plans": [
+      {
+        "plan_id": "REHAB001",
+        "plan_name": "糖尿病运动康复计划",
+        "condition": "2型糖尿病血糖控制",
+        "start_date": "2024-01-01",
+        "end_date": "2024-03-31",
+        "exercises": [
+          {
+            "exercise_name": "快走",
+            "frequency": "每日",
+            "duration": 30,
+            "intensity": "中等",
+            "instructions": "餐后1小时进行，心率保持在最大心率的60-70%"
+          },
+          {
+            "exercise_name": "力量训练",
+            "frequency": "每周3次",
+            "duration": 20,
+            "intensity": "轻到中等",
+            "instructions": "重点锻炼大肌群，每组8-12次，2-3组"
+          }
+        ],
+        "progress_tracking": {
+          "current_stage": "第2周",
+          "completion_percentage": 15,
+          "milestones": [
+            {
+              "milestone_name": "血糖稳定",
+              "target_date": "2024-01-31",
+              "achieved": false
+            },
+            {
+              "milestone_name": "体重减轻2kg",
+              "target_date": "2024-02-28",
+              "achieved": false
+            }
+          ]
+        }
+      }
+    ],
+    "qa_history": [
+      {
+        "qa_id": "QA001",
+        "question": "糖尿病患者可以吃水果吗？",
+        "answer": "糖尿病患者可以适量吃水果，建议选择低糖水果如苹果、梨、柚子等，每次控制在100-150g，最好在两餐之间食用。",
+        "category": "营养咨询",
+        "asked_at": 1705737600000,
+        "answered_at": 1705737660000,
+        "ai_confidence": 0.95,
+        "follow_up_questions": [
+          {
+            "question": "哪些水果属于低糖水果？",
+            "answer": "低糖水果包括：草莓、蓝莓、柠檬、柚子、苹果、梨等，每100g含糖量低于10g。"
+          }
+        ]
+      },
+      {
+        "qa_id": "QA002",
+        "question": "高血压患者的饮食注意事项？",
+        "answer": "高血压患者应限制钠盐摄入（每日<5g），增加钾的摄入，多吃蔬菜水果，限制饱和脂肪，控制体重，戒烟限酒。",
+        "category": "疾病管理",
+        "asked_at": 1705744800000,
+        "answered_at": 1705744860000,
+        "ai_confidence": 0.92,
+        "follow_up_questions": []
+      }
+    ],
+    "insurance_info": {
+      "insurance_provider": "平安健康保险",
+      "policy_number": "PA2024001001",
+      "policy_type": "商业医疗保险",
+      "coverage_start": "2024-01-01",
+      "coverage_end": "2024-12-31",
+      "coverage_details": {
+        "total_coverage": 500000,
+        "deductible": 1000,
+        "copay_percentage": 20,
+        "covered_services": ["门诊", "住院", "药品", "检查"],
+        "excluded_services": ["美容整形", "牙科", "视力矫正"]
+      },
+      "balance_info": {
+        "current_balance": 485000,
+        "used_amount": 15000,
+        "remaining_amount": 485000
+      },
+      "claims_history": [
+        {
+          "claim_id": "CLM001",
+          "service_date": "2024-01-10",
+          "service_type": "门诊",
+          "amount_claimed": 500,
+          "amount_approved": 400,
+          "status": "已理赔"
+        }
+      ]
+    },
+    "health_metrics": {
+      "height": 175,
+      "weight": 70,
+      "bmi": 22.9,
+      "blood_pressure": {
+        "systolic": 130,
+        "diastolic": 85
+      },
+      "blood_sugar": {
+        "fasting": 6.5,
+        "post_meal": 8.2,
+        "hba1c": 7.0
+      },
+      "vital_signs": {
+        "heart_rate": 72,
+        "temperature": 36.5,
+        "oxygen_saturation": 98
+      }
+    },
+    "preferences": {
+      "language": "zh-CN",
+      "notification_settings": {
+        "email_notifications": true,
+        "sms_notifications": true,
+        "push_notifications": true
+      },
+      "privacy_settings": {
+        "share_data_with_doctors": true,
+        "share_data_with_partners": false,
+        "allow_research_participation": true
+      }
+    },
+    "emergency_info": {
+      "blood_type": "A+",
+      "emergency_contacts": [
+        {
+          "name": "张父",
+          "relationship": "父亲",
+          "phone": "13800138002",
+          "email": "zhangfather@example.com"
+        },
+        {
+          "name": "李母",
+          "relationship": "母亲",
+          "phone": "13800138003",
+          "email": "zhangmother@example.com"
+        }
+      ],
+      "medical_alerts": ["糖尿病", "青霉素过敏"]
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705744800000,
+    "owner": "P2024001001",
+    "createBy": "patient_registration",
+    "updateBy": "patient_001"
+  },
+  {
+    "_id": "patient_002",
+    "patient_id": "P2024001002",
+    "name": "李四",
+    "gender": "女",
+    "dob": "1985-07-20",
+    "contact": {
+      "phone": "13900139002",
+      "email": "lisi@example.com",
+      "emergency_contact": {
+        "name": "李夫",
+        "relationship": "丈夫",
+        "phone": "13900139003"
+      },
+      "address": {
+        "street": "上海市浦东新区世纪大道100号",
+        "city": "上海市",
+        "state": "上海市",
+        "postal_code": "200120",
+        "country": "中国"
+      }
+    },
+    "medical_history": {
+      "allergies": ["花粉", "尘螨"],
+      "chronic_conditions": [
+        {
+          "condition": "甲状腺功能减退",
+          "diagnosis_date": "2022-03-15",
+          "status": "控制中",
+          "medications": [
+            {
+              "drug_name": "左甲状腺素钠",
+              "dosage": "50μg",
+              "frequency": "每日一次",
+              "start_date": "2022-03-20"
+            }
+          ]
+        }
+      ],
+      "surgeries": [],
+      "family_history": [
+        {
+          "condition": "甲状腺疾病",
+          "relationship": "母亲"
+        }
+      ]
+    },
+    "nutrition_logs": [
+      {
+        "log_id": "NUT003",
+        "date": "2024-01-15",
+        "meal_type": "晚餐",
+        "foods": [
+          {
+            "food_name": "糙米饭",
+            "quantity": 80,
+            "unit": "g",
+            "calories": 104,
+            "protein": 2,
+            "carbs": 22,
+            "fat": 1
+          },
+          {
+            "food_name": "蒸蛋羹",
+            "quantity": 1,
+            "unit": "份",
+            "calories": 90,
+            "protein": 8,
+            "carbs": 1,
+            "fat": 6
+          }
+        ],
+        "total_calories": 194,
+        "ai_analysis": {
+          "nutritional_score": 75,
+          "recommendations": ["增加蔬菜摄入", "适量增加蛋白质"],
+          "deficiencies": ["膳食纤维不足"]
+        }
+      }
+    ],
+    "rehab_plans": [
+      {
+        "plan_id": "REHAB002",
+        "plan_name": "甲状腺康复计划",
+        "condition": "甲状腺功能减退管理",
+        "start_date": "2024-01-01",
+        "end_date": "2024-06-30",
+        "exercises": [
+          {
+            "exercise_name": "瑜伽",
+            "frequency": "每周3次",
+            "duration": 45,
+            "intensity": "轻到中等",
+            "instructions": "重点进行颈部和肩部放松练习"
+          }
+        ],
+        "progress_tracking": {
+          "current_stage": "第3周",
+          "completion_percentage": 20,
+          "milestones": [
+            {
+              "milestone_name": "甲状腺功能指标正常",
+              "target_date": "2024-03-31",
+              "achieved": false
+            }
+          ]
+        }
+      }
+    ],
+    "qa_history": [
+      {
+        "qa_id": "QA003",
+        "question": "甲减患者饮食需要注意什么？",
+        "answer": "甲减患者应保证充足碘摄入，适量食用海带、紫菜等海产品，避免过量摄入致甲状腺肿物质如卷心菜、木薯等，保持均衡饮食。",
+        "category": "疾病管理",
+        "asked_at": 1705752000000,
+        "answered_at": 1705752060000,
+        "ai_confidence": 0.93,
+        "follow_up_questions": []
+      }
+    ],
+    "insurance_info": {
+      "insurance_provider": "中国人寿保险",
+      "policy_number": "CL2024001002",
+      "policy_type": "社会医疗保险",
+      "coverage_start": "2024-01-01",
+      "coverage_end": "2024-12-31",
+      "coverage_details": {
+        "total_coverage": 300000,
+        "deductible": 500,
+        "copay_percentage": 10,
+        "covered_services": ["门诊", "住院", "基本药品"],
+        "excluded_services": ["高端医疗", "牙科", "美容"]
+      },
+      "balance_info": {
+        "current_balance": 295000,
+        "used_amount": 5000,
+        "remaining_amount": 295000
+      },
+      "claims_history": [
+        {
+          "claim_id": "CLM002",
+          "service_date": "2024-01-12",
+          "service_type": "门诊",
+          "amount_claimed": 300,
+          "amount_approved": 270,
+          "status": "已理赔"
+        }
+      ]
+    },
+    "health_metrics": {
+      "height": 165,
+      "weight": 58,
+      "bmi": 21.3,
+      "blood_pressure": {
+        "systolic": 120,
+        "diastolic": 80
+      },
+      "blood_sugar": {
+        "fasting": 5.2,
+        "post_meal": 6.8,
+        "hba1c": 5.5
+      },
+      "vital_signs": {
+        "heart_rate": 68,
+        "temperature": 36.6,
+        "oxygen_saturation": 99
+      }
+    },
+    "preferences": {
+      "language": "zh-CN",
+      "notification_settings": {
+        "email_notifications": true,
+        "sms_notifications": false,
+        "push_notifications": true
+      },
+      "privacy_settings": {
+        "share_data_with_doctors": true,
+        "share_data_with_partners": true,
+        "allow_research_participation": false
+      }
+    },
+    "emergency_info": {
+      "blood_type": "B+",
+      "emergency_contacts": [
+        {
+          "name": "李夫",
+          "relationship": "丈夫",
+          "phone": "13900139003",
+          "email": "lihusband@example.com"
+        }
+      ],
+      "medical_alerts": ["花粉过敏", "甲状腺疾病"]
+    },
+    "createdAt": 1705744800000,
+    "updatedAt": 1705752000000,
+    "owner": "P2024001002",
+    "createBy": "patient_registration",
+    "updateBy": "patient_002"
+  }
+]

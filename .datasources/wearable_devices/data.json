@@ -1,0 +1,283 @@
+
+[
+  {
+    "_id": "wearable_001",
+    "device_id": "WDEV202401150001",
+    "user_id": "patient_001",
+    "device_type": "smartwatch",
+    "mac_address": "12:34:56:78:90:AB",
+    "last_sync_at": 1705737600000,
+    "data_schema": {
+      "metrics": [
+        {
+          "metric_name": "heart_rate",
+          "unit": "bpm",
+          "frequency": "1Hz",
+          "range": {
+            "min": 60,
+            "max": 100
+          }
+        },
+        {
+          "metric_name": "blood_pressure",
+          "unit": "mmHg",
+          "frequency": "0.1Hz",
+          "range": {
+            "min": 90,
+            "max": 140
+          }
+        },
+        {
+          "metric_name": "temperature",
+          "unit": "celsius",
+          "frequency": "0.1Hz",
+          "range": {
+            "min": 36.0,
+            "max": 37.5
+          }
+        },
+        {
+          "metric_name": "steps",
+          "unit": "count",
+          "frequency": "event_based",
+          "range": {
+            "min": 0,
+            "max": 20000
+          }
+        },
+        {
+          "metric_name": "sleep_hours",
+          "unit": "hours",
+          "frequency": "daily",
+          "range": {
+            "min": 6,
+            "max": 10
+          }
+        }
+      ],
+      "data_format": "JSON",
+      "api_version": "v2.1"
+    },
+    "status": "active",
+    "registered_at": 1705737600000,
+    "device_info": {
+      "brand": "Apple",
+      "model": "Watch Series 9",
+      "serial_number": "ABC123456789",
+      "firmware_version": "10.0.1",
+      "battery_level": 85
+    },
+    "health_data": {
+      "heart_rate": 72,
+      "blood_pressure": {
+        "systolic": 120,
+        "diastolic": 80
+      },
+      "temperature": 36.8,
+      "steps": 8500,
+      "sleep_hours": 7.5,
+      "spo2": 98
+    },
+    "sync_config": {
+      "sync_interval": 300,
+      "batch_size": 100,
+      "retry_attempts": 3,
+      "compression_enabled": true
+    },
+    "permissions": {
+      "data_sharing": true,
+      "third_party_access": ["medical_team", "family"],
+      "privacy_level": "standard"
+    },
+    "alerts": [
+      {
+        "alert_type": "high_heart_rate",
+        "severity": "warning",
+        "threshold_value": 100,
+        "triggered_at": 1705737600000,
+        "message": "心率超过正常范围"
+      }
+    ],
+    "location": {
+      "latitude": 39.9042,
+      "longitude": 116.4074,
+      "address": "北京市朝阳区"
+    },
+    "metadata": {
+      "source": "apple_health",
+      "version": "1.0.0",
+      "tags": ["smartwatch", "health_monitoring", "cardiac"]
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000
+  },
+  {
+    "_id": "wearable_002",
+    "device_id": "WDEV202401150002",
+    "user_id": "patient_002",
+    "device_type": "fitness_tracker",
+    "mac_address": "AB:CD:EF:12:34:56",
+    "last_sync_at": 1705737600000,
+    "data_schema": {
+      "metrics": [
+        {
+          "metric_name": "heart_rate",
+          "unit": "bpm",
+          "frequency": "0.5Hz",
+          "range": {
+            "min": 60,
+            "max": 100
+          }
+        },
+        {
+          "metric_name": "steps",
+          "unit": "count",
+          "frequency": "event_based",
+          "range": {
+            "min": 0,
+            "max": 30000
+          }
+        },
+        {
+          "metric_name": "sleep_hours",
+          "unit": "hours",
+          "frequency": "daily",
+          "range": {
+            "min": 5,
+            "max": 12
+          }
+        }
+      ],
+      "data_format": "JSON",
+      "api_version": "v1.2"
+    },
+    "status": "active",
+    "registered_at": 1705737600000,
+    "device_info": {
+      "brand": "Fitbit",
+      "model": "Charge 6",
+      "serial_number": "XYZ987654321",
+      "firmware_version": "1.2.0",
+      "battery_level": 92
+    },
+    "health_data": {
+      "heart_rate": 68,
+      "steps": 12000,
+      "sleep_hours": 8.2
+    },
+    "sync_config": {
+      "sync_interval": 600,
+      "batch_size": 50,
+      "retry_attempts": 2,
+      "compression_enabled": false
+    },
+    "permissions": {
+      "data_sharing": true,
+      "third_party_access": ["medical_team"],
+      "privacy_level": "high"
+    },
+    "alerts": [],
+    "location": {
+      "latitude": 31.2304,
+      "longitude": 121.4737,
+      "address": "上海市浦东新区"
+    },
+    "metadata": {
+      "source": "fitbit_api",
+      "version": "1.0.0",
+      "tags": ["fitness_tracker", "activity_monitoring"]
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000
+  },
+  {
+    "_id": "wearable_003",
+    "device_id": "WDEV202401150003",
+    "user_id": "patient_003",
+    "device_type": "medical_device",
+    "mac_address": "CD:EF:12:34:56:78",
+    "last_sync_at": 1705737600000,
+    "data_schema": {
+      "metrics": [
+        {
+          "metric_name": "blood_pressure",
+          "unit": "mmHg",
+          "frequency": "0.01Hz",
+          "range": {
+            "min": 90,
+            "max": 140
+          }
+        },
+        {
+          "metric_name": "temperature",
+          "unit": "celsius",
+          "frequency": "0.1Hz",
+          "range": {
+            "min": 35.5,
+            "max": 37.5
+          }
+        },
+        {
+          "metric_name": "spo2",
+          "unit": "percentage",
+          "frequency": "0.1Hz",
+          "range": {
+            "min": 95,
+            "max": 100
+          }
+        }
+      ],
+      "data_format": "HL7",
+      "api_version": "v3.0"
+    },
+    "status": "maintenance",
+    "registered_at": 1705737600000,
+    "device_info": {
+      "brand": "Omron",
+      "model": "HeartGuide",
+      "serial_number": "MED123456789",
+      "firmware_version": "2.1.3",
+      "battery_level": 45
+    },
+    "health_data": {
+      "blood_pressure": {
+        "systolic": 135,
+        "diastolic": 85
+      },
+      "temperature": 36.5,
+      "spo2": 97
+    },
+    "sync_config": {
+      "sync_interval": 1800,
+      "batch_size": 10,
+      "retry_attempts": 5,
+      "compression_enabled": true
+    },
+    "permissions": {
+      "data_sharing": true,
+      "third_party_access": ["medical_team", "emergency_contact"],
+      "privacy_level": "high"
+    },
+    "alerts": [
+      {
+        "alert_type": "low_battery",
+        "severity": "info",
+        "threshold_value": 50,
+        "triggered_at": 1705737600000,
+        "message": "设备电量低，请及时充电"
+      }
+    ],
+    "location": {
+      "latitude": 22.3193,
+      "longitude": 114.1694,
+      "address": "香港特别行政区"
+    },
+    "metadata": {
+      "source": "medical_device_api",
+      "version": "1.0.0",
+      "tags": ["medical_device", "blood_pressure", "clinical_grade"]
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000
+  }
+]

@@ -1,0 +1,80 @@
+
+{
+  "name": "medical_records",
+  "title": "病历记录",
+  "description": "存储患者病历记录，支持AI诊断分析和科室专业化管理",
+  "schemas": [
+    {
+      "name": "record_id",
+      "title": "病历ID",
+      "type": "String"
+    },
+    {
+      "name": "patient_id",
+      "title": "患者ID",
+      "type": "String"
+    },
+    {
+      "name": "doctor_id",
+      "title": "医生ID",
+      "type": "String"
+    },
+    {
+      "name": "department",
+      "title": "科室",
+      "type": "String"
+    },
+    {
+      "name": "record_type",
+      "title": "记录类型",
+      "type": "String"
+    },
+    {
+      "name": "chief_complaint",
+      "title": "主诉",
+      "type": "String"
+    },
+    {
+      "name": "present_illness",
+      "title": "现病史",
+      "type": "MultiLineString"
+    },
+    {
+      "name": "past_history",
+      "title": "既往史",
+      "type": "MultiLineString"
+    },
+    {
+      "name": "physical_exam",
+      "title": "体格检查",
+      "type": "Object"
+    },
+    {
+      "name": "diagnosis",
+      "title": "诊断",
+      "type": "Object"
+    },
+    {
+      "name": "treatment",
+      "title": "治疗方案",
+      "type": "Object"
+    },
+    {
+      "name": "ai_analysis",
+      "title": "AI分析结果",
+      "type": "Object"
+    },
+    {
+      "name": "created_at",
+      "title": "创建时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "updated_at",
+      "title": "更新时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    }
+  ]
+}
