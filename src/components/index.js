@@ -115,4 +115,3 @@ export * from './ReportGeneration.jsx';
 export * from './HallucinationAlerts.jsx';
 export * from './ApprovalWorkflow.jsx';
 export * from './ROIAnalysisDashboard.jsx';
-export * from './IntelligentSearch.jsx';

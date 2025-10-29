@@ -1,0 +1,597 @@
+
+{
+  "name": "roadmap",
+  "title": "开发路线图",
+  "schemas": [
+    {
+      "name": "roadmap_id",
+      "title": "路线图ID",
+      "type": "String"
+    },
+    {
+      "name": "name",
+      "title": "路线图名称",
+      "type": "String"
+    },
+    {
+      "name": "description",
+      "title": "路线图描述",
+      "type": "MultiLineString"
+    },
+    {
+      "name": "category",
+      "title": "路线图分类",
+      "type": "String"
+    },
+    {
+      "name": "status",
+      "title": "路线图状态",
+      "type": "String"
+    },
+    {
+      "name": "priority",
+      "title": "优先级",
+      "type": "String"
+    },
+    {
+      "name": "start_date",
+      "title": "开始日期",
+      "type": "Date",
+      "format": "date"
+    },
+    {
+      "name": "end_date",
+      "title": "结束日期",
+      "type": "Date",
+      "format": "date"
+    },
+    {
+      "name": "budget",
+      "title": "预算",
+      "type": "Number"
+    },
+    {
+      "name": "actual_cost",
+      "title": "实际成本",
+      "type": "Number"
+    },
+    {
+      "name": "owner",
+      "title": "负责人",
+      "type": "String"
+    },
+    {
+      "name": "team",
+      "title": "团队",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "progress",
+      "title": "整体进度",
+      "type": "Number"
+    },
+    {
+      "name": "milestones",
+      "title": "里程碑",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "milestone_id",
+            "title": "里程碑ID",
+            "type": "String"
+          },
+          {
+            "name": "name",
+            "title": "里程碑名称",
+            "type": "String"
+          },
+          {
+            "name": "description",
+            "title": "里程碑描述",
+            "type": "String"
+          },
+          {
+            "name": "category",
+            "title": "里程碑分类",
+            "type": "String"
+          },
+          {
+            "name": "status",
+            "title": "里程碑状态",
+            "type": "String"
+          },
+          {
+            "name": "priority",
+            "title": "优先级",
+            "type": "String"
+          },
+          {
+            "name": "start_date",
+            "title": "开始日期",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "end_date",
+            "title": "结束日期",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "actual_end_date",
+            "title": "实际结束日期",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "progress",
+            "title": "进度",
+            "type": "Number"
+          },
+          {
+            "name": "budget",
+            "title": "预算",
+            "type": "Number"
+          },
+          {
+            "name": "actual_cost",
+            "title": "实际成本",
+            "type": "Number"
+          },
+          {
+            "name": "owner",
+            "title": "负责人",
+            "type": "String"
+          },
+          {
+            "name": "dependencies",
+            "title": "依赖关系",
+            "type": "Array",
+            "items": {
+              "type": "String"
+            }
+          },
+          {
+            "name": "deliverables",
+            "title": "交付物",
+            "type": "Array",
+            "items": {
+              "type": "String"
+            }
+          },
+          {
+            "name": "risks",
+            "title": "风险",
+            "type": "Array",
+            "items": {
+              "type": "String"
+            }
+          },
+          {
+            "name": "kpis",
+            "title": "KPI指标",
+            "type": "Object"
+          }
+        ]
+      }
+    },
+    {
+      "name": "tasks",
+      "title": "任务",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "task_id",
+            "title": "任务ID",
+            "type": "String"
+          },
+          {
+            "name": "milestone_id",
+            "title": "关联里程碑ID",
+            "type": "String"
+          },
+          {
+            "name": "title",
+            "title": "任务标题",
+            "type": "String"
+          },
+          {
+            "name": "description",
+            "title": "任务描述",
+            "type": "String"
+          },
+          {
+            "name": "assignee",
+            "title": "负责人",
+            "type": "String"
+          },
+          {
+            "name": "status",
+            "title": "任务状态",
+            "type": "String"
+          },
+          {
+            "name": "priority",
+            "title": "优先级",
+            "type": "String"
+          },
+          {
+            "name": "start_date",
+            "title": "开始日期",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "due_date",
+            "title": "截止日期",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "completed_date",
+            "title": "完成日期",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "estimated_hours",
+            "title": "预估工时",
+            "type": "Number"
+          },
+          {
+            "name": "actual_hours",
+            "title": "实际工时",
+            "type": "Number"
+          },
+          {
+            "name": "progress",
+            "title": "进度",
+            "type": "Number"
+          },
+          {
+            "name": "dependencies",
+            "title": "依赖关系",
+            "type": "Array",
+            "items": {
+              "type": "String"
+            }
+          },
+          {
+            "name": "tags",
+            "title": "标签",
+            "type": "Array",
+            "items": {
+              "type": "String"
+            }
+          },
+          {
+            "name": "attachments",
+            "title": "附件",
+            "type": "Array",
+            "items": {
+              "type": "String"
+            }
+          },
+          {
+            "name": "comments",
+            "title": "评论",
+            "type": "Array",
+            "items": {
+              "type": "Object",
+              "schemas": [
+                {
+                  "name": "id",
+                  "title": "评论ID",
+                  "type": "Number"
+                },
+                {
+                  "name": "author",
+                  "title": "作者",
+                  "type": "String"
+                },
+                {
+                  "name": "content",
+                  "title": "内容",
+                  "type": "String"
+                },
+                {
+                  "name": "timestamp",
+                  "title": "时间戳",
+                  "type": "DateTime",
+                  "format": "timestamp-ms"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "risks",
+      "title": "风险",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "risk_id",
+            "title": "风险ID",
+            "type": "String"
+          },
+          {
+            "name": "title",
+            "title": "风险标题",
+            "type": "String"
+          },
+          {
+            "name": "description",
+            "title": "风险描述",
+            "type": "String"
+          },
+          {
+            "name": "category",
+            "title": "风险分类",
+            "type": "String"
+          },
+          {
+            "name": "probability",
+            "title": "发生概率",
+            "type": "String"
+          },
+          {
+            "name": "impact",
+            "title": "影响程度",
+            "type": "String"
+          },
+          {
+            "name": "status",
+            "title": "风险状态",
+            "type": "String"
+          },
+          {
+            "name": "owner",
+            "title": "负责人",
+            "type": "String"
+          },
+          {
+            "name": "identified_date",
+            "title": "识别日期",
+            "type": "Date",
+            "format": "date"
+          },
+          {
+            "name": "mitigation_plan",
+            "title": "缓解计划",
+            "type": "String"
+          },
+          {
+            "name": "contingency_plan",
+            "title": "应急计划",
+            "type": "String"
+          },
+          {
+            "name": "progress",
+            "title": "缓解进度",
+            "type": "Number"
+          },
+          {
+            "name": "kpis",
+            "title": "风险KPI",
+            "type": "Object"
+          }
+        ]
+      }
+    },
+    {
+      "name": "resources",
+      "title": "资源",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "resource_id",
+            "title": "资源ID",
+            "type": "String"
+          },
+          {
+            "name": "type",
+            "title": "资源类型",
+            "type": "String"
+          },
+          {
+            "name": "name",
+            "title": "资源名称",
+            "type": "String"
+          },
+          {
+            "name": "category",
+            "title": "资源分类",
+            "type": "String"
+          },
+          {
+            "name": "total_capacity",
+            "title": "总容量",
+            "type": "Number"
+          },
+          {
+            "name": "allocated_capacity",
+            "title": "已分配容量",
+            "type": "Number"
+          },
+          {
+            "name": "available_capacity",
+            "title": "可用容量",
+            "type": "Number"
+          },
+          {
+            "name": "utilization",
+            "title": "利用率",
+            "type": "Number"
+          },
+          {
+            "name": "cost",
+            "title": "成本",
+            "type": "Number"
+          },
+          {
+            "name": "budget",
+            "title": "预算",
+            "type": "Number"
+          },
+          {
+            "name": "projects",
+            "title": "关联项目",
+            "type": "Array",
+            "items": {
+              "type": "String"
+            }
+          },
+          {
+            "name": "constraints",
+            "title": "约束条件",
+            "type": "Array",
+            "items": {
+              "type": "String"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "kpis",
+      "title": "KPI指标",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "kpi_id",
+            "title": "KPI ID",
+            "type": "String"
+          },
+          {
+            "name": "name",
+            "title": "KPI名称",
+            "type": "String"
+          },
+          {
+            "name": "category",
+            "title": "KPI分类",
+            "type": "String"
+          },
+          {
+            "name": "current_value",
+            "title": "当前值",
+            "type": "Number"
+          },
+          {
+            "name": "target_value",
+            "title": "目标值",
+            "type": "Number"
+          },
+          {
+            "name": "unit",
+            "title": "单位",
+            "type": "String"
+          },
+          {
+            "name": "status",
+            "title": "状态",
+            "type": "String"
+          },
+          {
+            "name": "trend",
+            "title": "趋势",
+            "type": "String"
+          },
+          {
+            "name": "last_updated",
+            "title": "最后更新",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          },
+          {
+            "name": "description",
+            "title": "描述",
+            "type": "String"
+          },
+          {
+            "name": "calculation",
+            "title": "计算方式",
+            "type": "String"
+          },
+          {
+            "name": "owner",
+            "title": "负责人",
+            "type": "String"
+          },
+          {
+            "name": "frequency",
+            "title": "更新频率",
+            "type": "String"
+          },
+          {
+            "name": "historical_data",
+            "title": "历史数据",
+            "type": "Array",
+            "items": {
+              "type": "Object",
+              "schemas": [
+                {
+                  "name": "date",
+                  "title": "日期",
+                  "type": "Date",
+                  "format": "date"
+                },
+                {
+                  "name": "value",
+                  "title": "数值",
+                  "type": "Number"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "tags",
+      "title": "标签",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "metadata",
+      "title": "元数据",
+      "type": "Object",
+      "schemas": [
+        {
+          "name": "version",
+          "title": "版本",
+          "type": "String"
+        },
+        {
+          "name": "created_by",
+          "title": "创建人",
+          "type": "String"
+        },
+        {
+          "name": "updated_by",
+          "title": "更新人",
+          "type": "String"
+        }
+      ]
+    }
+  ]
+}
+  
