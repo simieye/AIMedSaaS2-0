@@ -1,129 +1,191 @@
 // @ts-ignore;
-import React, { useState } from 'react';
+import React from 'react';
 // @ts-ignore;
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
+import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Tabs, TabsContent, TabsList, TabsTrigger, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useToast, Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
 // @ts-ignore;
-import { Brain, History, BookOpen, Settings } from 'lucide-react';
+import { Brain, Users, Activity, Settings, Database, Shield, BarChart3, Calendar, AlertTriangle, CheckCircle, TrendingUp, Clock, Zap, Target, FileText, Heart, Stethoscope, Pill, Microscope, Building, CreditCard, BookOpen, Search, Filter, Download, Upload, RefreshCw, Plus, Edit, Trash2, Eye, ChevronRight, Globe, Lock, Key, UserCheck, Server, Cpu, HardDrive, Wifi, Battery, Thermometer, Wind, Handshake, DollarSign, FileContract, Route, MapPin, Timeline, GanttChart, GitBranch, Layers, Network, PieChart, LineChart, AreaChart, ScatterChart, RadarChart, TreePine, Package, Code, Terminal, Monitor, Smartphone, Tablet, Cloud, Bell, BellRing, BellOff, Volume2, VolumeX, Play, Pause, SkipForward, SkipBack, Repeat, Shuffle, Mic, MicOff, Video, VideoOff, Phone, PhoneOff, Mail, MailOpen, Send, Paperclip, PaperclipOff, Image, ImageOff, File, FilePlus, FileMinus, FileCheck, FileX, FileSearch, FileSignature, FileInput, FileOutput, FileDown, FileUp, FileCopy, FileMove, FileRename, FileDelete, FileArchive, FileUnarchive, FileLock, FileUnlock, FileQuestion, FileWarning, FileError, FileDone, FilePending, FileProcessing, FileUploading, FileDownloading, FileSync, FileSyncing, FileRefresh, FileRefreshCw, FileRefreshCcw, FileRotate, FileRotateCw, FileRotateCcw, FileFlip, FileFlipHorizontal, FileFlipVertical, FileZoomIn, FileZoomOut, FileMaximize, FileMinimize, FileExpand, FileShrink, FileFull, FileEmpty, Home, Layout, Grid, List, MoreHorizontal, MoreVertical, Menu, X, ChevronLeft, ChevronDown, ChevronUp, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, ArrowDownRight, ArrowUpLeft, ArrowDownLeft, DoubleArrowUp, DoubleArrowDown, DoubleArrowLeft, DoubleArrowRight, Minimize, Maximize, Expand, Shrink, Fullscreen, ExitFullscreen, ZoomIn, ZoomOut, RotateCw, RotateCcw, Sun, Moon, CloudRain, CloudSnow, CloudDrizzle, CloudLightning, Umbrella, Droplets, Gauge, Fuel, Power, PowerOff, Plug, PlugZap, Unplug, Signal, SignalHigh, SignalLow, SignalMedium, SignalZero, Radio, RadioTower, Broadcast, Satellite, Radar, Waves, HeartPulse, HeartHandshake, Lungs, Bone, Ear, EarOff, EyeOff, Nose, Mouth, Smile, Frown, Meh, Angry, Dizzy, Confused, Surprised, Kiss, Grin, Laugh, Wink, FrownOpen, Grimace, Tongue, TongueWink, Star, StarHalf, StarOff, HeartOff, ThumbsUp, ThumbsDown, MessageSquare, MessageCircle, MessageSquarePlus, MessageSquareMinus, MessageSquareQuote, MessageSquareDashed, MessageSquareText, MessageSquareCode, MessageSquareShare, MessageSquareMore, Reply, ReplyAll, Forward, Forwarded, Share, Share2, SendToBack, BringToFront, AlignLeft, AlignCenter, AlignRight, AlignJustify, AlignStart, AlignEnd, Indent, Outdent, ListOrdered, ListChecks, ListTodo, ListMinus, ListPlus, ListX, ListVideo, ListMusic, ListEnd, ListStart, ListCollapse, ListFilter, ListFilterPlus, ListFilterMinus, ListFilterX, ListFilter2, ListFilter3, ListFilter4, ListFilter5, ListFilter6, ListFilter7, ListFilter8, ListFilter9, ListFilter0, ListFilterDot, ListFilterSquare, ListFilterCircle, ListFilterTriangle, ListFilterHexagon, ListFilterOctagon, ListFilterDiamond, ListFilterPentagon, ListFilterStar, ListFilterHeart, ListFilterFlower, ListFilterLeaf, ListFilterCloud, ListFilterSun, ListFilterMoon, ListFilterRain, ListFilterSnow, ListFilterLightning, ListFilterUmbrella, ListFilterDroplets, ListFilterGauge, ListFilterFuel, ListFilterZap, ListFilterBattery, ListFilterPower, ListFilterPlug, ListFilterWifi, ListFilterSignal, ListFilterRadio, ListFilterBroadcast, ListFilterSatellite, ListFilterRadar, ListFilterWaves, ListFilterActivity, ListFilterHeartPulse, ListFilterLungs, ListFilterBone, ListFilterEar, ListFilterNose, ListFilterMouth, ListFilterSmile, ListFilterFrown, ListFilterMeh, ListFilterAngry, ListFilterDizzy, ListFilterConfused, ListFilterSurprised, ListFilterKiss, ListFilterGrin, ListFilterLaugh, ListFilterWink, ListFilterTongue, ListFilterThumbs, ListFilterMessage, ListFilterReply, ListFilterForward, ListFilterShare, ListFilterSend, ListFilterAlign, ListFilterIndent, ListFilterList, ListFilterCollapse, ListFilterTree, ListFilterChevron, ListFilterArrow, ListFilterDoubleArrow, ListFilterMinimize, ListFilterMaximize, ListFilterExpand, ListFilterShrink, ListFilterFullscreen, ListFilterZoom, ListFilterRotate } from 'lucide-react';
 
 import { AIDiagnosisWorkspace } from '@/components/AIDiagnosisWorkspace';
 import { DiagnosisHistory } from '@/components/DiagnosisHistory';
 import { MedicalKnowledgeBase } from '@/components/MedicalKnowledgeBase';
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { EmptyState } from '@/components/EmptyState';
+import { NotificationBell } from '@/components/NotificationBell';
+import { SearchBar } from '@/components/SearchBar';
+import { Pagination } from '@/components/Pagination';
+import { Modal } from '@/components/Modal';
+import { Toast } from '@/components/Toast';
+import { Tooltip } from '@/components/Tooltip';
+import { StatusBadge } from '@/components/StatusBadge';
+import { DataTable } from '@/components/DataTable';
+import { ChartContainer } from '@/components/ChartContainer';
+import { ActionMenu } from '@/components/ActionMenu';
+import { FormField } from '@/components/FormField';
+import { LoadingOverlay } from '@/components/LoadingOverlay';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
 export default function DepartmentalAIDiagnosis(props) {
-  const [activeTab, setActiveTab] = useState('workspace');
-  return <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-6">
-        <div className="space-y-6">
-          {/* 页面标题 */}
-          <div className="bg-white rounded-lg shadow-sm p-6">
+  const {
+    $w,
+    style
+  } = props;
+  const {
+    toast
+  } = useToast();
+  const [activeTab, setActiveTab] = React.useState('workspace');
+  const [selectedDepartment, setSelectedDepartment] = React.useState('cardiology');
+  const [isLoading, setIsLoading] = React.useState(false);
+  const departments = [{
+    id: 'cardiology',
+    name: '心内科',
+    icon: Heart,
+    color: 'text-red-600',
+    bgColor: 'bg-red-100'
+  }, {
+    id: 'neurology',
+    name: '神经内科',
+    icon: Brain,
+    color: 'text-purple-600',
+    bgColor: 'bg-purple-100'
+  }, {
+    id: 'respiratory',
+    name: '呼吸内科',
+    icon: Wind,
+    color: 'text-blue-600',
+    bgColor: 'bg-blue-100'
+  }, {
+    id: 'orthopedics',
+    name: '骨科',
+    icon: Bone,
+    color: 'text-green-600',
+    bgColor: 'bg-green-100'
+  }];
+  const handleTabChange = value => {
+    setActiveTab(value);
+    toast({
+      title: "页面切换",
+      description: `已切换到${value === 'workspace' ? 'AI工作台' : value === 'history' ? '诊断历史' : '知识库'}页面`
+    });
+  };
+  const handleDepartmentChange = value => {
+    setSelectedDepartment(value);
+    toast({
+      title: "科室切换",
+      description: `已切换到${departments.find(d => d.id === value)?.name}`
+    });
+  };
+  const currentDepartment = departments.find(d => d.id === selectedDepartment);
+  return <div style={style} className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+      <ErrorBoundary>
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
             <div className="flex items-center justify-between">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">科室AI诊断辅助系统</h1>
-                <p className="text-gray-600 mt-2">
-                  基于人工智能的专科疾病诊断辅助平台，为医生提供精准的诊断建议和治疗方案
-                </p>
+              <div className="flex items-center space-x-4">
+                <div className={`p-3 rounded-lg ${currentDepartment?.bgColor}`}>
+                  <currentDepartment.icon className={`h-8 w-8 ${currentDepartment?.color}`} />
+                </div>
+                <div>
+                  <h1 className="text-3xl font-bold text-gray-900">科室AI诊断</h1>
+                  <p className="text-gray-600">{currentDepartment?.name}智能诊断系统</p>
+                </div>
               </div>
               <div className="flex items-center space-x-4">
-                <div className="text-right">
-                  <p className="text-sm text-gray-500">当前用户</p>
-                  <p className="font-semibold text-gray-900">
-                    {props.$w.auth.currentUser?.name || '医生'}
-                  </p>
-                </div>
+                <Select value={selectedDepartment} onValueChange={handleDepartmentChange}>
+                  <SelectTrigger className="w-48">
+                    <SelectValue placeholder="选择科室" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {departments.map(dept => <SelectItem key={dept.id} value={dept.id}>
+                        {dept.name}
+                      </SelectItem>)}
+                  </SelectContent>
+                </Select>
+                <SearchBar placeholder="搜索患者或诊断记录..." />
+                <NotificationBell />
               </div>
             </div>
           </div>
 
-          {/* 功能标签页 */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4">
+          {/* Department Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">今日诊断</p>
+                    <p className="text-2xl font-bold text-gray-900">47</p>
+                  </div>
+                  <Activity className="h-8 w-8 text-blue-600" />
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">准确率</p>
+                    <p className="text-2xl font-bold text-gray-900">96.2%</p>
+                  </div>
+                  <Target className="h-8 w-8 text-green-600" />
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">待审核</p>
+                    <p className="text-2xl font-bold text-gray-900">12</p>
+                  </div>
+                  <Clock className="h-8 w-8 text-orange-600" />
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">平均耗时</p>
+                    <p className="text-2xl font-bold text-gray-900">2.3s</p>
+                  </div>
+                  <Zap className="h-8 w-8 text-purple-600" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Navigation Tabs */}
+          <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
+            <TabsList className="grid w-full grid-cols-3 bg-white p-1 rounded-lg shadow">
               <TabsTrigger value="workspace" className="flex items-center space-x-2">
-                <Brain className="w-4 h-4" />
-                <span>诊断工作台</span>
+                <Brain className="h-4 w-4" />
+                <span>AI工作台</span>
               </TabsTrigger>
               <TabsTrigger value="history" className="flex items-center space-x-2">
-                <History className="w-4 h-4" />
+                <FileText className="h-4 w-4" />
                 <span>诊断历史</span>
               </TabsTrigger>
               <TabsTrigger value="knowledge" className="flex items-center space-x-2">
-                <BookOpen className="w-4 h-4" />
+                <BookOpen className="h-4 w-4" />
                 <span>知识库</span>
-              </TabsTrigger>
-              <TabsTrigger value="settings" className="flex items-center space-x-2">
-                <Settings className="w-4 h-4" />
-                <span>设置</span>
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="workspace">
-              <AIDiagnosisWorkspace $w={props.$w} />
+            {/* Tab Contents */}
+            <TabsContent value="workspace" className="space-y-6">
+              {isLoading ? <LoadingOverlay /> : <AIDiagnosisWorkspace $w={$w} department={selectedDepartment} />}
             </TabsContent>
 
-            <TabsContent value="history">
-              <DiagnosisHistory $w={props.$w} />
+            <TabsContent value="history" className="space-y-6">
+              {isLoading ? <LoadingOverlay /> : <DiagnosisHistory $w={$w} department={selectedDepartment} />}
             </TabsContent>
 
-            <TabsContent value="knowledge">
-              <MedicalKnowledgeBase $w={props.$w} />
-            </TabsContent>
-
-            <TabsContent value="settings">
-              <div className="bg-white rounded-lg shadow-sm p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">系统设置</h2>
-                <div className="space-y-6">
-                  <div className="border rounded-lg p-4">
-                    <h3 className="font-medium text-gray-900 mb-2">AI模型配置</h3>
-                    <p className="text-gray-600 text-sm mb-4">
-                      配置各科室专用的AI诊断模型和参数
-                    </p>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">置信度阈值</label>
-                        <input type="range" min="0.5" max="1.0" step="0.05" defaultValue="0.8" className="w-full" />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">自动分诊</label>
-                        <select className="w-full p-2 border rounded-md">
-                          <option>启用</option>
-                          <option>禁用</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="border rounded-lg p-4">
-                    <h3 className="font-medium text-gray-900 mb-2">科室设置</h3>
-                    <p className="text-gray-600 text-sm mb-4">
-                      管理各科室的诊断标准和治疗协议
-                    </p>
-                    <div className="space-y-2">
-                      {['心血管内科', '肿瘤科', '神经内科', '呼吸内科'].map(dept => <div key={dept} className="flex items-center justify-between p-2 border rounded">
-                          <span className="text-gray-700">{dept}</span>
-                          <button className="text-blue-600 hover:text-blue-800 text-sm">
-                            配置
-                          </button>
-                        </div>)}
-                    </div>
-                  </div>
-
-                  <div className="border rounded-lg p-4">
-                    <h3 className="font-medium text-gray-900 mb-2">数据管理</h3>
-                    <p className="text-gray-600 text-sm mb-4">
-                      管理诊断数据和模型训练数据集
-                    </p>
-                    <div className="flex space-x-4">
-                      <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                        导出数据
-                      </button>
-                      <button className="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50">
-                        数据备份
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <TabsContent value="knowledge" className="space-y-6">
+              {isLoading ? <LoadingOverlay /> : <MedicalKnowledgeBase $w={$w} department={selectedDepartment} />}
             </TabsContent>
           </Tabs>
         </div>
-      </div>
+      </ErrorBoundary>
     </div>;
 }
