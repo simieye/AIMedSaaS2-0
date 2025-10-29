@@ -1,389 +1,495 @@
 // @ts-ignore;
 import React, { useState, useEffect } from 'react';
 // @ts-ignore;
-import { Card, CardContent, CardHeader, CardTitle, Button, Input, Select, Badge, useToast, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
+import { Card, CardContent, CardHeader, CardTitle, Button, Input, Select, Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useToast, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
 // @ts-ignore;
-import { Search, Send, ThumbsUp, ThumbsDown, Clock, CheckCircle, AlertCircle, BarChart3, Target, Zap, FileText, Database } from 'lucide-react';
+import { Search, Play, Save, Download, Eye, BarChart3, Settings, RefreshCw, CheckCircle, AlertCircle, Clock, TrendingUp, Target } from 'lucide-react';
 
+// @ts-ignore;
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 export function RetrievalTesting({
   $w,
+  onTest,
   className,
   style
 }) {
   const {
     toast
   } = useToast();
-  const [query, setQuery] = useState('');
+  const [testQuery, setTestQuery] = useState('');
   const [selectedModel, setSelectedModel] = useState('default');
-  const [searchResults, setSearchResults] = useState([]);
+  const [selectedDataset, setSelectedDataset] = useState('medical_qa');
+  const [testResults, setTestResults] = useState([]);
   const [testHistory, setTestHistory] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [evaluation, setEvaluation] = useState(null);
-  const mockResults = [{
-    id: 'RES001',
-    title: '心血管疾病AI诊断技术综述',
-    content: '本文综述了近年来心血管疾病AI诊断技术的发展现状，包括深度学习、机器学习等技术在心电图、超声心动图等医学影像分析中的应用...',
-    score: 0.95,
-    source: 'literature',
-    sourceId: 'LIT001',
-    relevance: 'high',
-    snippets: ['深度学习在心血管疾病诊断中的应用', 'AI技术在心电图分析中的准确性', '机器学习算法的优化方法']
+  const [isRunning, setIsRunning] = useState(false);
+  const [currentTest, setCurrentTest] = useState(null);
+  const mockTestResults = [{
+    query: '心血管疾病的治疗方法有哪些？',
+    response: '心血管疾病的治疗方法包括药物治疗、介入治疗和手术治疗等...',
+    sources: ['心血管疾病诊疗指南2024版', '内科学教材第9版', '柳叶刀心血管专刊'],
+    relevanceScore: 0.92,
+    accuracy: 0.88,
+    completeness: 0.85,
+    responseTime: 1.2,
+    timestamp: '2024-02-20 10:30:00'
   }, {
-    id: 'RES002',
-    title: '心电图AI诊断算法优化研究',
-    content: '研究针对心电图AI诊断算法的优化方法，通过改进网络结构和训练策略，提高了诊断的准确性和稳定性...',
-    score: 0.88,
-    source: 'literature',
-    sourceId: 'LIT002',
-    relevance: 'high',
-    snippets: ['网络结构优化', '训练策略改进', '准确性提升方法']
-  }, {
-    id: 'RES003',
-    title: '心血管影像诊断标准',
-    content: '介绍了心血管影像诊断的标准流程和评估指标，为AI诊断系统的开发提供了参考依据...',
-    score: 0.76,
-    source: 'guideline',
-    sourceId: 'GUID001',
-    relevance: 'medium',
-    snippets: ['诊断标准流程', '评估指标体系', '质量控制要求']
-  }, {
-    id: 'RES004',
-    title: 'AI医疗设备监管政策',
-    content: '分析了AI医疗设备的监管政策和审批流程，讨论了技术要求和安全性评估标准...',
-    score: 0.65,
-    source: 'policy',
-    sourceId: 'POL001',
-    relevance: 'low',
-    snippets: ['监管政策框架', '审批流程要求', '安全性评估']
+    query: '糖尿病的早期症状是什么？',
+    response: '糖尿病的早期症状包括多饮、多尿、多食、体重下降等...',
+    sources: ['糖尿病管理手册', 'WHO糖尿病指南', '中华内分泌杂志'],
+    relevanceScore: 0.89,
+    accuracy: 0.91,
+    completeness: 0.82,
+    responseTime: 0.8,
+    timestamp: '2024-02-20 10:25:00'
   }];
-  const mockHistory = [{
-    id: 'HIST001',
-    query: '糖尿病视网膜病变AI诊断',
-    timestamp: '2024-01-15 14:30:00',
+  const mockTestHistory = [{
+    id: 'TEST001',
+    name: '心血管疾病问答测试',
     model: 'default',
-    resultsCount: 5,
-    avgScore: 0.82,
-    userFeedback: 'positive',
-    responseTime: 1.2
+    dataset: 'cardiology_qa',
+    totalQueries: 50,
+    avgRelevance: 0.87,
+    avgAccuracy: 0.84,
+    avgResponseTime: 1.1,
+    status: 'completed',
+    createdAt: '2024-02-19 15:30:00',
+    completedAt: '2024-02-19 15:45:00'
   }, {
-    id: 'HIST002',
-    query: '肿瘤免疫治疗生物标志物',
-    timestamp: '2024-01-15 13:45:00',
-    model: 'enhanced',
-    resultsCount: 8,
-    avgScore: 0.91,
-    userFeedback: 'positive',
-    responseTime: 1.8
-  }, {
-    id: 'HIST003',
-    query: '神经退行性疾病早期诊断',
-    timestamp: '2024-01-15 12:20:00',
-    model: 'default',
-    resultsCount: 3,
-    avgScore: 0.74,
-    userFeedback: 'negative',
-    responseTime: 0.9
+    id: 'TEST002',
+    name: '全科室综合测试',
+    model: 'gpt-4',
+    dataset: 'medical_qa',
+    totalQueries: 100,
+    avgRelevance: 0.91,
+    avgAccuracy: 0.89,
+    avgResponseTime: 1.5,
+    status: 'completed',
+    createdAt: '2024-02-18 09:00:00',
+    completedAt: '2024-02-18 09:25:00'
   }];
   const models = [{
     value: 'default',
     label: '默认模型'
   }, {
-    value: 'enhanced',
-    label: '增强模型'
+    value: 'gpt-3.5',
+    label: 'GPT-3.5'
   }, {
-    value: 'fast',
-    label: '快速模型'
+    value: 'gpt-4',
+    label: 'GPT-4'
   }, {
-    value: 'accurate',
-    label: '高精度模型'
+    value: 'claude',
+    label: 'Claude'
+  }];
+  const datasets = [{
+    value: 'medical_qa',
+    label: '医学问答数据集'
+  }, {
+    value: 'cardiology_qa',
+    label: '心血管问答集'
+  }, {
+    value: 'endocrinology_qa',
+    label: '内分泌问答集'
+  }, {
+    value: 'oncology_qa',
+    label: '肿瘤问答集'
+  }];
+  const performanceData = [{
+    metric: '相关性',
+    current: 0.87,
+    baseline: 0.82,
+    target: 0.90
+  }, {
+    metric: '准确性',
+    current: 0.84,
+    baseline: 0.78,
+    target: 0.85
+  }, {
+    metric: '完整性',
+    current: 0.82,
+    baseline: 0.75,
+    target: 0.80
+  }, {
+    metric: '响应速度',
+    current: 0.78,
+    baseline: 0.70,
+    target: 0.85
+  }];
+  const radarData = [{
+    subject: '相关性',
+    A: 87,
+    B: 82,
+    fullMark: 100
+  }, {
+    subject: '准确性',
+    A: 84,
+    B: 78,
+    fullMark: 100
+  }, {
+    subject: '完整性',
+    A: 82,
+    B: 75,
+    fullMark: 100
+  }, {
+    subject: '响应速度',
+    A: 78,
+    B: 70,
+    fullMark: 100
+  }, {
+    subject: '引用质量',
+    A: 85,
+    B: 80,
+    fullMark: 100
   }];
   useEffect(() => {
-    setTestHistory(mockHistory);
+    setTestResults(mockTestResults);
+    setTestHistory(mockTestHistory);
   }, []);
-  const getRelevanceBadge = relevance => {
-    const relevanceConfig = {
-      high: {
+  const getStatusBadge = status => {
+    const statusConfig = {
+      completed: {
         color: 'bg-green-100 text-green-800',
-        text: '高相关'
+        icon: CheckCircle,
+        text: '已完成'
       },
-      medium: {
-        color: 'bg-yellow-100 text-yellow-800',
-        text: '中相关'
+      running: {
+        color: 'bg-blue-100 text-blue-800',
+        icon: Clock,
+        text: '运行中'
       },
-      low: {
+      failed: {
         color: 'bg-red-100 text-red-800',
-        text: '低相关'
+        icon: AlertCircle,
+        text: '失败'
       }
     };
-    const config = relevanceConfig[relevance] || relevanceConfig.low;
-    return <Badge className={config.color}>{config.text}</Badge>;
+    const config = statusConfig[status] || statusConfig.running;
+    const Icon = config.icon;
+    return <Badge className={config.color}>
+        <Icon className="w-3 h-3 mr-1" />
+        {config.text}
+      </Badge>;
   };
-  const getSourceIcon = source => {
-    const iconMap = {
-      literature: FileText,
-      guideline: Database,
-      policy: FileText,
-      clinical: Database
-    };
-    return iconMap[source] || FileText;
-  };
-  const handleSearch = async () => {
-    if (!query.trim()) {
+  const handleSingleTest = () => {
+    if (!testQuery.trim()) {
       toast({
-        title: "请输入查询内容",
-        description: "查询内容不能为空",
+        title: "请输入测试查询",
+        description: "测试查询不能为空",
         variant: "destructive"
       });
       return;
     }
-    setLoading(true);
-    try {
-      // 模拟搜索延迟
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setSearchResults(mockResults);
-      setEvaluation({
-        precision: 0.85,
-        recall: 0.78,
-        f1Score: 0.81,
-        responseTime: 1.2,
-        totalResults: mockResults.length
-      });
+    setIsRunning(true);
+    // 模拟测试过程
+    setTimeout(() => {
+      const newResult = {
+        query: testQuery,
+        response: '这是针对查询的模拟回答...',
+        sources: ['相关文献1', '相关文献2', '相关文献3'],
+        relevanceScore: Math.random() * 0.3 + 0.7,
+        accuracy: Math.random() * 0.3 + 0.7,
+        completeness: Math.random() * 0.3 + 0.7,
+        responseTime: Math.random() * 2 + 0.5,
+        timestamp: new Date().toISOString()
+      };
+      setTestResults(prev => [newResult, ...prev]);
+      setIsRunning(false);
+      if (onTest) {
+        onTest({
+          query: testQuery,
+          model: selectedModel
+        });
+      }
       toast({
-        title: "搜索完成",
-        description: `找到 ${mockResults.length} 个相关结果`
+        title: "测试完成",
+        description: "单次测试已完成，请查看结果"
       });
-    } catch (error) {
-      toast({
-        title: "搜索失败",
-        description: error.message,
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
+    }, 2000);
   };
-  const handleFeedback = (resultId, feedback) => {
-    setSearchResults(prev => prev.map(result => result.id === resultId ? {
-      ...result,
-      userFeedback: feedback
-    } : result));
+  const handleBatchTest = () => {
+    setIsRunning(true);
+    setCurrentTest({
+      name: `批量测试 - ${new Date().toLocaleString()}`,
+      model: selectedModel,
+      dataset: selectedDataset,
+      startTime: new Date()
+    });
+    // 模拟批量测试
+    setTimeout(() => {
+      const newTest = {
+        id: `TEST${Date.now()}`,
+        name: currentTest.name,
+        model: selectedModel,
+        dataset: selectedDataset,
+        totalQueries: Math.floor(Math.random() * 50) + 50,
+        avgRelevance: Math.random() * 0.2 + 0.8,
+        avgAccuracy: Math.random() * 0.2 + 0.8,
+        avgResponseTime: Math.random() * 1 + 0.5,
+        status: 'completed',
+        createdAt: currentTest.startTime.toISOString(),
+        completedAt: new Date().toISOString()
+      };
+      setTestHistory(prev => [newTest, ...prev]);
+      setIsRunning(false);
+      setCurrentTest(null);
+      toast({
+        title: "批量测试完成",
+        description: `已完成 ${newTest.totalQueries} 个查询的测试`
+      });
+    }, 5000);
+  };
+  const handleViewDetails = resultId => {
     toast({
-      title: "反馈已记录",
-      description: `感谢您的反馈`
+      title: "查看详情",
+      description: `正在查看测试结果 ${resultId} 的详细信息`
     });
   };
-  const handleEvaluate = () => {
-    if (searchResults.length === 0) {
-      toast({
-        title: "无搜索结果",
-        description: "请先进行搜索",
-        variant: "destructive"
-      });
-      return;
-    }
+  const handleExportResults = () => {
     toast({
-      title: "评估完成",
-      description: "搜索结果评估已生成"
+      title: "导出结果",
+      description: "正在导出测试结果..."
     });
   };
   const handleSaveTest = () => {
-    if (!query || searchResults.length === 0) {
-      toast({
-        title: "无法保存",
-        description: "请先进行有效的搜索",
-        variant: "destructive"
-      });
-      return;
-    }
-    const newTest = {
-      id: `HIST${Date.now()}`,
-      query: query,
-      timestamp: new Date().toISOString(),
-      model: selectedModel,
-      resultsCount: searchResults.length,
-      avgScore: searchResults.reduce((sum, result) => sum + result.score, 0) / searchResults.length,
-      userFeedback: 'pending',
-      responseTime: evaluation?.responseTime || 0
-    };
-    setTestHistory(prev => [newTest, ...prev]);
     toast({
-      title: "测试已保存",
-      description: "搜索测试已保存到历史记录"
+      title: "保存测试",
+      description: "测试配置已保存"
     });
   };
   return <div className={className} style={style}>
       <div className="space-y-6">
-        {/* 头部 */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">检索测试</h1>
-            <p className="text-gray-600">测试RAG系统的检索效果，评估结果质量和相关性</p>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" onClick={handleSaveTest}>
-              <Database className="w-4 h-4 mr-2" />
-              保存测试
-            </Button>
-            <Button onClick={handleEvaluate}>
-              <BarChart3 className="w-4 h-4 mr-2" />
-              评估结果
-            </Button>
-          </div>
-        </div>
-
-        {/* 搜索界面 */}
+        {/* 测试配置 */}
         <Card>
           <CardHeader>
-            <CardTitle>查询测试</CardTitle>
+            <CardTitle className="flex items-center">
+              <Search className="w-5 h-5 mr-2" />
+              检索测试配置
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="flex space-x-4">
-                <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <Input placeholder="输入医学查询内容..." value={query} onChange={e => setQuery(e.target.value)} className="pl-10 text-lg" />
+              {/* 单次测试 */}
+              <div className="border rounded-lg p-4">
+                <h4 className="font-medium text-gray-900 mb-3">单次查询测试</h4>
+                <div className="flex space-x-4">
+                  <div className="flex-1">
+                    <Input placeholder="输入测试查询..." value={testQuery} onChange={e => setTestQuery(e.target.value)} />
+                  </div>
+                  <Select value={selectedModel} onValueChange={setSelectedModel}>
+                    <SelectTrigger className="w-48">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {models.map(model => <SelectItem key={model.value} value={model.value}>
+                          {model.label}
+                        </SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  <Button onClick={handleSingleTest} disabled={isRunning}>
+                    <Play className="w-4 h-4 mr-2" />
+                    {isRunning ? '测试中...' : '开始测试'}
+                  </Button>
                 </div>
-                <Select value={selectedModel} onValueChange={setSelectedModel}>
-                  <SelectTrigger className="w-48">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {models.map(model => <SelectItem key={model.value} value={model.value}>
-                        {model.label}
-                      </SelectItem>)}
-                  </SelectContent>
-                </Select>
-                <Button onClick={handleSearch} disabled={loading}>
-                  {loading ? <>
-                      <div className="w-4 h-4 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      搜索中...
-                    </> : <>
-                      <Send className="w-4 h-4 mr-2" />
-                      搜索
-                    </>}
-                </Button>
               </div>
-              
-              {/* 快速查询示例 */}
-              <div className="flex flex-wrap gap-2">
-                <span className="text-sm text-gray-600">快速查询:</span>
-                {['心血管疾病AI诊断', '糖尿病视网膜病变', '肿瘤免疫治疗', '神经退行性疾病'].map(example => <Button key={example} variant="outline" size="sm" onClick={() => setQuery(example)}>
-                    {example}
-                  </Button>)}
+
+              {/* 批量测试 */}
+              <div className="border rounded-lg p-4">
+                <h4 className="font-medium text-gray-900 mb-3">批量测试</h4>
+                <div className="grid grid-cols-3 gap-4">
+                  <Select value={selectedModel} onValueChange={setSelectedModel}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="选择模型" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {models.map(model => <SelectItem key={model.value} value={model.value}>
+                          {model.label}
+                        </SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  <Select value={selectedDataset} onValueChange={setSelectedDataset}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="选择数据集" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {datasets.map(dataset => <SelectItem key={dataset.value} value={dataset.value}>
+                          {dataset.label}
+                      </SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  <Button onClick={handleBatchTest} disabled={isRunning}>
+                    <Play className="w-4 h-4 mr-2" />
+                    {isRunning ? '测试中...' : '批量测试'}
+                  </Button>
+                </div>
+              </div>
+
+              {/* 操作按钮 */}
+              <div className="flex items-center space-x-2">
+                <Button variant="outline" onClick={handleSaveTest}>
+                  <Save className="w-4 h-4 mr-2" />
+                  保存配置
+                </Button>
+                <Button variant="outline">
+                  <Settings className="w-4 h-4 mr-2" />
+                  高级设置
+                </Button>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* 搜索结果 */}
-        {searchResults.length > 0 && <div className="grid grid-cols-3 gap-6">
-            <div className="col-span-2 space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>搜索结果 ({searchResults.length})</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {searchResults.map(result => {
-                  const Icon = getSourceIcon(result.source);
-                  return <div key={result.id} className="border rounded-lg p-4">
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex items-center space-x-3">
-                            <Icon className="w-5 h-5 text-gray-400" />
-                            <div>
-                              <h4 className="font-medium text-gray-900">{result.title}</h4>
-                              <div className="flex items-center space-x-2 mt-1">
-                                {getRelevanceBadge(result.relevance)}
-                                <Badge variant="outline">{result.source}</Badge>
-                                <span className="text-sm text-gray-500">评分: {result.score}</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Button variant="ghost" size="sm" onClick={() => handleFeedback(result.id, 'positive')}>
-                              <ThumbsUp className="w-4 h-4" />
-                            </Button>
-                            <Button variant="ghost" size="sm" onClick={() => handleFeedback(result.id, 'negative')}>
-                              <ThumbsDown className="w-4 h-4" />
-                            </Button>
-                          </div>
-                        </div>
-                        <p className="text-gray-700 text-sm mb-3">{result.content}</p>
-                        <div className="flex flex-wrap gap-1">
-                          {result.snippets.map((snippet, index) => <Badge key={index} variant="outline" className="text-xs">
-                              {snippet}
-                            </Badge>)}
-                        </div>
-                      </div>;
-                })}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+        {/* 性能分析 */}
+        <div className="grid grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>性能指标对比</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={performanceData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="metric" />
+                  <YAxis domain={[0, 1]} />
+                  <Tooltip formatter={value => [`${(value * 100).toFixed(0)}%`, '']} />
+                  <Legend />
+                  <Bar dataKey="current" fill="#3B82F6" name="当前性能" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="baseline" fill="#93BBFC" name="基线性能" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="target" fill="#10B981" name="目标性能" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
 
-            {/* 评估结果 */}
+          <Card>
+            <CardHeader>
+              <CardTitle>综合性能雷达图</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ResponsiveContainer width="100%" height={300}>
+                <RadarChart data={radarData}>
+                  <PolarGrid />
+                  <PolarAngleAxis dataKey="subject" />
+                  <PolarRadiusAxis angle={90} domain={[0, 100]} />
+                  <Radar name="当前模型" dataKey="A" stroke="#3B82F6" fill="#3B82F6" fillOpacity={0.6} />
+                  <Radar name="基线模型" dataKey="B" stroke="#93BBFC" fill="#93BBFC" fillOpacity={0.6} />
+                  <Legend />
+                </RadarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* 测试结果 */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span>测试结果</span>
+              <Button variant="outline" size="sm" onClick={handleExportResults}>
+                <Download className="w-4 h-4 mr-2" />
+                导出结果
+              </Button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
             <div className="space-y-4">
-              {evaluation && <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <Target className="w-5 h-5 mr-2" />
-                      评估指标
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">精确率</span>
-                        <span className="font-semibold text-green-600">{(evaluation.precision * 100).toFixed(1)}%</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">召回率</span>
-                        <span className="font-semibold text-blue-600">{(evaluation.recall * 100).toFixed(1)}%</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">F1分数</span>
-                        <span className="font-semibold text-purple-600">{(evaluation.f1Score * 100).toFixed(1)}%</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">响应时间</span>
-                        <span className="font-semibold text-orange-600">{evaluation.responseTime}s</span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-gray-600">结果数量</span>
-                        <span className="font-semibold text-gray-900">{evaluation.totalResults}</span>
+              {testResults.map((result, index) => <div key={index} className="border rounded-lg p-4">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h4 className="font-medium text-gray-900 mb-2">查询: {result.query}</h4>
+                      <p className="text-gray-700 text-sm mb-2">{result.response}</p>
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        {result.sources.map((source, idx) => <span key={idx} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded">
+                            {source}
+                          </span>)}
                       </div>
                     </div>
-                  </CardContent>
-                </Card>}
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Clock className="w-5 h-5 mr-2" />
-                    测试历史
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {testHistory.slice(0, 5).map(test => <div key={test.id} className="border rounded-lg p-3">
-                        <div className="flex items-center justify-between mb-2">
-                          <h5 className="font-medium text-gray-900 truncate">{test.query}</h5>
-                          <div className="flex items-center space-x-1">
-                            {test.userFeedback === 'positive' ? <ThumbsUp className="w-4 h-4 text-green-500" /> : test.userFeedback === 'negative' ? <ThumbsDown className="w-4 h-4 text-red-500" /> : <Clock className="w-4 h-4 text-gray-400" />}
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-                          <div>模型: {test.model}</div>
-                          <div>结果: {test.resultsCount}</div>
-                          <div>评分: {test.avgScore.toFixed(2)}</div>
-                          <div>时间: {test.responseTime}s</div>
-                        </div>
-                      </div>)}
+                    <Button variant="ghost" size="sm" onClick={() => handleViewDetails(`result_${index}`)}>
+                      <Eye className="w-4 h-4" />
+                    </Button>
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="grid grid-cols-4 gap-4 text-sm">
+                    <div>
+                      <span className="text-gray-600">相关性:</span>
+                      <span className="ml-1 font-medium">{(result.relevanceScore * 100).toFixed(0)}%</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">准确性:</span>
+                      <span className="ml-1 font-medium">{(result.accuracy * 100).toFixed(0)}%</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">完整性:</span>
+                      <span className="ml-1 font-medium">{(result.completeness * 100).toFixed(0)}%</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-600">响应时间:</span>
+                      <span className="ml-1 font-medium">{result.responseTime}s</span>
+                    </div>
+                  </div>
+                </div>)}
             </div>
-          </div>}
+          </CardContent>
+        </Card>
+
+        {/* 测试历史 */}
+        <Card>
+          <CardHeader>
+            <CardTitle>测试历史</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>测试名称</TableHead>
+                  <TableHead>模型</TableHead>
+                  <TableHead>数据集</TableHead>
+                  <TableHead>查询数</TableHead>
+                  <TableHead>平均相关性</TableHead>
+                  <TableHead>平均准确性</TableHead>
+                  <TableHead>状态</TableHead>
+                  <TableHead>完成时间</TableHead>
+                  <TableHead>操作</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {testHistory.map(test => <TableRow key={test.id}>
+                    <TableCell>
+                      <div className="font-medium text-gray-900">{test.name}</div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-gray-900">{test.model}</div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-gray-900">{test.dataset}</div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-gray-900">{test.totalQueries}</div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-gray-900">{(test.avgRelevance * 100).toFixed(0)}%</div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-gray-900">{(test.avgAccuracy * 100).toFixed(0)}%</div>
+                    </TableCell>
+                    <TableCell>
+                      {getStatusBadge(test.status)}
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-gray-900">{test.completedAt}</div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex items-center space-x-2">
+                        <Button variant="ghost" size="sm" onClick={() => handleViewDetails(test.id)}>
+                          <Eye className="w-4 h-4" />
+                        </Button>
+                        <Button variant="ghost" size="sm">
+                          <Download className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>)}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
       </div>
     </div>;
 }

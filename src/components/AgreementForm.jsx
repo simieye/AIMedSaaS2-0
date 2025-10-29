@@ -18,15 +18,15 @@ export function AgreementForm({
   } = useToast();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    partner_id: '',
+    hospitalName: '',
+    hospitalId: '',
     type: 'strategic_cooperation',
     value: '',
-    responsible_person: '',
-    contact_email: '',
-    contact_phone: '',
-    start_date: '',
-    end_date: '',
+    responsiblePerson: '',
+    contactEmail: '',
+    contactPhone: '',
+    startDate: '',
+    endDate: '',
     description: '',
     terms: {
       purpose: '',
@@ -36,7 +36,7 @@ export function AgreementForm({
         hospital: []
       },
       deliverables: [],
-      data_sharing: {
+      dataSharing: {
         scope: '',
         purpose: '',
         security: '',
@@ -67,15 +67,15 @@ export function AgreementForm({
       setLoading(true);
       setTimeout(() => {
         const mockData = {
-          name: '北京协和医院AI诊断系统合作协议',
-          partner_id: 'partner_001',
+          hospitalName: '北京协和医院',
+          hospitalId: 'H001',
           type: 'strategic_cooperation',
           value: '5000000',
-          responsible_person: '张主任',
-          contact_email: 'zhang@xiehe.com',
-          contact_phone: '010-12345678',
-          start_date: '2024-01-01',
-          end_date: '2024-12-31',
+          responsiblePerson: '张主任',
+          contactEmail: 'zhang@xiehe.com',
+          contactPhone: '010-12345678',
+          startDate: '2024-01-01',
+          endDate: '2024-12-31',
           description: '战略合作协议，包含AI诊断系统部署和技术支持',
           terms: {
             purpose: '通过AI诊断技术提升医疗服务质量，建立长期战略合作关系',
@@ -85,7 +85,7 @@ export function AgreementForm({
               hospital: ['提供医疗数据', '配合系统部署', '人员配合', '反馈使用情况']
             },
             deliverables: ['AI诊断系统', '技术文档', '培训材料', '维护服务'],
-            data_sharing: {
+            dataSharing: {
               scope: '脱敏医疗数据',
               purpose: 'AI模型训练和优化',
               security: '符合HIPAA和GDPR标准',
@@ -118,8 +118,8 @@ export function AgreementForm({
       ...prev,
       terms: {
         ...prev.terms,
-        data_sharing: {
-          ...prev.terms.data_sharing,
+        dataSharing: {
+          ...prev.terms.dataSharing,
           [field]: value
         }
       }
@@ -215,7 +215,7 @@ export function AgreementForm({
   };
   const handleSubmit = async () => {
     // 基本验证
-    if (!formData.name || !formData.responsible_person || !formData.contact_email || !formData.start_date || !formData.end_date) {
+    if (!formData.hospitalName || !formData.responsiblePerson || !formData.contactEmail || !formData.startDate || !formData.endDate) {
       toast({
         title: "验证失败",
         description: "请填写所有必填字段",
@@ -291,15 +291,15 @@ export function AgreementForm({
             <div className="grid grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  协议名称 *
+                  医院名称 *
                 </label>
-                <Input value={formData.name} onChange={e => handleInputChange('name', e.target.value)} placeholder="请输入协议名称" />
+                <Input value={formData.hospitalName} onChange={e => handleInputChange('hospitalName', e.target.value)} placeholder="请输入医院名称" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  合作伙伴ID
+                  医院ID
                 </label>
-                <Input value={formData.partner_id} onChange={e => handleInputChange('partner_id', e.target.value)} placeholder="请输入合作伙伴ID" />
+                <Input value={formData.hospitalId} onChange={e => handleInputChange('hospitalId', e.target.value)} placeholder="请输入医院ID" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -326,31 +326,31 @@ export function AgreementForm({
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   负责人 *
                 </label>
-                <Input value={formData.responsible_person} onChange={e => handleInputChange('responsible_person', e.target.value)} placeholder="请输入负责人姓名" />
+                <Input value={formData.responsiblePerson} onChange={e => handleInputChange('responsiblePerson', e.target.value)} placeholder="请输入负责人姓名" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   联系邮箱 *
                 </label>
-                <Input type="email" value={formData.contact_email} onChange={e => handleInputChange('contact_email', e.target.value)} placeholder="请输入联系邮箱" />
+                <Input type="email" value={formData.contactEmail} onChange={e => handleInputChange('contactEmail', e.target.value)} placeholder="请输入联系邮箱" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   联系电话
                 </label>
-                <Input value={formData.contact_phone} onChange={e => handleInputChange('contact_phone', e.target.value)} placeholder="请输入联系电话" />
+                <Input value={formData.contactPhone} onChange={e => handleInputChange('contactPhone', e.target.value)} placeholder="请输入联系电话" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   开始日期 *
                 </label>
-                <Input type="date" value={formData.start_date} onChange={e => handleInputChange('start_date', e.target.value)} />
+                <Input type="date" value={formData.startDate} onChange={e => handleInputChange('startDate', e.target.value)} />
               </div>
               <div className="col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   结束日期 *
                 </label>
-                <Input type="date" value={formData.end_date} onChange={e => handleInputChange('end_date', e.target.value)} />
+                <Input type="date" value={formData.endDate} onChange={e => handleInputChange('endDate', e.target.value)} />
               </div>
               <div className="col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -474,25 +474,25 @@ export function AgreementForm({
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   数据范围
                 </label>
-                <Textarea value={formData.terms.data_sharing.scope} onChange={e => handleDataSharingChange('scope', e.target.value)} placeholder="请描述数据共享范围" rows={2} />
+                <Textarea value={formData.terms.dataSharing.scope} onChange={e => handleDataSharingChange('scope', e.target.value)} placeholder="请描述数据共享范围" rows={2} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   使用目的
                 </label>
-                <Textarea value={formData.terms.data_sharing.purpose} onChange={e => handleDataSharingChange('purpose', e.target.value)} placeholder="请描述数据使用目的" rows={2} />
+                <Textarea value={formData.terms.dataSharing.purpose} onChange={e => handleDataSharingChange('purpose', e.target.value)} placeholder="请描述数据使用目的" rows={2} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   安全标准
                 </label>
-                <Textarea value={formData.terms.data_sharing.security} onChange={e => handleDataSharingChange('security', e.target.value)} placeholder="请描述安全标准" rows={2} />
+                <Textarea value={formData.terms.dataSharing.security} onChange={e => handleDataSharingChange('security', e.target.value)} placeholder="请描述安全标准" rows={2} />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   数据保留
                 </label>
-                <Textarea value={formData.terms.data_sharing.retention} onChange={e => handleDataSharingChange('retention', e.target.value)} placeholder="请描述数据保留期限" rows={2} />
+                <Textarea value={formData.terms.dataSharing.retention} onChange={e => handleDataSharingChange('retention', e.target.value)} placeholder="请描述数据保留期限" rows={2} />
               </div>
             </div>
           </CardContent>

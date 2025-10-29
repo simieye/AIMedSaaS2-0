@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 // @ts-ignore;
 import { Tabs, TabsContent, TabsList, TabsTrigger, Button } from '@/components/ui';
 // @ts-ignore;
-import { Building2, Target, TrendingUp, DollarSign, Layout, Plus } from 'lucide-react';
+import { Building2, Target, TrendingUp, DollarSign, Layout, FileText, CreditCard, BarChart3, Plus } from 'lucide-react';
 
 import { SponsorList } from '@/components/SponsorList';
 import { SponsorshipProjects } from '@/components/SponsorshipProjects';
-import { AnalyticsDashboard } from '@/components/AnalyticsDashboard';
-import { FinancialManagement } from '@/components/FinancialManagement';
 import { AdPositionManagement } from '@/components/AdPositionManagement';
+import { AnalyticsDashboard } from '@/components/AnalyticsDashboard';
+import { ContractManagement } from '@/components/ContractManagement';
+import { PaymentTracking } from '@/components/PaymentTracking';
+import { ReportGeneration } from '@/components/ReportGeneration';
 export default function PharmaSponsorshipManagement(props) {
   const [activeTab, setActiveTab] = useState('sponsors');
   const handleViewSponsorDetails = sponsorId => {
@@ -45,7 +47,7 @@ export default function PharmaSponsorshipManagement(props) {
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">药企赞助管理</h1>
                 <p className="text-gray-600 mt-2">
-                  管理药企赞助商、赞助项目、效果分析、财务管理和广告位配置
+                  管理药企赞助商、赞助项目、广告位配置、ROI分析、合同管理和付款跟踪
                 </p>
               </div>
               <div className="flex items-center space-x-4">
@@ -61,7 +63,7 @@ export default function PharmaSponsorshipManagement(props) {
 
           {/* 功能标签页 */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
+            <TabsList className="grid w-full grid-cols-7">
               <TabsTrigger value="sponsors" className="flex items-center space-x-2">
                 <Building2 className="w-4 h-4" />
                 <span>赞助商管理</span>
@@ -70,17 +72,25 @@ export default function PharmaSponsorshipManagement(props) {
                 <Target className="w-4 h-4" />
                 <span>赞助项目</span>
               </TabsTrigger>
-              <TabsTrigger value="analytics" className="flex items-center space-x-2">
-                <TrendingUp className="w-4 h-4" />
-                <span>效果分析</span>
-              </TabsTrigger>
-              <TabsTrigger value="financial" className="flex items-center space-x-2">
-                <DollarSign className="w-4 h-4" />
-                <span>财务管理</span>
-              </TabsTrigger>
               <TabsTrigger value="adpositions" className="flex items-center space-x-2">
                 <Layout className="w-4 h-4" />
-                <span>广告位管理</span>
+                <span>广告位配置</span>
+              </TabsTrigger>
+              <TabsTrigger value="analytics" className="flex items-center space-x-2">
+                <TrendingUp className="w-4 h-4" />
+                <span>ROI分析</span>
+              </TabsTrigger>
+              <TabsTrigger value="contracts" className="flex items-center space-x-2">
+                <FileText className="w-4 h-4" />
+                <span>合同管理</span>
+              </TabsTrigger>
+              <TabsTrigger value="payments" className="flex items-center space-x-2">
+                <CreditCard className="w-4 h-4" />
+                <span>付款跟踪</span>
+              </TabsTrigger>
+              <TabsTrigger value="reports" className="flex items-center space-x-2">
+                <BarChart3 className="w-4 h-4" />
+                <span>数据报告</span>
               </TabsTrigger>
             </TabsList>
 
@@ -92,16 +102,24 @@ export default function PharmaSponsorshipManagement(props) {
               <SponsorshipProjects $w={props.$w} onViewDetails={handleViewProjectDetails} onEdit={handleEditProject} onCreate={handleCreateProject} />
             </TabsContent>
 
+            <TabsContent value="adpositions">
+              <AdPositionManagement $w={props.$w} />
+            </TabsContent>
+
             <TabsContent value="analytics">
               <AnalyticsDashboard $w={props.$w} />
             </TabsContent>
 
-            <TabsContent value="financial">
-              <FinancialManagement $w={props.$w} />
+            <TabsContent value="contracts">
+              <ContractManagement $w={props.$w} />
             </TabsContent>
 
-            <TabsContent value="adpositions">
-              <AdPositionManagement $w={props.$w} />
+            <TabsContent value="payments">
+              <PaymentTracking $w={props.$w} />
+            </TabsContent>
+
+            <TabsContent value="reports">
+              <ReportGeneration $w={props.$w} />
             </TabsContent>
           </Tabs>
         </div>

@@ -7,10 +7,6 @@ import { Search, Filter, Download, Eye, Edit, Trash2, Plus, Calendar, Building2,
 
 export function AgreementList({
   $w,
-  onViewAgreement,
-  onEditAgreement,
-  onCreateAgreement,
-  onViewDocuments,
   className,
   style
 }) {
@@ -23,73 +19,69 @@ export function AgreementList({
   const [agreements, setAgreements] = useState([]);
   const [loading, setLoading] = useState(false);
   const mockAgreements = [{
-    _id: 'AGR001',
-    name: '北京协和医院AI诊断系统合作协议',
-    partner_id: 'partner_001',
-    partner_name: '北京协和医院',
+    id: 'AGR001',
+    hospitalName: '北京协和医院',
+    hospitalId: 'H001',
     status: 'active',
-    start_date: '2024-01-01',
-    end_date: '2024-12-31',
+    startDate: '2024-01-01',
+    endDate: '2024-12-31',
     type: 'strategic_cooperation',
     value: 5000000,
-    responsible_person: '张主任',
-    contact_email: 'zhang@xiehe.com',
-    contact_phone: '010-12345678',
+    responsiblePerson: '张主任',
+    contactEmail: 'zhang@xiehe.com',
+    contactPhone: '010-12345678',
     description: '战略合作协议，包含AI诊断系统部署和技术支持',
     documents: ['主协议.pdf', '技术附件.pdf', '保密协议.pdf'],
-    created_at: '2024-01-01 10:00:00',
-    updated_at: '2024-01-15 14:30:00'
+    createdAt: '2024-01-01 10:00:00',
+    updatedAt: '2024-01-15 14:30:00'
   }, {
-    _id: 'AGR002',
-    name: '上海瑞金医院技术服务协议',
-    partner_id: 'partner_002',
-    partner_name: '上海瑞金医院',
+    id: 'AGR002',
+    hospitalName: '上海瑞金医院',
+    hospitalId: 'H002',
     status: 'pending',
-    start_date: '2024-02-01',
-    end_date: '2025-01-31',
+    startDate: '2024-02-01',
+    endDate: '2025-01-31',
     type: 'technical_service',
     value: 2000000,
-    responsible_person: '李院长',
-    contact_email: 'li@ruijin.com',
-    contact_phone: '021-87654321',
+    responsiblePerson: '李院长',
+    contactEmail: 'li@ruijin.com',
+    contactPhone: '021-87654321',
     description: '技术服务协议，提供AI诊断系统维护和升级服务',
     documents: ['服务协议.pdf'],
-    created_at: '2024-01-10 09:15:00',
-    updated_at: '2024-01-10 09:15:00'
+    createdAt: '2024-01-10 09:15:00',
+    updatedAt: '2024-01-10 09:15:00'
   }, {
-    _id: 'AGR003',
-    name: '广州中山医院试点项目协议',
-    partner_id: 'partner_003',
-    partner_name: '广州中山医院',
+    id: 'AGR003',
+    hospitalName: '广州中山医院',
+    hospitalId: 'H003',
     status: 'suspended',
-    start_date: '2023-06-01',
-    end_date: '2024-05-31',
+    startDate: '2023-06-01',
+    endDate: '2024-05-31',
     type: 'pilot_project',
     value: 800000,
-    responsible_person: '王副院长',
-    contact_email: 'wang@zhongshan.com',
-    contact_phone: '020-11223344',
+    responsiblePerson: '王副院长',
+    contactEmail: 'wang@zhongshan.com',
+    contactPhone: '020-11223344',
     description: '试点项目协议，AI诊断系统试点应用',
     documents: ['试点协议.pdf', '实施方案.pdf'],
-    created_at: '2023-05-15 16:20:00',
-    updated_at: '2024-01-05 11:45:00'
+    createdAt: '2023-05-15 16:20:00',
+    updatedAt: '2024-01-05 11:45:00'
   }, {
-    _id: 'AGR004',
-    name: '深圳人民医院科研合作协议',
-    partner_id: 'partner_004',
-    partner_name: '深圳人民医院',
+    id: 'AGR004',
+    hospitalName: '深圳人民医院',
+    hospitalId: 'H004',
     status: 'expired',
-    start_date: '2023-01-01',
-    end_date: '2023-12-31',
+    startDate: '2023-01-01',
+    endDate: '2023-12-31',
     type: 'research_cooperation',
     value: 1500000,
-    responsible_person: '陈主任',
-    contact_email: 'chen@szhospital.com',
-    contact_phone: '0755-55667788',
+    responsiblePerson: '陈主任',
+    contactEmail: 'chen@szhospital.com',
+    contactPhone: '0755-55667788',
     description: '科研合作协议，AI诊断算法研发和数据共享',
     documents: ['科研协议.pdf', '数据共享协议.pdf'],
-    created_at: '2022-12-20 13:30:00',
-    updated_at: '2023-12-31 17:00:00'
+    createdAt: '2022-12-20 13:30:00',
+    updatedAt: '2023-12-31 17:00:00'
   }];
   useEffect(() => {
     setAgreements(mockAgreements);
@@ -159,37 +151,29 @@ export function AgreementList({
     }).format(amount);
   };
   const handleViewDetails = agreementId => {
-    if (onViewAgreement) {
-      onViewAgreement(agreementId);
-    } else {
-      toast({
-        title: "查看详情",
-        description: `正在查看协议 ${agreementId} 的详细信息`
-      });
-    }
+    toast({
+      title: "查看详情",
+      description: `正在查看协议 ${agreementId} 的详细信息`
+    });
   };
   const handleEdit = agreementId => {
-    if (onEditAgreement) {
-      onEditAgreement(agreementId);
-    } else {
-      toast({
-        title: "编辑协议",
-        description: `正在编辑协议 ${agreementId}`
-      });
-    }
+    toast({
+      title: "编辑协议",
+      description: `正在编辑协议 ${agreementId}`
+    });
   };
   const handleStatusChange = (agreementId, newStatus) => {
-    setAgreements(prev => prev.map(agreement => agreement._id === agreementId ? {
+    setAgreements(prev => prev.map(agreement => agreement.id === agreementId ? {
       ...agreement,
       status: newStatus
     } : agreement));
     toast({
       title: "状态更新",
-      description: `协议 ${agreementId} 状态已更新为 ${newStatus}`
+      description: `协议 ${agreementId} 状态已更新`
     });
   };
   const handleDelete = agreementId => {
-    setAgreements(prev => prev.filter(agreement => agreement._id !== agreementId));
+    setAgreements(prev => prev.filter(agreement => agreement.id !== agreementId));
     toast({
       title: "删除成功",
       description: `协议 ${agreementId} 已删除`,
@@ -202,18 +186,8 @@ export function AgreementList({
       description: "正在导出协议数据..."
     });
   };
-  const handleViewDocuments = agreementId => {
-    if (onViewDocuments) {
-      onViewDocuments(agreementId);
-    } else {
-      toast({
-        title: "查看文档",
-        description: `正在查看协议 ${agreementId} 的文档`
-      });
-    }
-  };
   const filteredAgreements = agreements.filter(agreement => {
-    const matchesSearch = agreement.name.toLowerCase().includes(searchTerm.toLowerCase()) || agreement._id.toLowerCase().includes(searchTerm.toLowerCase()) || agreement.responsible_person.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = agreement.hospitalName.toLowerCase().includes(searchTerm.toLowerCase()) || agreement.id.toLowerCase().includes(searchTerm.toLowerCase()) || agreement.responsiblePerson.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = selectedStatus === 'all' || agreement.status === selectedStatus;
     return matchesSearch && matchesStatus;
   });
@@ -230,7 +204,7 @@ export function AgreementList({
               <Download className="w-4 h-4 mr-2" />
               导出数据
             </Button>
-            <Button onClick={onCreateAgreement}>
+            <Button>
               <Plus className="w-4 h-4 mr-2" />
               新增协议
             </Button>
@@ -243,7 +217,7 @@ export function AgreementList({
             <div className="grid grid-cols-3 gap-4">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input placeholder="搜索协议名称、ID或负责人..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
+                <Input placeholder="搜索医院名称、协议ID或负责人..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
               </div>
               
               <Select value={selectedStatus} onValueChange={setSelectedStatus}>
@@ -332,7 +306,7 @@ export function AgreementList({
                 <div>
                   <p className="text-sm text-gray-600">合作医院</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    {new Set(agreements.map(a => a.partner_id)).size}
+                    {new Set(agreements.map(a => a.hospitalId)).size}
                   </p>
                 </div>
               </div>
@@ -350,8 +324,7 @@ export function AgreementList({
               <TableHeader>
                 <TableRow>
                   <TableHead>协议ID</TableHead>
-                  <TableHead>协议名称</TableHead>
-                  <TableHead>合作医院</TableHead>
+                  <TableHead>医院名称</TableHead>
                   <TableHead>协议类型</TableHead>
                   <TableHead>合作金额</TableHead>
                   <TableHead>负责人</TableHead>
@@ -362,20 +335,14 @@ export function AgreementList({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredAgreements.map(agreement => <TableRow key={agreement._id}>
+                {filteredAgreements.map(agreement => <TableRow key={agreement.id}>
                     <TableCell>
-                      <div className="font-medium text-gray-900">{agreement._id}</div>
+                      <div className="font-medium text-gray-900">{agreement.id}</div>
                     </TableCell>
                     <TableCell>
                       <div>
-                        <div className="font-medium text-gray-900">{agreement.name}</div>
-                        <div className="text-sm text-gray-500">{agreement.contact_email}</div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div>
-                        <div className="font-medium text-gray-900">{agreement.partner_name}</div>
-                        <div className="text-sm text-gray-500">{agreement.contact_phone}</div>
+                        <div className="font-medium text-gray-900">{agreement.hospitalName}</div>
+                        <div className="text-sm text-gray-500">{agreement.contactEmail}</div>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -388,31 +355,28 @@ export function AgreementList({
                     </TableCell>
                     <TableCell>
                       <div>
-                        <div className="font-medium text-gray-900">{agreement.responsible_person}</div>
-                        <div className="text-sm text-gray-500">{agreement.contact_phone}</div>
+                        <div className="font-medium text-gray-900">{agreement.responsiblePerson}</div>
+                        <div className="text-sm text-gray-500">{agreement.contactPhone}</div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-gray-900">{agreement.start_date}</div>
+                      <div className="text-gray-900">{agreement.startDate}</div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-gray-900">{agreement.end_date}</div>
+                      <div className="text-gray-900">{agreement.endDate}</div>
                     </TableCell>
                     <TableCell>
                       {getStatusBadge(agreement.status)}
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center space-x-2">
-                        <Button variant="ghost" size="sm" onClick={() => handleViewDetails(agreement._id)}>
+                        <Button variant="ghost" size="sm" onClick={() => handleViewDetails(agreement.id)}>
                           <Eye className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleEdit(agreement._id)}>
+                        <Button variant="ghost" size="sm" onClick={() => handleEdit(agreement.id)}>
                           <Edit className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleViewDocuments(agreement._id)}>
-                          <FileText className="w-4 h-4" />
-                        </Button>
-                        <Select onValueChange={value => handleStatusChange(agreement._id, value)}>
+                        <Select onValueChange={value => handleStatusChange(agreement.id, value)}>
                           <SelectTrigger className="w-24 h-8">
                             <SelectValue placeholder="状态" />
                           </SelectTrigger>
@@ -422,7 +386,7 @@ export function AgreementList({
                             <SelectItem value="terminated">终止</SelectItem>
                           </SelectContent>
                         </Select>
-                        <Button variant="ghost" size="sm" onClick={() => handleDelete(agreement._id)}>
+                        <Button variant="ghost" size="sm" onClick={() => handleDelete(agreement.id)}>
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>

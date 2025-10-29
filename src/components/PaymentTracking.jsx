@@ -3,9 +3,9 @@ import React, { useState, useEffect } from 'react';
 // @ts-ignore;
 import { Card, CardContent, CardHeader, CardTitle, Button, Input, Select, Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useToast, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
 // @ts-ignore;
-import { Search, Filter, Download, Plus, Eye, Edit, DollarSign, FileText, Calendar, CheckCircle, Clock, AlertCircle, Receipt, CreditCard } from 'lucide-react';
+import { Search, Filter, Download, Eye, Edit, CreditCard, Calendar, CheckCircle, Clock, AlertCircle, DollarSign, Receipt, TrendingUp, Plus } from 'lucide-react';
 
-export function FinancialManagement({
+export function PaymentTracking({
   $w,
   className,
   style
@@ -15,104 +15,95 @@ export function FinancialManagement({
   } = useToast();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('all');
-  const [selectedPeriod, setSelectedPeriod] = useState('all');
-  const [bills, setBills] = useState([]);
+  const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(false);
-  const mockBills = [{
-    id: 'BILL001',
-    projectId: 'PRJ001',
-    projectName: '心血管药物推广活动',
+  const mockPayments = [{
+    id: 'PAY001',
+    invoiceId: 'INV202401001',
+    contractId: 'CON001',
     sponsorId: 'SPN001',
     sponsorName: '辉瑞制药有限公司',
+    projectName: '心血管药物推广活动',
     type: 'sponsorship_fee',
     status: 'paid',
     amount: 2500000,
     currency: 'CNY',
-    issueDate: '2024-01-01',
     dueDate: '2024-01-31',
     paidDate: '2024-01-28',
     paymentMethod: 'bank_transfer',
-    invoiceNumber: 'INV202401001',
-    invoiceStatus: 'issued',
+    transactionId: 'TXN20240128001',
     description: '第一季度赞助费用',
     paymentTerms: 'NET30',
-    taxRate: 0.06,
-    taxAmount: 150000,
-    totalAmount: 2650000,
+    lateFee: 0,
+    discount: 0,
     createdAt: '2024-01-01 10:00:00',
     updatedAt: '2024-01-28 14:30:00'
   }, {
-    id: 'BILL002',
-    projectId: 'PRJ002',
-    projectName: '糖尿病管理解决方案',
+    id: 'PAY002',
+    invoiceId: 'INV202401002',
+    contractId: 'CON002',
     sponsorId: 'SPN002',
     sponsorName: '阿斯利康投资（中国）有限公司',
+    projectName: '糖尿病管理解决方案',
     type: 'service_fee',
     status: 'pending',
     amount: 1750000,
     currency: 'CNY',
-    issueDate: '2024-01-15',
     dueDate: '2024-02-15',
     paidDate: null,
     paymentMethod: null,
-    invoiceNumber: 'INV202401002',
-    invoiceStatus: 'issued',
+    transactionId: null,
     description: '技术服务费用',
     paymentTerms: 'NET30',
-    taxRate: 0.06,
-    taxAmount: 105000,
-    totalAmount: 1855000,
+    lateFee: 0,
+    discount: 50000,
     createdAt: '2024-01-15 09:00:00',
     updatedAt: '2024-01-15 09:00:00'
   }, {
-    id: 'BILL003',
-    projectId: 'PRJ003',
-    projectName: '诊断设备品牌推广',
+    id: 'PAY003',
+    invoiceId: 'INV202312001',
+    contractId: 'CON003',
     sponsorId: 'SPN003',
     sponsorName: '罗氏诊断产品（上海）有限公司',
+    projectName: '诊断设备品牌推广',
     type: 'setup_fee',
     status: 'overdue',
     amount: 500000,
     currency: 'CNY',
-    issueDate: '2023-12-01',
     dueDate: '2023-12-31',
     paidDate: null,
     paymentMethod: null,
-    invoiceNumber: 'INV202312001',
-    invoiceStatus: 'issued',
+    transactionId: null,
     description: '项目设置费用',
     paymentTerms: 'NET30',
-    taxRate: 0.06,
-    taxAmount: 30000,
-    totalAmount: 530000,
+    lateFee: 25000,
+    discount: 0,
     createdAt: '2023-12-01 11:00:00',
     updatedAt: '2023-12-01 11:00:00'
   }, {
-    id: 'BILL004',
-    projectId: 'PRJ004',
-    projectName: '肿瘤治疗学术推广',
-    sponsorId: 'SPN004',
-    sponsorName: '强生（中国）投资有限公司',
-    type: 'sponsorship_fee',
-    status: 'cancelled',
-    amount: 2250000,
+    id: 'PAY004',
+    invoiceId: 'INV202401003',
+    contractId: 'CON001',
+    sponsorId: 'SPN001',
+    sponsorName: '辉瑞制药有限公司',
+    projectName: '心血管药物推广活动',
+    type: 'milestone_payment',
+    status: 'processing',
+    amount: 1500000,
     currency: 'CNY',
-    issueDate: '2023-11-15',
-    dueDate: '2023-12-15',
+    dueDate: '2024-02-15',
     paidDate: null,
-    paymentMethod: null,
-    invoiceNumber: 'INV202311001',
-    invoiceStatus: 'cancelled',
-    description: '学术推广费用（项目取消）',
+    paymentMethod: 'bank_transfer',
+    transactionId: null,
+    description: '里程碑付款 - 系统部署完成',
     paymentTerms: 'NET30',
-    taxRate: 0.06,
-    taxAmount: 135000,
-    totalAmount: 2385000,
-    createdAt: '2023-11-15 14:00:00',
-    updatedAt: '2024-01-05 16:00:00'
+    lateFee: 0,
+    discount: 0,
+    createdAt: '2024-01-20 16:00:00',
+    updatedAt: '2024-01-20 16:00:00'
   }];
   useEffect(() => {
-    setBills(mockBills);
+    setPayments(mockPayments);
   }, []);
   const getStatusBadge = status => {
     const statusConfig = {
@@ -130,6 +121,11 @@ export function FinancialManagement({
         color: 'bg-red-100 text-red-800',
         icon: AlertCircle,
         text: '逾期'
+      },
+      processing: {
+        color: 'bg-blue-100 text-blue-800',
+        icon: Clock,
+        text: '处理中'
       },
       cancelled: {
         color: 'bg-gray-100 text-gray-800',
@@ -158,9 +154,9 @@ export function FinancialManagement({
         color: 'bg-green-100 text-green-800',
         text: '设置费'
       },
-      maintenance_fee: {
+      milestone_payment: {
         color: 'bg-orange-100 text-orange-800',
-        text: '维护费'
+        text: '里程碑付款'
       }
     };
     const config = typeConfig[type] || typeConfig.sponsorship_fee;
@@ -173,56 +169,57 @@ export function FinancialManagement({
       minimumFractionDigits: 0
     }).format(amount);
   };
-  const handleViewDetails = billId => {
+  const handleViewDetails = paymentId => {
     toast({
       title: "查看详情",
-      description: `正在查看账单 ${billId} 的详细信息`
+      description: `正在查看付款 ${paymentId} 的详细信息`
     });
   };
-  const handleEdit = billId => {
+  const handleEdit = paymentId => {
     toast({
-      title: "编辑账单",
-      description: `正在编辑账单 ${billId}`
+      title: "编辑付款",
+      description: `正在编辑付款 ${paymentId}`
     });
   };
-  const handleSendInvoice = billId => {
+  const handleSendReminder = paymentId => {
     toast({
-      title: "发送发票",
-      description: `发票已发送给客户`
+      title: "发送提醒",
+      description: `付款提醒已发送给客户`
     });
   };
-  const handleMarkAsPaid = billId => {
-    setBills(prev => prev.map(bill => bill.id === billId ? {
-      ...bill,
+  const handleMarkAsPaid = paymentId => {
+    setPayments(prev => prev.map(payment => payment.id === paymentId ? {
+      ...payment,
       status: 'paid',
       paidDate: new Date().toISOString().split('T')[0]
-    } : bill));
+    } : payment));
     toast({
       title: "标记已付款",
-      description: `账单 ${billId} 已标记为已付款`
+      description: `付款 ${paymentId} 已标记为已付款`
     });
   };
   const handleExport = () => {
     toast({
       title: "导出数据",
-      description: "正在导出财务数据..."
+      description: "正在导出付款数据..."
     });
   };
-  const filteredBills = bills.filter(bill => {
-    const matchesSearch = bill.projectName.toLowerCase().includes(searchTerm.toLowerCase()) || bill.sponsorName.toLowerCase().includes(searchTerm.toLowerCase()) || bill.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = selectedStatus === 'all' || bill.status === selectedStatus;
+  const filteredPayments = payments.filter(payment => {
+    const matchesSearch = payment.invoiceId.toLowerCase().includes(searchTerm.toLowerCase()) || payment.sponsorName.toLowerCase().includes(searchTerm.toLowerCase()) || payment.projectName.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = selectedStatus === 'all' || payment.status === selectedStatus;
     return matchesSearch && matchesStatus;
   });
-  const totalRevenue = bills.filter(b => b.status === 'paid').reduce((sum, b) => sum + b.totalAmount, 0);
-  const pendingRevenue = bills.filter(b => b.status === 'pending').reduce((sum, b) => sum + b.totalAmount, 0);
-  const overdueRevenue = bills.filter(b => b.status === 'overdue').reduce((sum, b) => sum + b.totalAmount, 0);
+  const totalAmount = payments.reduce((sum, payment) => sum + payment.amount, 0);
+  const paidAmount = payments.filter(p => p.status === 'paid').reduce((sum, p) => sum + p.amount, 0);
+  const pendingAmount = payments.filter(p => p.status === 'pending' || p.status === 'overdue').reduce((sum, p) => sum + p.amount, 0);
+  const overdueAmount = payments.filter(p => p.status === 'overdue').reduce((sum, p) => sum + p.amount + p.lateFee, 0);
   return <div className={className} style={style}>
       <div className="space-y-6">
         {/* 头部 */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">财务管理</h1>
-            <p className="text-gray-600">管理账单、发票和付款状态跟踪</p>
+            <h1 className="text-2xl font-bold text-gray-900">付款跟踪</h1>
+            <p className="text-gray-600">管理和监控所有付款状态和财务流程</p>
           </div>
           <div className="flex items-center space-x-2">
             <Button variant="outline" onClick={handleExport}>
@@ -231,7 +228,7 @@ export function FinancialManagement({
             </Button>
             <Button>
               <Plus className="w-4 h-4 mr-2" />
-              创建账单
+              创建付款
             </Button>
           </div>
         </div>
@@ -242,7 +239,7 @@ export function FinancialManagement({
             <div className="grid grid-cols-3 gap-4">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input placeholder="搜索项目名称、赞助商或发票号..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
+                <Input placeholder="搜索发票号、赞助商或项目..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
               </div>
               
               <Select value={selectedStatus} onValueChange={setSelectedStatus}>
@@ -254,22 +251,17 @@ export function FinancialManagement({
                   <SelectItem value="paid">已付款</SelectItem>
                   <SelectItem value="pending">待付款</SelectItem>
                   <SelectItem value="overdue">逾期</SelectItem>
+                  <SelectItem value="processing">处理中</SelectItem>
                   <SelectItem value="cancelled">已取消</SelectItem>
                 </SelectContent>
               </Select>
 
-              <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
-                <SelectTrigger>
-                  <SelectValue placeholder="选择时间范围" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">全部时间</SelectItem>
-                  <SelectItem value="current_month">本月</SelectItem>
-                  <SelectItem value="last_month">上月</SelectItem>
-                  <SelectItem value="current_quarter">本季度</SelectItem>
-                  <SelectItem value="current_year">本年</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex items-center space-x-2">
+                <Button variant="outline">
+                  <Filter className="w-4 h-4 mr-2" />
+                  高级筛选
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -279,12 +271,26 @@ export function FinancialManagement({
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center space-x-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <DollarSign className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">总金额</p>
+                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(totalAmount)}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center space-x-3">
                 <div className="p-2 bg-green-100 rounded-lg">
-                  <DollarSign className="w-6 h-6 text-green-600" />
+                  <CheckCircle className="w-6 h-6 text-green-600" />
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">已收款</p>
-                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(totalRevenue)}</p>
+                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(paidAmount)}</p>
                 </div>
               </div>
             </CardContent>
@@ -298,7 +304,7 @@ export function FinancialManagement({
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">待收款</p>
-                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(pendingRevenue)}</p>
+                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(pendingAmount)}</p>
                 </div>
               </div>
             </CardContent>
@@ -311,43 +317,28 @@ export function FinancialManagement({
                   <AlertCircle className="w-6 h-6 text-red-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">逾期款项</p>
-                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(overdueRevenue)}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Receipt className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">总账单数</p>
-                  <p className="text-2xl font-bold text-gray-900">{bills.length}</p>
+                  <p className="text-sm text-gray-600">逾期金额</p>
+                  <p className="text-2xl font-bold text-gray-900">{formatCurrency(overdueAmount)}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* 账单列表 */}
+        {/* 付款列表 */}
         <Card>
           <CardHeader>
-            <CardTitle>账单列表</CardTitle>
+            <CardTitle>付款列表</CardTitle>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>账单ID</TableHead>
-                  <TableHead>项目名称</TableHead>
+                  <TableHead>发票号</TableHead>
                   <TableHead>赞助商</TableHead>
+                  <TableHead>项目</TableHead>
                   <TableHead>类型</TableHead>
                   <TableHead>金额</TableHead>
-                  <TableHead>开票日期</TableHead>
                   <TableHead>到期日期</TableHead>
                   <TableHead>付款日期</TableHead>
                   <TableHead>状态</TableHead>
@@ -355,52 +346,50 @@ export function FinancialManagement({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredBills.map(bill => <TableRow key={bill.id}>
+                {filteredPayments.map(payment => <TableRow key={payment.id}>
                     <TableCell>
                       <div>
-                        <div className="font-medium text-gray-900">{bill.id}</div>
-                        <div className="text-sm text-gray-500">{bill.invoiceNumber}</div>
+                        <div className="font-medium text-gray-900">{payment.invoiceId}</div>
+                        {payment.transactionId && <div className="text-sm text-gray-500">{payment.transactionId}</div>}
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="font-medium text-gray-900">{bill.projectName}</div>
+                      <div className="text-gray-900">{payment.sponsorName}</div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-gray-900">{bill.sponsorName}</div>
+                      <div className="text-gray-900">{payment.projectName}</div>
                     </TableCell>
                     <TableCell>
-                      {getTypeBadge(bill.type)}
+                      {getTypeBadge(payment.type)}
                     </TableCell>
                     <TableCell>
                       <div>
-                        <div className="font-medium text-gray-900">{formatCurrency(bill.amount)}</div>
-                        <div className="text-sm text-gray-500">含税: {formatCurrency(bill.totalAmount)}</div>
+                        <div className="font-medium text-gray-900">{formatCurrency(payment.amount)}</div>
+                        {payment.lateFee > 0 && <div className="text-sm text-red-500">滞纳金: {formatCurrency(payment.lateFee)}</div>}
+                        {payment.discount > 0 && <div className="text-sm text-green-500">折扣: -{formatCurrency(payment.discount)}</div>}
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-gray-900">{bill.issueDate}</div>
+                      <div className="text-gray-900">{payment.dueDate}</div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-gray-900">{bill.dueDate}</div>
+                      <div className="text-gray-900">{payment.paidDate || '-'}</div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-gray-900">{bill.paidDate || '-'}</div>
-                    </TableCell>
-                    <TableCell>
-                      {getStatusBadge(bill.status)}
+                      {getStatusBadge(payment.status)}
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center space-x-2">
-                        <Button variant="ghost" size="sm" onClick={() => handleViewDetails(bill.id)}>
+                        <Button variant="ghost" size="sm" onClick={() => handleViewDetails(payment.id)}>
                           <Eye className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleEdit(bill.id)}>
+                        <Button variant="ghost" size="sm" onClick={() => handleEdit(payment.id)}>
                           <Edit className="w-4 h-4" />
                         </Button>
-                        {bill.status === 'pending' && <Button variant="ghost" size="sm" onClick={() => handleSendInvoice(bill.id)}>
-                            <FileText className="w-4 h-4" />
+                        {(payment.status === 'pending' || payment.status === 'overdue') && <Button variant="ghost" size="sm" onClick={() => handleSendReminder(payment.id)}>
+                            <Receipt className="w-4 h-4" />
                           </Button>}
-                        {bill.status === 'pending' && <Button variant="ghost" size="sm" onClick={() => handleMarkAsPaid(bill.id)}>
+                        {payment.status === 'pending' && <Button variant="ghost" size="sm" onClick={() => handleMarkAsPaid(payment.id)}>
                             <CheckCircle className="w-4 h-4" />
                           </Button>}
                       </div>

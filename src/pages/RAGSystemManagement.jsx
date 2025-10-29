@@ -3,34 +3,25 @@ import React, { useState } from 'react';
 // @ts-ignore;
 import { Tabs, TabsContent, TabsList, TabsTrigger, Button } from '@/components/ui';
 // @ts-ignore;
-import { Database, Search, Activity, BarChart3, Brain, Network, Settings } from 'lucide-react';
+import { Search, Database, FileText, AlertTriangle, BarChart3, BookOpen, Plus } from 'lucide-react';
 
-import { DocumentLibrary } from '@/components/DocumentLibrary';
-import { SearchConfiguration } from '@/components/SearchConfiguration';
-import { SystemMonitoring } from '@/components/SystemMonitoring';
-import { PerformanceStatistics } from '@/components/PerformanceStatistics';
-import { KnowledgeGraph } from '@/components/KnowledgeGraph';
+import { LiteratureLibrary } from '@/components/LiteratureLibrary';
+import { KnowledgeBaseConfig } from '@/components/KnowledgeBaseConfig';
+import { RetrievalTesting } from '@/components/RetrievalTesting';
+import { HallucinationMonitoring } from '@/components/HallucinationMonitoring';
 export default function RAGSystemManagement(props) {
-  const [activeTab, setActiveTab] = useState('documents');
-  const handleDocumentUpload = () => {
-    // 这里可以添加文档上传的逻辑
-    console.log('上传文档');
+  const [activeTab, setActiveTab] = useState('literature');
+  const handleSearch = query => {
+    console.log('搜索文献:', query);
   };
-  const handleConfigurationSave = () => {
-    // 这里可以添加配置保存的逻辑
-    console.log('保存配置');
+  const handleUploadDocument = file => {
+    console.log('上传文档:', file);
   };
-  const handleSystemRefresh = () => {
-    // 这里可以添加系统刷新的逻辑
-    console.log('刷新系统');
+  const handleTestRetrieval = testConfig => {
+    console.log('测试检索:', testConfig);
   };
-  const handleReportExport = () => {
-    // 这里可以添加报告导出的逻辑
-    console.log('导出报告');
-  };
-  const handleGraphExport = () => {
-    // 这里可以添加图谱导出的逻辑
-    console.log('导出图谱');
+  const handleViewHallucinationReport = reportId => {
+    console.log('查看幻觉报告:', reportId);
   };
   return <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-6">
@@ -39,9 +30,9 @@ export default function RAGSystemManagement(props) {
           <div className="bg-white rounded-lg shadow-sm p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">RAG系统管理</h1>
+                <h1 className="text-3xl font-bold text-gray-900">RAG系统集成管理</h1>
                 <p className="text-gray-600 mt-2">
-                  管理检索增强生成系统，包括文献库、检索配置、系统监控、性能统计和知识图谱
+                  文献检索、知识库管理、检索测试、幻觉检测和性能分析
                 </p>
               </div>
               <div className="flex items-center space-x-4">
@@ -57,47 +48,39 @@ export default function RAGSystemManagement(props) {
 
           {/* 功能标签页 */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
-              <TabsTrigger value="documents" className="flex items-center space-x-2">
-                <Database className="w-4 h-4" />
-                <span>文献库</span>
-              </TabsTrigger>
-              <TabsTrigger value="search" className="flex items-center space-x-2">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="literature" className="flex items-center space-x-2">
                 <Search className="w-4 h-4" />
-                <span>检索配置</span>
-              </TabsTrigger>
-              <TabsTrigger value="monitoring" className="flex items-center space-x-2">
-                <Activity className="w-4 h-4" />
-                <span>系统监控</span>
-              </TabsTrigger>
-              <TabsTrigger value="statistics" className="flex items-center space-x-2">
-                <BarChart3 className="w-4 h-4" />
-                <span>性能统计</span>
+                <span>文献检索</span>
               </TabsTrigger>
               <TabsTrigger value="knowledge" className="flex items-center space-x-2">
-                <Network className="w-4 h-4" />
-                <span>知识图谱</span>
+                <Database className="w-4 h-4" />
+                <span>知识库管理</span>
+              </TabsTrigger>
+              <TabsTrigger value="testing" className="flex items-center space-x-2">
+                <FileText className="w-4 h-4" />
+                <span>检索测试</span>
+              </TabsTrigger>
+              <TabsTrigger value="hallucination" className="flex items-center space-x-2">
+                <AlertTriangle className="w-4 h-4" />
+                <span>幻觉检测</span>
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="documents">
-              <DocumentLibrary $w={props.$w} onUpload={handleDocumentUpload} />
-            </TabsContent>
-
-            <TabsContent value="search">
-              <SearchConfiguration $w={props.$w} onSave={handleConfigurationSave} />
-            </TabsContent>
-
-            <TabsContent value="monitoring">
-              <SystemMonitoring $w={props.$w} onRefresh={handleSystemRefresh} />
-            </TabsContent>
-
-            <TabsContent value="statistics">
-              <PerformanceStatistics $w={props.$w} onExport={handleReportExport} />
+            <TabsContent value="literature">
+              <LiteratureLibrary $w={props.$w} onSearch={handleSearch} />
             </TabsContent>
 
             <TabsContent value="knowledge">
-              <KnowledgeGraph $w={props.$w} onExport={handleGraphExport} />
+              <KnowledgeBaseConfig $w={props.$w} onUploadDocument={handleUploadDocument} />
+            </TabsContent>
+
+            <TabsContent value="testing">
+              <RetrievalTesting $w={props.$w} onTest={handleTestRetrieval} />
+            </TabsContent>
+
+            <TabsContent value="hallucination">
+              <HallucinationMonitoring $w={props.$w} onViewReport={handleViewHallucinationReport} />
             </TabsContent>
           </Tabs>
         </div>

@@ -1,399 +1,463 @@
 // @ts-ignore;
 import React, { useState, useEffect } from 'react';
 // @ts-ignore;
-import { Card, CardContent, CardHeader, CardTitle, Button, Input, Select, Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useToast, SelectTrigger, SelectValue, SelectContent, SelectItem, Switch } from '@/components/ui';
+import { Card, CardContent, CardHeader, CardTitle, Button, Input, Select, Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useToast, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
 // @ts-ignore;
-import { Database, Settings, RefreshCw, Plus, Edit, Trash2, Eye, Clock, CheckCircle, AlertCircle, Globe, FileText, Link, Zap } from 'lucide-react';
+import { Upload, Search, Filter, Download, Eye, Edit, Trash2, Plus, Database, FileText, Folder, Settings, RefreshCw, CheckCircle, AlertCircle, Clock } from 'lucide-react';
 
 export function KnowledgeBaseConfig({
   $w,
+  onUploadDocument,
   className,
   style
 }) {
   const {
     toast
   } = useToast();
-  const [dataSources, setDataSources] = useState([]);
-  const [updateStrategies, setUpdateStrategies] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const mockDataSources = [{
-    id: 'DS001',
-    name: 'PubMed医学文献数据库',
-    type: 'api',
-    url: 'https://pubmed.ncbi.nlm.nih.gov/',
-    status: 'active',
-    lastSync: '2024-01-15 14:30:00',
-    syncFrequency: 'daily',
-    totalRecords: 125000,
-    indexedRecords: 118500,
-    description: '美国国家医学图书馆的生物医学文献数据库',
-    config: {
-      apiKey: 'encrypted_key_***',
-      queryLimit: 1000,
-      timeout: 30000
-    }
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [documents, setDocuments] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  const mockDocuments = [{
+    id: 'DOC001',
+    name: '心血管疾病诊疗指南2024版',
+    type: 'guideline',
+    category: 'cardiology',
+    status: 'indexed',
+    size: 2048576,
+    pages: 156,
+    uploadDate: '2024-01-15',
+    lastUpdated: '2024-01-20',
+    uploadedBy: '张医生',
+    description: '最新版心血管疾病诊疗指南，包含诊断标准、治疗方案等内容',
+    tags: ['心血管', '诊疗指南', '2024版'],
+    indexedPages: 156,
+    processingStatus: 'completed',
+    embeddings: 2048,
+    version: 'v2.1'
   }, {
-    id: 'DS002',
-    name: 'CNKI中国知网',
-    type: 'crawler',
-    url: 'https://www.cnki.net/',
-    status: 'active',
-    lastSync: '2024-01-15 02:00:00',
-    syncFrequency: 'weekly',
-    totalRecords: 89000,
-    indexedRecords: 85600,
-    description: '中国最大的学术文献数据库',
-    config: {
-      crawlDepth: 3,
-      maxPages: 100,
-      delay: 2000
-    }
+    id: 'DOC002',
+    name: '糖尿病管理手册',
+    type: 'handbook',
+    category: 'endocrinology',
+    status: 'processing',
+    size: 1536000,
+    pages: 98,
+    uploadDate: '2024-02-10',
+    lastUpdated: '2024-02-10',
+    uploadedBy: '李医生',
+    description: '糖尿病患者的综合管理手册，涵盖饮食、运动、药物治疗等方面',
+    tags: ['糖尿病', '管理手册', '综合治疗'],
+    indexedPages: 45,
+    processingStatus: 'processing',
+    embeddings: 896,
+    version: 'v1.0'
   }, {
-    id: 'DS003',
-    name: '本地PDF文献库',
-    type: 'local',
-    url: '/data/literature/',
-    status: 'active',
-    lastSync: '2024-01-15 10:15:00',
-    syncFrequency: 'manual',
-    totalRecords: 45000,
-    indexedRecords: 44500,
-    description: '本地存储的PDF格式医学文献',
-    config: {
-      path: '/data/literature/',
-      supportedFormats: ['pdf', 'doc', 'docx'],
-      maxSize: '50MB'
-    }
+    id: 'DOC003',
+    name: '肿瘤免疫治疗研究进展',
+    type: 'research',
+    category: 'oncology',
+    status: 'pending',
+    size: 3072000,
+    pages: 234,
+    uploadDate: '2024-02-15',
+    lastUpdated: '2024-02-15',
+    uploadedBy: '王教授',
+    description: '肿瘤免疫治疗最新研究进展综述，包含临床试验数据和案例分析',
+    tags: ['肿瘤', '免疫治疗', '研究进展'],
+    indexedPages: 0,
+    processingStatus: 'pending',
+    embeddings: 0,
+    version: 'v1.0'
   }, {
-    id: 'DS004',
-    name: '临床试验数据库',
-    type: 'api',
-    url: 'https://clinicaltrials.gov/',
-    status: 'inactive',
-    lastSync: '2024-01-10 16:45:00',
-    syncFrequency: 'monthly',
-    totalRecords: 32000,
-    indexedRecords: 28900,
-    description: '美国国立卫生研究院临床试验数据库',
-    config: {
-      apiKey: 'encrypted_key_***',
-      regions: ['US', 'EU', 'Asia'],
-      phases: ['Phase 1', 'Phase 2', 'Phase 3']
-    }
-  }];
-  const mockUpdateStrategies = [{
-    id: 'US001',
-    name: '增量更新策略',
-    type: 'incremental',
-    status: 'active',
-    schedule: '0 2 * * *',
-    description: '只更新新增或修改的文献，提高更新效率',
-    config: {
-      batchSize: 1000,
-      maxRetries: 3,
-      conflictResolution: 'latest'
-    }
-  }, {
-    id: 'US002',
-    name: '全量更新策略',
-    type: 'full',
-    status: 'inactive',
-    schedule: '0 3 1 * *',
-    description: '每月1号进行全量更新，确保数据完整性',
-    config: {
-      batchSize: 500,
-      maxRetries: 5,
-      conflictResolution: 'merge'
-    }
-  }, {
-    id: 'US003',
-    name: '智能更新策略',
-    type: 'smart',
-    status: 'active',
-    schedule: '0 */6 * * *',
-    description: '基于文献重要性和更新频率智能调度',
-    config: {
-      priorityThreshold: 0.8,
-      batchSize: 800,
-      maxRetries: 3,
-      conflictResolution: 'weighted'
-    }
+    id: 'DOC004',
+    name: '医学影像诊断标准',
+    type: 'standard',
+    category: 'radiology',
+    status: 'indexed',
+    size: 1024000,
+    pages: 67,
+    uploadDate: '2024-01-08',
+    lastUpdated: '2024-01-12',
+    uploadedBy: '赵医生',
+    description: '医学影像诊断的标准操作程序和质量控制要求',
+    tags: ['医学影像', '诊断标准', '质量控制'],
+    indexedPages: 67,
+    processingStatus: 'completed',
+    embeddings: 1024,
+    version: 'v3.0'
   }];
   useEffect(() => {
-    setDataSources(mockDataSources);
-    setUpdateStrategies(mockUpdateStrategies);
+    setDocuments(mockDocuments);
   }, []);
+  const categories = [{
+    value: 'all',
+    label: '全部类别'
+  }, {
+    value: 'cardiology',
+    label: '心血管'
+  }, {
+    value: 'endocrinology',
+    label: '内分泌'
+  }, {
+    value: 'oncology',
+    label: '肿瘤'
+  }, {
+    value: 'radiology',
+    label: '放射学'
+  }];
+  const documentTypes = [{
+    value: 'guideline',
+    label: '诊疗指南'
+  }, {
+    value: 'handbook',
+    label: '手册'
+  }, {
+    value: 'research',
+    label: '研究文献'
+  }, {
+    value: 'standard',
+    label: '标准规范'
+  }];
   const getStatusBadge = status => {
     const statusConfig = {
-      active: {
+      indexed: {
         color: 'bg-green-100 text-green-800',
         icon: CheckCircle,
-        text: '活跃'
+        text: '已索引'
       },
-      inactive: {
-        color: 'bg-gray-100 text-gray-800',
+      processing: {
+        color: 'bg-blue-100 text-blue-800',
+        icon: Clock,
+        text: '处理中'
+      },
+      pending: {
+        color: 'bg-yellow-100 text-yellow-800',
         icon: AlertCircle,
-        text: '未激活'
+        text: '待处理'
       },
-      error: {
+      failed: {
         color: 'bg-red-100 text-red-800',
         icon: AlertCircle,
-        text: '错误'
+        text: '处理失败'
       }
     };
-    const config = statusConfig[status] || statusConfig.inactive;
+    const config = statusConfig[status] || statusConfig.pending;
     const Icon = config.icon;
     return <Badge className={config.color}>
         <Icon className="w-3 h-3 mr-1" />
         {config.text}
       </Badge>;
   };
-  const getTypeIcon = type => {
-    const iconMap = {
-      api: Globe,
-      crawler: Link,
-      local: FileText,
-      database: Database
+  const getTypeBadge = type => {
+    const typeConfig = {
+      guideline: 'bg-purple-100 text-purple-800',
+      handbook: 'bg-blue-100 text-blue-800',
+      research: 'bg-green-100 text-green-800',
+      standard: 'bg-orange-100 text-orange-800'
     };
-    return iconMap[type] || Database;
+    const typeLabels = {
+      guideline: '诊疗指南',
+      handbook: '手册',
+      research: '研究文献',
+      standard: '标准规范'
+    };
+    return <Badge className={typeConfig[type] || 'bg-gray-100 text-gray-800'}>
+        {typeLabels[type] || type}
+      </Badge>;
   };
-  const handleSyncDataSource = dataSourceId => {
-    setDataSources(prev => prev.map(ds => ds.id === dataSourceId ? {
-      ...ds,
-      status: 'active'
-    } : ds));
+  const formatFileSize = bytes => {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+  const handleFileUpload = event => {
+    const files = event.target.files;
+    if (files.length > 0) {
+      setUploading(true);
+      // 模拟文件上传
+      setTimeout(() => {
+        const newDocument = {
+          id: `DOC${Date.now()}`,
+          name: files[0].name,
+          type: 'research',
+          category: 'cardiology',
+          status: 'pending',
+          size: files[0].size,
+          pages: Math.floor(Math.random() * 100) + 50,
+          uploadDate: new Date().toISOString().split('T')[0],
+          lastUpdated: new Date().toISOString().split('T')[0],
+          uploadedBy: $w.auth.currentUser?.name || '当前用户',
+          description: '新上传的文档',
+          tags: ['新文档'],
+          indexedPages: 0,
+          processingStatus: 'pending',
+          embeddings: 0,
+          version: 'v1.0'
+        };
+        setDocuments(prev => [newDocument, ...prev]);
+        setUploading(false);
+        if (onUploadDocument) {
+          onUploadDocument(files[0]);
+        }
+        toast({
+          title: "上传成功",
+          description: `文档 ${files[0].name} 已上传成功`
+        });
+      }, 2000);
+    }
+  };
+  const handleViewDetails = documentId => {
     toast({
-      title: "同步数据源",
-      description: `正在同步数据源 ${dataSourceId}`
+      title: "查看详情",
+      description: `正在查看文档 ${documentId} 的详细信息`
     });
   };
-  const handleEditDataSource = dataSourceId => {
+  const handleEdit = documentId => {
     toast({
-      title: "编辑数据源",
-      description: `正在编辑数据源 ${dataSourceId}`
+      title: "编辑文档",
+      description: `正在编辑文档 ${documentId}`
     });
   };
-  const handleDeleteDataSource = dataSourceId => {
-    setDataSources(prev => prev.filter(ds => ds.id !== dataSourceId));
+  const handleDelete = documentId => {
+    setDocuments(prev => prev.filter(doc => doc.id !== documentId));
     toast({
       title: "删除成功",
-      description: `数据源 ${dataSourceId} 已删除`,
+      description: `文档 ${documentId} 已删除`,
       variant: "destructive"
     });
   };
-  const handleToggleStrategy = strategyId => {
-    setUpdateStrategies(prev => prev.map(strategy => strategy.id === strategyId ? {
-      ...strategy,
-      status: strategy.status === 'active' ? 'inactive' : 'active'
-    } : strategy));
+  const handleReindex = documentId => {
+    setDocuments(prev => prev.map(doc => doc.id === documentId ? {
+      ...doc,
+      status: 'processing',
+      processingStatus: 'processing'
+    } : doc));
     toast({
-      title: "策略状态更新",
-      description: `更新策略 ${strategyId} 状态已更改`
+      title: "重新索引",
+      description: `文档 ${documentId} 正在重新索引`
     });
   };
-  const handleEditStrategy = strategyId => {
-    toast({
-      title: "编辑策略",
-      description: `正在编辑更新策略 ${strategyId}`
-    });
-  };
-  const handleTestConnection = dataSourceId => {
-    toast({
-      title: "测试连接",
-      description: `正在测试数据源 ${dataSourceId} 的连接...`
-    });
-  };
+  const filteredDocuments = documents.filter(doc => {
+    const matchesSearch = !searchTerm || doc.name.toLowerCase().includes(searchTerm.toLowerCase()) || doc.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || doc.category === selectedCategory;
+    const matchesStatus = selectedStatus === 'all' || doc.status === selectedStatus;
+    return matchesSearch && matchesCategory && matchesStatus;
+  });
+  const totalDocuments = documents.length;
+  const indexedDocuments = documents.filter(doc => doc.status === 'indexed').length;
+  const processingDocuments = documents.filter(doc => doc.status === 'processing').length;
+  const totalSize = documents.reduce((sum, doc) => sum + doc.size, 0);
+  const totalEmbeddings = documents.reduce((sum, doc) => sum + doc.embeddings, 0);
   return <div className={className} style={style}>
       <div className="space-y-6">
-        {/* 头部 */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">知识库配置</h1>
-            <p className="text-gray-600">管理数据源和更新策略，确保知识库数据的及时性和准确性</p>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline">
-              <RefreshCw className="w-4 h-4 mr-2" />
-              全量同步
-            </Button>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              添加数据源
-            </Button>
-          </div>
+        {/* 统计概览 */}
+        <div className="grid grid-cols-4 gap-4">
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <Database className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">总文档数</p>
+                  <p className="text-2xl font-bold text-gray-900">{totalDocuments}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <CheckCircle className="w-6 h-6 text-green-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">已索引</p>
+                  <p className="text-2xl font-bold text-gray-900">{indexedDocuments}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-yellow-100 rounded-lg">
+                  <Clock className="w-6 h-6 text-yellow-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">处理中</p>
+                  <p className="text-2xl font-bold text-gray-900">{processingDocuments}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 bg-purple-100 rounded-lg">
+                  <Settings className="w-6 h-6 text-purple-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">嵌入向量</p>
+                  <p className="text-2xl font-bold text-gray-900">{totalEmbeddings.toLocaleString()}</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* 数据源管理 */}
+        {/* 上传和筛选区域 */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center">
-              <Database className="w-5 h-5 mr-2" />
-              数据源管理
+            <CardTitle className="flex items-center justify-between">
+              <span className="flex items-center">
+                <Upload className="w-5 h-5 mr-2" />
+                知识库管理
+              </span>
+              <div className="flex items-center space-x-2">
+                <Button variant="outline" size="sm">
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                  刷新索引
+                </Button>
+                <Button variant="outline" size="sm">
+                  <Settings className="w-4 h-4 mr-2" />
+                  配置设置
+                </Button>
+              </div>
             </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {/* 文件上传 */}
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <div className="space-y-2">
+                  <p className="text-lg font-medium text-gray-900">上传文档</p>
+                  <p className="text-sm text-gray-600">支持PDF、Word、TXT格式，最大50MB</p>
+                </div>
+                <div className="mt-4">
+                  <input type="file" accept=".pdf,.doc,.docx,.txt" onChange={handleFileUpload} className="hidden" id="file-upload" />
+                  <Button onClick={() => document.getElementById('file-upload').click()} disabled={uploading}>
+                    {uploading ? '上传中...' : '选择文件'}
+                  </Button>
+                </div>
+              </div>
+
+              {/* 筛选器 */}
+              <div className="grid grid-cols-3 gap-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Input placeholder="搜索文档名称或描述..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
+                </div>
+                
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="选择类别" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map(category => <SelectItem key={category.value} value={category.value}>
+                        {category.label}
+                      </SelectItem>)}
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="选择状态" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">全部状态</SelectItem>
+                    <SelectItem value="indexed">已索引</SelectItem>
+                    <SelectItem value="processing">处理中</SelectItem>
+                    <SelectItem value="pending">待处理</SelectItem>
+                    <SelectItem value="failed">处理失败</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* 文档列表 */}
+        <Card>
+          <CardHeader>
+            <CardTitle>文档列表</CardTitle>
           </CardHeader>
           <CardContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>名称</TableHead>
+                  <TableHead>文档名称</TableHead>
                   <TableHead>类型</TableHead>
+                  <TableHead>类别</TableHead>
+                  <TableHead>大小</TableHead>
+                  <TableHead>页数</TableHead>
                   <TableHead>状态</TableHead>
-                  <TableHead>总记录数</TableHead>
-                  <TableHead>已索引</TableHead>
-                  <TableHead>同步频率</TableHead>
-                  <TableHead>最后同步</TableHead>
+                  <TableHead>上传者</TableHead>
+                  <TableHead>上传时间</TableHead>
                   <TableHead>操作</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {dataSources.map(dataSource => {
-                const Icon = getTypeIcon(dataSource.type);
-                return <TableRow key={dataSource.id}>
+                {filteredDocuments.map(doc => <TableRow key={doc.id}>
                     <TableCell>
-                      <div className="flex items-center space-x-3">
-                        <Icon className="w-5 h-5 text-gray-400" />
-                        <div>
-                          <div className="font-medium text-gray-900">{dataSource.name}</div>
-                          <div className="text-sm text-gray-500">{dataSource.description}</div>
+                      <div>
+                        <div className="font-medium text-gray-900">{doc.name}</div>
+                        <div className="text-sm text-gray-500">{doc.description}</div>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {doc.tags.map((tag, index) => <span key={index} className="px-1 py-0.5 bg-gray-100 text-gray-600 text-xs rounded">
+                              {tag}
+                            </span>)}
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline">{dataSource.type}</Badge>
+                      {getTypeBadge(doc.type)}
                     </TableCell>
                     <TableCell>
-                      {getStatusBadge(dataSource.status)}
+                      <div className="text-gray-900">{doc.category}</div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-gray-900">{dataSource.totalRecords.toLocaleString()}</div>
+                      <div className="text-gray-900">{formatFileSize(doc.size)}</div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-gray-900">{dataSource.indexedRecords.toLocaleString()}</div>
+                      <div className="text-gray-900">{doc.pages}</div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-gray-900">{dataSource.syncFrequency}</div>
+                      {getStatusBadge(doc.status)}
                     </TableCell>
                     <TableCell>
-                      <div className="text-gray-900">{dataSource.lastSync}</div>
+                      <div className="text-gray-900">{doc.uploadedBy}</div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="text-gray-900">{doc.uploadDate}</div>
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center space-x-2">
-                        <Button variant="ghost" size="sm" onClick={() => handleSyncDataSource(dataSource.id)}>
-                          <RefreshCw className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleTestConnection(dataSource.id)}>
+                        <Button variant="ghost" size="sm" onClick={() => handleViewDetails(doc.id)}>
                           <Eye className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleEditDataSource(dataSource.id)}>
+                        <Button variant="ghost" size="sm" onClick={() => handleEdit(doc.id)}>
                           <Edit className="w-4 h-4" />
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleDeleteDataSource(dataSource.id)}>
+                        {doc.status === 'indexed' && <Button variant="ghost" size="sm" onClick={() => handleReindex(doc.id)}>
+                            <RefreshCw className="w-4 h-4" />
+                          </Button>}
+                        <Button variant="ghost" size="sm" onClick={() => handleDelete(doc.id)}>
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
                     </TableCell>
-                  </TableRow>;
-              })}
+                  </TableRow>)}
               </TableBody>
             </Table>
-          </CardContent>
-        </Card>
-
-        {/* 更新策略管理 */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Settings className="w-5 h-5 mr-2" />
-              更新策略管理
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {updateStrategies.map(strategy => <div key={strategy.id} className="border rounded-lg p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-3">
-                        <Zap className="w-5 h-5 text-gray-400" />
-                        <div>
-                          <h4 className="font-medium text-gray-900">{strategy.name}</h4>
-                          <p className="text-sm text-gray-500">{strategy.description}</p>
-                        </div>
-                      </div>
-                      <Badge variant="outline">{strategy.type}</Badge>
-                      {getStatusBadge(strategy.status)}
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <Switch checked={strategy.status === 'active'} onCheckedChange={() => handleToggleStrategy(strategy.id)} />
-                      <Button variant="ghost" size="sm" onClick={() => handleEditStrategy(strategy.id)}>
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="mt-3 grid grid-cols-4 gap-4 text-sm">
-                    <div>
-                      <span className="text-gray-600">调度时间:</span>
-                      <span className="ml-2 font-medium">{strategy.schedule}</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-600">批次大小:</span>
-                      <span className="ml-2 font-medium">{strategy.config.batchSize}</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-600">最大重试:</span>
-                      <span className="ml-2 font-medium">{strategy.config.maxRetries}</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-600">冲突解决:</span>
-                      <span className="ml-2 font-medium">{strategy.config.conflictResolution}</span>
-                    </div>
-                  </div>
-                </div>)}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* 系统配置 */}
-        <Card>
-          <CardHeader>
-            <CardTitle>系统配置</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-medium text-gray-900 mb-4">索引配置</h4>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">自动索引</span>
-                    <Switch defaultChecked />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">实时更新</span>
-                    <Switch />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">增量索引</span>
-                    <Switch defaultChecked />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h4 className="font-medium text-gray-900 mb-4">性能配置</h4>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">并发处理数</span>
-                    <Input type="number" defaultValue="5" className="w-20" />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">超时时间(秒)</span>
-                    <Input type="number" defaultValue="30" className="w-20" />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-gray-600">重试次数</span>
-                    <Input type="number" defaultValue="3" className="w-20" />
-                  </div>
-                </div>
-              </div>
-            </div>
           </CardContent>
         </Card>
       </div>

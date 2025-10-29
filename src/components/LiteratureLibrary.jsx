@@ -3,179 +3,175 @@ import React, { useState, useEffect } from 'react';
 // @ts-ignore;
 import { Card, CardContent, CardHeader, CardTitle, Button, Input, Select, Badge, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useToast, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
 // @ts-ignore;
-import { Search, Filter, Upload, Download, Eye, Edit, Trash2, Plus, FileText, Book, Clock, CheckCircle, AlertCircle, RefreshCw, Database, Tag } from 'lucide-react';
+import { Search, Filter, Download, Eye, ExternalLink, Calendar, User, FileText, BookOpen, Star, TrendingUp } from 'lucide-react';
 
 export function LiteratureLibrary({
   $w,
+  onSearch,
   className,
   style
 }) {
   const {
     toast
   } = useToast();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedStatus, setSelectedStatus] = useState('all');
+  const [selectedYear, setSelectedYear] = useState('all');
+  const [sortBy, setSortBy] = useState('relevance');
   const [literature, setLiterature] = useState([]);
   const [loading, setLoading] = useState(false);
   const mockLiterature = [{
     id: 'LIT001',
-    title: '心血管疾病AI诊断技术综述',
+    title: '人工智能在心血管疾病诊断中的应用研究',
     authors: ['张三', '李四', '王五'],
-    journal: '中华医学杂志',
-    year: 2023,
-    volume: '45',
-    issue: '3',
-    pages: '123-135',
+    journal: '中华心血管病杂志',
+    year: 2024,
+    volume: 52,
+    issue: 3,
+    pages: '234-242',
+    doi: '10.1234/ccm.2024.52.3.234',
+    abstract: '本研究探讨了人工智能技术在心血管疾病诊断中的应用，通过深度学习算法分析医学影像，提高了诊断准确性和效率...',
     category: 'cardiology',
-    status: 'indexed',
-    indexedDate: '2024-01-15',
-    fileSize: '2.5MB',
-    format: 'PDF',
-    doi: '10.1234/med.2023.45.3.123',
-    abstract: '本文综述了近年来心血管疾病AI诊断技术的发展现状，包括深度学习、机器学习等技术在心电图、超声心动图等医学影像分析中的应用...',
-    keywords: ['心血管疾病', 'AI诊断', '深度学习', '医学影像'],
-    citations: 45,
-    downloads: 128,
-    relevanceScore: 0.92
+    keywords: ['人工智能', '心血管疾病', '深度学习', '医学影像'],
+    citationCount: 45,
+    relevanceScore: 0.95,
+    openAccess: true,
+    pdfUrl: 'https://example.com/paper1.pdf',
+    publishedDate: '2024-03-15',
+    indexed: true
   }, {
     id: 'LIT002',
-    title: '糖尿病视网膜病变自动检测算法研究',
-    authors: ['赵六', '钱七'],
-    journal: '眼科新进展',
-    year: 2023,
-    volume: '28',
-    issue: '2',
-    pages: '67-78',
+    title: '糖尿病视网膜病变的AI辅助诊断系统开发',
+    authors: ['赵六', '钱七', '孙八'],
+    journal: '中华糖尿病杂志',
+    year: 2024,
+    volume: 16,
+    issue: 2,
+    pages: '123-130',
+    doi: '10.5678/dm.2024.16.2.123',
+    abstract: '开发了一套基于深度学习的糖尿病视网膜病变AI辅助诊断系统，通过眼底图像分析实现早期病变检测...',
     category: 'endocrinology',
-    status: 'processing',
-    indexedDate: null,
-    fileSize: '1.8MB',
-    format: 'PDF',
-    doi: '10.5678/oph.2023.28.2.67',
-    abstract: '研究基于深度学习的糖尿病视网膜病变自动检测算法，通过大规模眼底图像数据训练模型，实现了高精度的病变识别...',
-    keywords: ['糖尿病', '视网膜病变', '深度学习', '自动检测'],
-    citations: 23,
-    downloads: 67,
-    relevanceScore: 0.88
+    keywords: ['糖尿病', '视网膜病变', 'AI诊断', '眼底图像'],
+    citationCount: 32,
+    relevanceScore: 0.88,
+    openAccess: false,
+    pdfUrl: null,
+    publishedDate: '2024-02-20',
+    indexed: true
   }, {
     id: 'LIT003',
-    title: '肿瘤免疫治疗生物标志物研究进展',
-    authors: ['孙八', '周九', '吴十'],
-    journal: '肿瘤学杂志',
-    year: 2022,
-    volume: '38',
-    issue: '4',
-    pages: '234-245',
+    title: '肿瘤免疫治疗的新进展与临床应用',
+    authors: ['周九', '吴十', '郑十一'],
+    journal: '中华肿瘤杂志',
+    year: 2023,
+    volume: 45,
+    issue: 8,
+    pages: '567-575',
+    doi: '10.9012/cjo.2023.45.8.567',
+    abstract: '综述了肿瘤免疫治疗的最新进展，包括CAR-T细胞疗法、PD-1/PD-L1抑制剂等新型治疗方法...',
     category: 'oncology',
-    status: 'indexed',
-    indexedDate: '2024-01-10',
-    fileSize: '3.2MB',
-    format: 'PDF',
-    doi: '10.9012/onc.2022.38.4.234',
-    abstract: '综述了肿瘤免疫治疗相关生物标志物的最新研究进展，包括PD-L1表达、肿瘤突变负荷、微卫星不稳定性等关键指标...',
-    keywords: ['肿瘤免疫', '生物标志物', 'PD-L1', '精准医疗'],
-    citations: 78,
-    downloads: 234,
-    relevanceScore: 0.95
+    keywords: ['肿瘤免疫', 'CAR-T', 'PD-1', '免疫治疗'],
+    citationCount: 78,
+    relevanceScore: 0.82,
+    openAccess: true,
+    pdfUrl: 'https://example.com/paper3.pdf',
+    publishedDate: '2023-08-10',
+    indexed: true
   }, {
     id: 'LIT004',
-    title: '神经退行性疾病早期诊断方法比较',
-    authors: ['郑十一', '王十二'],
-    journal: '神经科学前沿',
-    year: 2023,
-    volume: '19',
-    issue: '1',
-    pages: '45-56',
-    category: 'neurology',
-    status: 'failed',
-    indexedDate: null,
-    fileSize: '2.1MB',
-    format: 'PDF',
-    doi: '10.3456/neu.2023.19.1.45',
-    abstract: '比较分析了阿尔茨海默病、帕金森病等神经退行性疾病的早期诊断方法，包括影像学检查、生物标志物检测等...',
-    keywords: ['神经退行性疾病', '早期诊断', '阿尔茨海默病', '帕金森病'],
-    citations: 34,
-    downloads: 89,
-    relevanceScore: 0.85
-  }];
-  const categories = [{
-    value: 'all',
-    label: '全部分类'
-  }, {
-    value: 'cardiology',
-    label: '心血管内科'
-  }, {
-    value: 'endocrinology',
-    label: '内分泌科'
-  }, {
-    value: 'oncology',
-    label: '肿瘤科'
-  }, {
-    value: 'neurology',
-    label: '神经内科'
-  }, {
-    value: 'respiratory',
-    label: '呼吸内科'
+    title: '医学影像AI算法的验证与标准化研究',
+    authors: ['冯十二', '陈十三', '褚十四'],
+    journal: '中华放射学杂志',
+    year: 2024,
+    volume: 58,
+    issue: 1,
+    pages: '45-52',
+    doi: '10.3456/cjr.2024.58.1.45',
+    abstract: '研究了医学影像AI算法的验证方法和标准化流程，提出了统一的评估框架和质量控制标准...',
+    category: 'radiology',
+    keywords: ['医学影像', 'AI算法', '验证', '标准化'],
+    citationCount: 28,
+    relevanceScore: 0.79,
+    openAccess: true,
+    pdfUrl: 'https://example.com/paper4.pdf',
+    publishedDate: '2024-01-08',
+    indexed: true
   }];
   useEffect(() => {
     setLiterature(mockLiterature);
   }, []);
-  const getStatusBadge = status => {
-    const statusConfig = {
-      indexed: {
-        color: 'bg-green-100 text-green-800',
-        icon: CheckCircle,
-        text: '已索引'
-      },
-      processing: {
-        color: 'bg-yellow-100 text-yellow-800',
-        icon: Clock,
-        text: '处理中'
-      },
-      failed: {
-        color: 'bg-red-100 text-red-800',
-        icon: AlertCircle,
-        text: '索引失败'
-      },
-      pending: {
-        color: 'bg-gray-100 text-gray-800',
-        icon: Clock,
-        text: '待处理'
-      }
+  const categories = [{
+    value: 'all',
+    label: '全部类别'
+  }, {
+    value: 'cardiology',
+    label: '心血管'
+  }, {
+    value: 'endocrinology',
+    label: '内分泌'
+  }, {
+    value: 'oncology',
+    label: '肿瘤'
+  }, {
+    value: 'radiology',
+    label: '放射学'
+  }];
+  const years = [{
+    value: 'all',
+    label: '全部年份'
+  }, {
+    value: '2024',
+    label: '2024年'
+  }, {
+    value: '2023',
+    label: '2023年'
+  }, {
+    value: '2022',
+    label: '2022年'
+  }];
+  const sortOptions = [{
+    value: 'relevance',
+    label: '相关性'
+  }, {
+    value: 'citation',
+    label: '引用数'
+  }, {
+    value: 'date',
+    label: '发表日期'
+  }, {
+    value: 'impact',
+    label: '影响因子'
+  }];
+  const getCategoryBadge = category => {
+    const categoryMap = {
+      cardiology: 'bg-blue-100 text-blue-800',
+      endocrinology: 'bg-green-100 text-green-800',
+      oncology: 'bg-red-100 text-red-800',
+      radiology: 'bg-purple-100 text-purple-800'
     };
-    const config = statusConfig[status] || statusConfig.pending;
-    const Icon = config.icon;
-    return <Badge className={config.color}>
-        <Icon className="w-3 h-3 mr-1" />
-        {config.text}
+    const categoryLabels = {
+      cardiology: '心血管',
+      endocrinology: '内分泌',
+      oncology: '肿瘤',
+      radiology: '放射学'
+    };
+    return <Badge className={categoryMap[category] || 'bg-gray-100 text-gray-800'}>
+        {categoryLabels[category] || category}
       </Badge>;
   };
-  const getCategoryBadge = category => {
-    const categoryConfig = {
-      cardiology: {
-        color: 'bg-blue-100 text-blue-800',
-        text: '心血管内科'
-      },
-      endocrinology: {
-        color: 'bg-purple-100 text-purple-800',
-        text: '内分泌科'
-      },
-      oncology: {
-        color: 'bg-red-100 text-red-800',
-        text: '肿瘤科'
-      },
-      neurology: {
-        color: 'bg-green-100 text-green-800',
-        text: '神经内科'
-      },
-      respiratory: {
-        color: 'bg-orange-100 text-orange-800',
-        text: '呼吸内科'
-      }
-    };
-    const config = categoryConfig[category] || categoryConfig.cardiology;
-    return <Badge className={config.color}>{config.text}</Badge>;
+  const handleSearch = () => {
+    setLoading(true);
+    if (onSearch) {
+      onSearch(searchQuery);
+    }
+    // 模拟搜索延迟
+    setTimeout(() => {
+      setLoading(false);
+      toast({
+        title: "搜索完成",
+        description: `找到 ${literature.length} 篇相关文献`
+      });
+    }, 1000);
   };
   const handleViewDetails = literatureId => {
     toast({
@@ -183,251 +179,204 @@ export function LiteratureLibrary({
       description: `正在查看文献 ${literatureId} 的详细信息`
     });
   };
-  const handleEdit = literatureId => {
-    toast({
-      title: "编辑文献",
-      description: `正在编辑文献 ${literatureId}`
-    });
+  const handleDownloadPDF = (literatureId, pdfUrl) => {
+    if (pdfUrl) {
+      toast({
+        title: "下载PDF",
+        description: `正在下载文献 ${literatureId} 的PDF文件`
+      });
+    } else {
+      toast({
+        title: "无法下载",
+        description: "该文献不提供开放访问",
+        variant: "destructive"
+      });
+    }
   };
-  const handleReindex = literatureId => {
-    setLiterature(prev => prev.map(item => item.id === literatureId ? {
-      ...item,
-      status: 'processing'
-    } : item));
+  const handleExportCitation = literatureId => {
     toast({
-      title: "重新索引",
-      description: `正在重新索引文献 ${literatureId}`
-    });
-  };
-  const handleDelete = literatureId => {
-    setLiterature(prev => prev.filter(item => item.id !== literatureId));
-    toast({
-      title: "删除成功",
-      description: `文献 ${literatureId} 已删除`,
-      variant: "destructive"
-    });
-  };
-  const handleUpload = () => {
-    toast({
-      title: "上传文献",
-      description: "正在打开文献上传界面..."
-    });
-  };
-  const handleBatchReindex = () => {
-    const processingItems = literature.filter(item => item.status !== 'indexed');
-    setLiterature(prev => prev.map(item => processingItems.some(p => p.id === item.id) ? {
-      ...item,
-      status: 'processing'
-    } : item));
-    toast({
-      title: "批量重新索引",
-      description: `正在重新索引 ${processingItems.length} 篇文献`
+      title: "导出引用",
+      description: `正在导出文献 ${literatureId} 的引用格式`
     });
   };
   const filteredLiterature = literature.filter(item => {
-    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) || item.authors.some(author => author.toLowerCase().includes(searchTerm.toLowerCase())) || item.keywords.some(keyword => keyword.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesSearch = !searchQuery || item.title.toLowerCase().includes(searchQuery.toLowerCase()) || item.abstract.toLowerCase().includes(searchQuery.toLowerCase()) || item.authors.some(author => author.toLowerCase().includes(searchQuery.toLowerCase()));
     const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
-    const matchesStatus = selectedStatus === 'all' || item.status === selectedStatus;
-    return matchesSearch && matchesCategory && matchesStatus;
+    const matchesYear = selectedYear === 'all' || item.year.toString() === selectedYear;
+    return matchesSearch && matchesCategory && matchesYear;
+  }).sort((a, b) => {
+    switch (sortBy) {
+      case 'relevance':
+        return b.relevanceScore - a.relevanceScore;
+      case 'citation':
+        return b.citationCount - a.citationCount;
+      case 'date':
+        return new Date(b.publishedDate) - new Date(a.publishedDate);
+      default:
+        return 0;
+    }
   });
   return <div className={className} style={style}>
       <div className="space-y-6">
-        {/* 头部 */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">文献库管理</h1>
-            <p className="text-gray-600">管理医学文献资源，支持上传、分类和索引状态监控</p>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" onClick={handleBatchReindex}>
-              <RefreshCw className="w-4 h-4 mr-2" />
-              批量重新索引
-            </Button>
-            <Button onClick={handleUpload}>
-              <Upload className="w-4 h-4 mr-2" />
-              上传文献
-            </Button>
-          </div>
-        </div>
-
-        {/* 筛选器 */}
+        {/* 搜索区域 */}
         <Card>
-          <CardContent className="p-4">
-            <div className="grid grid-cols-3 gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                <Input placeholder="搜索标题、作者或关键词..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="pl-10" />
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <Search className="w-5 h-5 mr-2" />
+              文献检索
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {/* 主搜索框 */}
+              <div className="flex space-x-4">
+                <div className="flex-1 relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Input placeholder="输入关键词、作者、DOI或文献标题..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10 text-lg" />
+                </div>
+                <Button onClick={handleSearch} disabled={loading} className="px-8">
+                  {loading ? '搜索中...' : '搜索'}
+                </Button>
               </div>
-              
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger>
-                  <SelectValue placeholder="选择分类" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map(category => <SelectItem key={category.value} value={category.value}>
-                      {category.label}
-                    </SelectItem>)}
-                </SelectContent>
-              </Select>
 
-              <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-                <SelectTrigger>
-                  <SelectValue placeholder="选择状态" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">全部状态</SelectItem>
-                  <SelectItem value="indexed">已索引</SelectItem>
-                  <SelectItem value="processing">处理中</SelectItem>
-                  <SelectItem value="failed">索引失败</SelectItem>
-                  <SelectItem value="pending">待处理</SelectItem>
-                </SelectContent>
-              </Select>
+              {/* 高级筛选 */}
+              <div className="grid grid-cols-4 gap-4">
+                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="选择学科类别" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map(category => <SelectItem key={category.value} value={category.value}>
+                        {category.label}
+                      </SelectItem>)}
+                  </SelectContent>
+                </Select>
+
+                <Select value={selectedYear} onValueChange={setSelectedYear}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="选择发表年份" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {years.map(year => <SelectItem key={year.value} value={year.value}>
+                        {year.label}
+                      </SelectItem>)}
+                  </SelectContent>
+                </Select>
+
+                <Select value={sortBy} onValueChange={setSortBy}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="排序方式" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {sortOptions.map(option => <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>)}
+                  </SelectContent>
+                </Select>
+
+                <Button variant="outline">
+                  <Filter className="w-4 h-4 mr-2" />
+                  高级筛选
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* 统计卡片 */}
-        <div className="grid grid-cols-4 gap-4">
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-blue-100 rounded-lg">
-                  <Book className="w-6 h-6 text-blue-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">总文献数</p>
-                  <p className="text-2xl font-bold text-gray-900">{literature.length}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-green-100 rounded-lg">
-                  <CheckCircle className="w-6 h-6 text-green-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">已索引</p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {literature.filter(item => item.status === 'indexed').length}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-yellow-100 rounded-lg">
-                  <Clock className="w-6 h-6 text-yellow-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">处理中</p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {literature.filter(item => item.status === 'processing').length}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-purple-100 rounded-lg">
-                  <Database className="w-6 h-6 text-purple-600" />
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">总大小</p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {literature.reduce((total, item) => total + parseFloat(item.fileSize), 0).toFixed(1)}MB
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* 搜索统计 */}
+        <div className="flex items-center justify-between">
+          <div className="text-gray-600">
+            找到 <span className="font-semibold text-gray-900">{filteredLiterature.length}</span> 篇相关文献
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button variant="outline" size="sm">
+              <Download className="w-4 h-4 mr-2" />
+              导出结果
+            </Button>
+          </div>
         </div>
 
         {/* 文献列表 */}
-        <Card>
-          <CardHeader>
-            <CardTitle>文献列表</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>标题</TableHead>
-                  <TableHead>作者</TableHead>
-                  <TableHead>期刊</TableHead>
-                  <TableHead>分类</TableHead>
-                  <TableHead>年份</TableHead>
-                  <TableHead>状态</TableHead>
-                  <TableHead>相关性评分</TableHead>
-                  <TableHead>引用数</TableHead>
-                  <TableHead>操作</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredLiterature.map(item => <TableRow key={item.id}>
-                    <TableCell>
-                      <div>
-                        <div className="font-medium text-gray-900">{item.title}</div>
-                        <div className="text-sm text-gray-500">{item.journal} • {item.volume}({item.issue}): {item.pages}</div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-gray-900">{item.authors.join(', ')}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-gray-900">{item.journal}</div>
-                    </TableCell>
-                    <TableCell>
-                      {getCategoryBadge(item.category)}
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-gray-900">{item.year}</div>
-                    </TableCell>
-                    <TableCell>
-                      {getStatusBadge(item.status)}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-16 bg-gray-200 rounded-full h-2">
-                          <div className="bg-blue-600 h-2 rounded-full" style={{
-                        width: `${item.relevanceScore * 100}%`
-                      }}></div>
+        <div className="space-y-4">
+          {filteredLiterature.map(item => <Card key={item.id} className="hover:shadow-md transition-shadow">
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  {/* 标题和基本信息 */}
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2 hover:text-blue-600 cursor-pointer" onClick={() => handleViewDetails(item.id)}>
+                        {item.title}
+                      </h3>
+                      <div className="flex items-center space-x-4 text-sm text-gray-600">
+                        <div className="flex items-center space-x-1">
+                          <User className="w-4 h-4" />
+                          <span>{item.authors.join(', ')}</span>
                         </div>
-                        <span className="text-sm text-gray-900">{item.relevanceScore}</span>
+                        <div className="flex items-center space-x-1">
+                          <BookOpen className="w-4 h-4" />
+                          <span>{item.journal}</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <Calendar className="w-4 h-4" />
+                          <span>{item.year}年{item.volume}卷{item.issue}期</span>
+                        </div>
                       </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="text-gray-900">{item.citations}</div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center space-x-2">
-                        <Button variant="ghost" size="sm" onClick={() => handleViewDetails(item.id)}>
-                          <Eye className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleEdit(item.id)}>
-                          <Edit className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleReindex(item.id)}>
-                          <RefreshCw className="w-4 h-4" />
-                        </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleDelete(item.id)}>
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
+                    </div>
+                    <div className="flex flex-col items-end space-y-2">
+                      {getCategoryBadge(item.category)}
+                      <div className="flex items-center space-x-1 text-sm text-gray-500">
+                        <Star className="w-4 h-4 text-yellow-500" />
+                        <span>{item.citationCount} 引用</span>
                       </div>
-                    </TableCell>
-                  </TableRow>)}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
+                      <div className="text-sm text-gray-500">
+                        相关性: {(item.relevanceScore * 100).toFixed(0)}%
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 摘要 */}
+                  <div className="text-gray-700 text-sm leading-relaxed">
+                    {item.abstract}
+                  </div>
+
+                  {/* 关键词 */}
+                  <div className="flex flex-wrap gap-2">
+                    {item.keywords.map((keyword, index) => <span key={index} className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">
+                        {keyword}
+                      </span>)}
+                  </div>
+
+                  {/* 操作按钮 */}
+                  <div className="flex items-center justify-between pt-2 border-t">
+                    <div className="flex items-center space-x-2 text-sm text-gray-500">
+                      <span>DOI: {item.doi}</span>
+                      {item.openAccess && <Badge variant="secondary" className="text-green-700 bg-green-100">
+                          开放访问
+                        </Badge>}
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Button variant="ghost" size="sm" onClick={() => handleViewDetails(item.id)}>
+                        <Eye className="w-4 h-4 mr-1" />
+                        详情
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleExportCitation(item.id)}>
+                        <FileText className="w-4 h-4 mr-1" />
+                        引用
+                      </Button>
+                      {item.pdfUrl && <Button variant="ghost" size="sm" onClick={() => handleDownloadPDF(item.id, item.pdfUrl)}>
+                          <Download className="w-4 h-4 mr-1" />
+                          PDF
+                        </Button>}
+                      <Button variant="ghost" size="sm" onClick={() => window.open(`https://doi.org/${item.doi}`, '_blank')}>
+                        <ExternalLink className="w-4 h-4 mr-1" />
+                        原文
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>)}
+        </div>
       </div>
     </div>;
 }
