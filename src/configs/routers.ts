@@ -9,6 +9,7 @@ import PATIENTMANAGEMENT from '../pages/PatientManagement.jsx';
 import DOCTORMANAGEMENT from '../pages/DoctorManagement.jsx';
 import APIKEYMANAGEMENT from '../pages/ApiKeyManagement.jsx';
 import DEPARTMENTALAIDIAGNOSIS from '../pages/DepartmentalAIDiagnosis.jsx';
+import AIDIAGNOSISSYSTEM from '../pages/AIDiagnosisSystem.jsx';
 export const routers = [{
   id: "DoctorPortal",
   component: DOCTORPORTAL
@@ -42,4 +43,7 @@ export const routers = [{
 }, {
   id: "DepartmentalAIDiagnosis",
   component: DEPARTMENTALAIDIAGNOSIS
+}, {
+  id: "AIDiagnosisSystem",
+  component: AIDIAGNOSISSYSTEM
 }]
