@@ -1,15 +1,14 @@
 // @ts-ignore;
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // @ts-ignore;
 import { Card, CardContent, CardHeader, CardTitle, Button, Input, Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
 // @ts-ignore;
-import { Copy, Download, Eye, EyeOff } from 'lucide-react';
+import { Copy, Download, Eye, EyeOff, Zap, Clock } from 'lucide-react';
 // @ts-ignore;
 import { cn } from '@/lib/utils';
 
 // @ts-ignore;
-import { getIconPreview, validateIconName, iconThemes, applyIconTheme, getAllCategories } from '@/components/Icons';
-// @ts-ignore;
+import { getIconPreview, validateIconName, iconThemes, applyIconTheme, getAllCategories, getIconCacheStats, iconPerformanceMonitor, lazyLoadIcon } from '@/components/Icons';
 
 /**
  * 图标预览组件
@@ -21,6 +20,7 @@ export function IconPreview({
   showThemeSelector = true,
   showCodeGenerator = true,
   showValidation = true,
+  showPerformanceInfo = true,
   className,
   ...props
 }) {
@@ -29,10 +29,51 @@ export function IconPreview({
   const [customSize, setCustomSize] = useState(24);
   const [customColor, setCustomColor] = useState('#6b7280');
   const [customStrokeWidth, setCustomStrokeWidth] = useState(2);
+  const [cacheStats, setCacheStats] = useState(null);
+  const [renderTime, setRenderTime] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // 验证图标名称
   const validation = validateIconName(iconName);
-  const iconPreview = getIconPreview(iconName);
+
+  // 获取图标预览信息
+  const [iconPreview, setIconPreview] = useState(null);
+
+  // 更新缓存统计
+  useEffect(() => {
+    const updateStats = () => {
+      setCacheStats(getIconCacheStats());
+    };
+    updateStats();
+    const interval = setInterval(updateStats, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // 加载图标预览
+  useEffect(() => {
+    if (iconName && validation.isValid) {
+      setIsLoading(true);
+
+      // 测量渲染性能
+      iconPerformanceMonitor.start();
+
+      // 懒加载图标
+      lazyLoadIcon(iconName).then(() => {
+        const preview = getIconPreview(iconName);
+        setIconPreview(preview);
+        const duration = iconPerformanceMonitor.end();
+        setRenderTime(duration);
+        setIsLoading(false);
+      }).catch(error => {
+        console.error('Failed to load icon:', error);
+        setIconPreview(null);
+        setIsLoading(false);
+      });
+    } else {
+      setIconPreview(null);
+      setRenderTime(null);
+    }
+  }, [iconName, validation.isValid]);
 
   // 获取所有主题选项
   const themeOptions = Object.keys(iconThemes);
@@ -59,6 +100,16 @@ export function IconPreview({
 />`;
   };
 
+  // 生成性能优化代码
+  const generateOptimizedCode = () => {
+    return `// 使用缓存优化的图标获取
+import { getIcon } from '@/components/Icons';
+
+const IconComponent = getIcon('${iconName}');
+// 渲染时间: ${renderTime ? renderTime.toFixed(2) : 'N/A'}ms
+// 缓存命中率: ${cacheStats?.hitRate || 'N/A'}`;
+  };
+
   // 复制到剪贴板
   const copyToClipboard = text => {
     navigator.clipboard.writeText(text);
@@ -69,17 +120,59 @@ export function IconPreview({
     // 这里可以实现SVG下载功能
     console.log('下载图标:', iconName);
   };
+
+  // 渲染性能信息
+  const renderPerformanceInfo = () => {
+    if (!showPerformanceInfo || !renderTime) return null;
+    return <div className="bg-blue-50 p-3 rounded-lg">
+        <div className="flex items-center space-x-2 mb-2">
+          <Zap className="h-4 w-4 text-blue-600" />
+          <h4 className="text-sm font-medium text-blue-900">性能信息</h4>
+        </div>
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <div>
+            <span className="text-blue-700">渲染时间:</span>
+            <span className="ml-1 font-medium text-blue-900">{renderTime.toFixed(2)}ms</span>
+          </div>
+          <div>
+            <span className="text-blue-700">缓存状态:</span>
+            <span className="ml-1 font-medium text-blue-900">
+              {cacheStats ? `${cacheStats.size}/${cacheStats.maxSize}` : 'N/A'}
+            </span>
+          </div>
+          <div>
+            <span className="text-blue-700">命中率:</span>
+            <span className="ml-1 font-medium text-blue-900">
+              {cacheStats?.hitRate || 'N/A'}
+            </span>
+          </div>
+          <div>
+            <span className="text-blue-700">加载状态:</span>
+            <span className="ml-1 font-medium text-blue-900">
+              {isLoading ? '加载中' : '已完成'}
+            </span>
+          </div>
+        </div>
+      </div>;
+  };
   return <div className={cn("space-y-6", className)} {...props}>
       {/* 图标预览区域 */}
       <Card>
         <CardHeader>
-          <CardTitle>图标预览</CardTitle>
+          <CardTitle className="flex items-center justify-between">
+            图标预览
+            {isLoading && <span className="text-sm text-gray-500">加载中...</span>}
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-center p-8 border-2 border-dashed border-gray-300 rounded-lg">
             {iconPreview ? <div className="text-center">
                 {themedIcon}
                 <p className="mt-2 text-sm text-gray-600">{iconName}</p>
+                {renderTime && <p className="text-xs text-gray-500">
+                    <Clock className="inline h-3 w-3 mr-1" />
+                    {renderTime.toFixed(2)}ms
+                  </p>}
               </div> : <div className="text-center text-gray-500">
                 <EyeOff className="h-12 w-12 mx-auto mb-2" />
                 <p>图标不存在或名称无效</p>
@@ -87,6 +180,9 @@ export function IconPreview({
           </div>
         </CardContent>
       </Card>
+
+      {/* 性能信息 */}
+      {renderPerformanceInfo()}
 
       {/* 图标名称输入 */}
       <Card>
@@ -174,6 +270,18 @@ export function IconPreview({
                       {generateUsageCode()}
                     </pre>
                     <Button variant="outline" size="sm" className="absolute top-2 right-2" onClick={() => copyToClipboard(generateUsageCode())}>
+                      <Copy className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">性能优化代码</label>
+                  <div className="relative">
+                    <pre className="bg-blue-50 p-3 rounded text-sm overflow-x-auto">
+                      {generateOptimizedCode()}
+                    </pre>
+                    <Button variant="outline" size="sm" className="absolute top-2 right-2" onClick={() => copyToClipboard(generateOptimizedCode())}>
                       <Copy className="h-4 w-4" />
                     </Button>
                   </div>
