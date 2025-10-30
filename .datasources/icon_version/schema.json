@@ -1,0 +1,115 @@
+
+{
+  "name": "icon_version",
+  "title": "图标版本控制",
+  "schemas": [
+    {
+      "name": "icon_name",
+      "title": "图标名称",
+      "type": "String"
+    },
+    {
+      "name": "version_number",
+      "title": "版本号",
+      "type": "String"
+    },
+    {
+      "name": "file_path",
+      "title": "文件路径",
+      "type": "String"
+    },
+    {
+      "name": "update_time",
+      "title": "更新时间",
+      "type": "DateTime",
+      "format": "timestamp-ms"
+    },
+    {
+      "name": "version_status",
+      "title": "版本状态",
+      "type": "String"
+    },
+    {
+      "name": "change_record",
+      "title": "变更记录",
+      "type": "MultiLineString"
+    },
+    {
+      "name": "file_size",
+      "title": "文件大小",
+      "type": "Number"
+    },
+    {
+      "name": "file_hash",
+      "title": "文件哈希值",
+      "type": "String"
+    },
+    {
+      "name": "author",
+      "title": "作者",
+      "type": "String"
+    },
+    {
+      "name": "is_active",
+      "title": "是否激活",
+      "type": "Boolean"
+    },
+    {
+      "name": "category",
+      "title": "分类",
+      "type": "String"
+    },
+    {
+      "name": "tags",
+      "title": "标签",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "dependencies",
+      "title": "依赖项",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      }
+    },
+    {
+      "name": "compatibility",
+      "title": "兼容性信息",
+      "type": "Object"
+    },
+    {
+      "name": "release_notes",
+      "title": "发布说明",
+      "type": "MultiLineString"
+    },
+    {
+      "name": "download_count",
+      "title": "下载次数",
+      "type": "Number"
+    },
+    {
+      "name": "rating",
+      "title": "评分",
+      "type": "Number"
+    },
+    {
+      "name": "is_deprecated",
+      "title": "是否已弃用",
+      "type": "Boolean"
+    },
+    {
+      "name": "deprecation_reason",
+      "title": "弃用原因",
+      "type": "MultiLineString"
+    },
+    {
+      "name": "migration_guide",
+      "title": "迁移指南",
+      "type": "MultiLineString"
+    }
+  ]
+}
+  
