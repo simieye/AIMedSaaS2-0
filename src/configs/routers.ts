@@ -15,6 +15,7 @@ import RAGSYSTEMMANAGEMENT from '../pages/RAGSystemManagement.jsx';
 import AROUNDROADMAP from '../pages/ARoundRoadmap.jsx';
 import RAGSYSTEMINTEGRATION from '../pages/RAGSystemIntegration.jsx';
 import DEVELOPMENTROADMAP from '../pages/DevelopmentRoadmap.jsx';
+import ICONMONITORINGDASHBOARD from '../pages/IconMonitoringDashboard.jsx';
 export const routers = [{
   id: "DoctorPortal",
   component: DOCTORPORTAL
@@ -66,4 +67,7 @@ export const routers = [{
 }, {
   id: "DevelopmentRoadmap",
   component: DEVELOPMENTROADMAP
+}, {
+  id: "IconMonitoringDashboard",
+  component: ICONMONITORINGDASHBOARD
 }]
