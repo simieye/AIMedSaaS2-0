@@ -9,7 +9,6 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
-    'plugin:jsx-a11y/recommended',
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -21,119 +20,159 @@ module.exports = {
   plugins: [
     'react',
     'react-hooks',
-    'jsx-a11y',
     'import',
   ],
   rules: {
-    // React 相关规则
+    // React相关规则
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'react/jsx-uses-react': 'off',
     'react/jsx-uses-vars': 'error',
     'react/jsx-key': 'error',
-    'react/jsx-no-duplicate-props': 'error',
-    'react/jsx-no-undef': 'error',
-    'react/jsx-pascal-case': 'error',
+    'react/no-unknown-property': 'error',
+    'react/no-unescaped-entities': 'warn',
+    'react/display-name': 'off',
     
-    // React Hooks 规则
+    // React Hooks规则
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     
-    // 导入相关规则
-    'import/no-unresolved': 'error',
-    'import/no-duplicates': 'error', // 防止重复导入
+    // 导入相关规则 - 防止重复导入
+    'import/no-duplicates': 'error',
+    'import/no-unresolved': 'off', // 由于使用自定义路径，暂时关闭
     'import/order': [
       'error',
       {
-        groups: [
+        'groups': [
           'builtin',
           'external',
           'internal',
           'parent',
           'sibling',
-          'index',
+          'index'
         ],
         'newlines-between': 'always',
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-      },
+        'alphabetize': {
+          'order': 'asc',
+          'caseInsensitive': true
+        }
+      }
     ],
-    'import/no-cycle': 'error',
-    'import/no-self-import': 'error',
-    'import/no-useless-path-segments': 'error',
     
-    // 通用规则
-    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    // 代码质量规则
+    'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
     'no-console': 'warn',
     'no-debugger': 'error',
     'no-alert': 'warn',
     'no-var': 'error',
     'prefer-const': 'error',
     'prefer-arrow-callback': 'error',
-    'arrow-spacing': 'error',
-    'no-duplicate-imports': 'error', // 防止重复导入
-    'no-redeclare': 'error',
-    'no-shadow': 'error',
-    'no-undef': 'error',
     
-    // 代码风格
-    'indent': ['error', 2, { SwitchCase: 1 }],
+    // 代码风格规则
+    'indent': ['error', 2, { 'SwitchCase': 1 }],
     'linebreak-style': ['error', 'unix'],
     'quotes': ['error', 'single'],
     'semi': ['error', 'always'],
     'comma-dangle': ['error', 'always-multiline'],
     'object-curly-spacing': ['error', 'always'],
     'array-bracket-spacing': ['error', 'never'],
-    'space-before-function-paren': ['error', {
-      anonymous: 'always',
-      named: 'never',
-      asyncArrow: 'always',
-    }],
+    'space-before-function-paren': ['error', 'never'],
     'keyword-spacing': 'error',
     'space-infix-ops': 'error',
     'eol-last': 'error',
     'no-trailing-spaces': 'error',
     
-    // JSX 相关
-    'jsx-quotes': ['error', 'prefer-double'],
-    'jsx-a11y/alt-text': 'warn',
-    'jsx-a11y/anchor-has-content': 'warn',
-    'jsx-a11y/anchor-is-valid': 'warn',
-    'jsx-a11y/aria-props': 'warn',
-    'jsx-a11y/aria-proptypes': 'warn',
-    'jsx-a11y/aria-unsupported-elements': 'warn',
-    'jsx-a11y/click-events-have-key-events': 'warn',
-    'jsx-a11y/heading-has-content': 'warn',
-    'jsx-a11y/html-has-lang': 'warn',
-    'jsx-a11y/img-redundant-alt': 'warn',
-    'jsx-a11y/interactive-supports-focus': 'warn',
-    'jsx-a11y/label-has-associated-control': 'warn',
-    'jsx-a11y/media-has-caption': 'warn',
-    'jsx-a11y/mouse-events-have-key-events': 'warn',
-    'jsx-a11y/no-access-key': 'warn',
-    'jsx-a11y/no-autofocus': 'warn',
-    'jsx-a11y/no-distracting-elements': 'warn',
-    'jsx-a11y/no-interactive-element-to-noninteractive-role': 'warn',
-    'jsx-a11y/no-noninteractive-element-interactions': 'warn',
-    'jsx-a11y/no-noninteractive-element-to-interactive-role': 'warn',
-    'jsx-a11y/no-redundant-roles': 'warn',
-    'jsx-a11y/no-static-element-interactions': 'warn',
-    'jsx-a11y/role-has-required-aria-props': 'warn',
-    'jsx-a11y/role-supports-aria-props': 'warn',
-    'jsx-a11y/scope': 'warn',
-    'jsx-a11y/tabindex-no-positive': 'warn',
+    // 复杂性规则
+    'complexity': ['warn', 10],
+    'max-depth': ['warn', 4],
+    'max-lines': ['warn', 300],
+    'max-lines-per-function': ['warn', 50],
+    'max-params': ['warn', 4],
     
-    // 性能相关
-    'react/jsx-no-bind': 'warn',
-    'react/jsx-no-literals': 'off',
-    'react/no-array-index-key': 'warn',
-    'react/no-unstable-nested-components': 'warn',
+    // 最佳实践
+    'eqeqeq': 'error',
+    'no-eval': 'error',
+    'no-implied-eval': 'error',
+    'no-new-func': 'error',
+    'no-script-url': 'error',
+    'no-self-compare': 'error',
+    'no-sequences': 'error',
+    'no-throw-literal': 'error',
+    'no-unmodified-loop-condition': 'error',
+    'no-unused-expressions': 'error',
+    'no-useless-call': 'error',
+    'no-useless-concat': 'error',
+    'no-useless-escape': 'error',
+    'no-void': 'error',
+    'no-with': 'error',
+    'radix': 'error',
+    'wrap-iife': ['error', 'inside'],
+    'yoda': 'error',
     
-    // 可访问性
-    'jsx-a11y/click-events-have-key-events': 'warn',
-    'jsx-a11y/no-static-element-interactions': 'warn',
+    // 变量声明
+    'no-delete-var': 'error',
+    'no-label-var': 'error',
+    'no-restricted-globals': 'error',
+    'no-shadow': 'error',
+    'no-shadow-restricted-names': 'error',
+    'no-undef': 'error',
+    'no-undef-init': 'error',
+    'no-undefined': 'off',
+    'no-use-before-define': ['error', { 'functions': false }],
+    
+    // 代码风格一致性
+    'consistent-this': ['error', 'self'],
+    'func-names': 'off',
+    'init-declarations': 'off',
+    'new-cap': 'error',
+    'new-parens': 'error',
+    'no-array-constructor': 'error',
+    'no-lonely-if': 'error',
+    'no-mixed-spaces-and-tabs': 'error',
+    'no-nested-ternary': 'error',
+    'no-new-object': 'error',
+    'no-spaced-func': 'error',
+    'no-ternary': 'off',
+    'no-trailing-spaces': 'error',
+    'no-underscore-dangle': 'off',
+    'no-unneeded-ternary': 'error',
+    'object-shorthand': 'error',
+    'one-var': ['error', 'never'],
+    'operator-assignment': 'error',
+    'operator-linebreak': ['error', 'after'],
+    
+    // ES6+ 规则
+    'arrow-body-style': ['error', 'as-needed'],
+    'arrow-parens': ['error', 'as-needed'],
+    'arrow-spacing': 'error',
+    'constructor-super': 'error',
+    'generator-star-spacing': 'error',
+    'no-class-assign': 'error',
+    'no-confusing-arrow': 'error',
+    'no-const-assign': 'error',
+    'no-dupe-class-members': 'error',
+    'no-duplicate-imports': 'error', // 防止重复导入
+    'no-new-symbol': 'error',
+    'no-restricted-imports': 'off',
+    'no-this-before-super': 'error',
+    'no-useless-computed-key': 'error',
+    'no-useless-constructor': 'error',
+    'no-useless-rename': 'error',
+    'no-var': 'error',
+    'object-shorthand': 'error',
+    'prefer-arrow-callback': 'error',
+    'prefer-const': 'error',
+    'prefer-destructuring': 'error',
+    'prefer-numeric-literals': 'error',
+    'prefer-rest-params': 'error',
+    'prefer-spread': 'error',
+    'prefer-template': 'error',
+    'require-yield': 'error',
+    'rest-spread-spacing': 'error',
+    'sort-imports': 'error', // 自动排序导入
+    'symbol-description': 'error',
+    'template-curly-spacing': 'error',
+    'yield-star-spacing': 'error'
   },
   settings: {
     react: {
@@ -143,31 +182,26 @@ module.exports = {
       alias: {
         map: [
           ['@', './src'],
-          ['@components', './src/components'],
-          ['@utils', './src/utils'],
-          ['@hooks', './src/hooks'],
-          ['@assets', './src/assets'],
+          ['@/components', './components'],
+          ['@/pages', './pages'],
+          ['@/lib', './lib'],
+          ['@/utils', './utils']
         ],
-        extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-      },
-    },
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      }
+    }
   },
   overrides: [
     {
-      files: ['*.test.js', '*.test.jsx', '*.spec.js', '*.spec.jsx'],
-      env: {
-        jest: true,
-      },
+      files: ['*.jsx', '*.js'],
       rules: {
-        'no-unused-vars': 'off',
-        'no-console': 'off',
-      },
-    },
-    {
-      files: ['*.config.js', '*.config.jsx'],
-      rules: {
-        'no-console': 'off',
-      },
-    },
-  ],
+        // JSX/JS文件特定规则
+        'react/jsx-filename-extension': ['error', { 'extensions': ['.jsx', '.js'] }],
+        'react/function-component-definition': ['error', {
+          'namedComponents': 'arrow-function',
+          'unnamedComponents': 'arrow-function'
+        }]
+      }
+    }
+  ]
 };

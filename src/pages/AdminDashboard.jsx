@@ -8,9 +8,6 @@ import { Brain, Users, Activity, Settings, Database, Shield, BarChart3, Calendar
 import { AdminStatsCard } from '@/components/AdminStatsCard';
 import { SystemHealthMonitor } from '@/components/SystemHealthMonitor';
 import { RecentActivity } from '@/components/RecentActivity';
-import { AgentCard } from '@/components/AgentCard';
-import { AgentForm } from '@/components/AgentForm';
-import { AgentStats } from '@/components/AgentStats';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { EmptyState } from '@/components/EmptyState';
@@ -35,242 +32,137 @@ export default function AdminDashboard(props) {
   const {
     toast
   } = useToast();
-  const [activeTab, setActiveTab] = React.useState('overview');
   const [isLoading, setIsLoading] = React.useState(false);
-  const [agents, setAgents] = React.useState([{
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [notifications, setNotifications] = React.useState([{
     id: 1,
-    name: 'Medical Diagnosis Agent',
-    type: 'diagnosis',
-    status: 'active',
-    accuracy: 95.2,
-    lastTrained: '2024-01-15',
-    description: '专门用于医疗诊断的AI代理'
+    title: '系统警报',
+    message: 'API响应时间超过阈值',
+    time: '5分钟前',
+    read: false
   }, {
     id: 2,
-    name: 'Patient Triage Agent',
-    type: 'triage',
-    status: 'training',
-    accuracy: 89.7,
-    lastTrained: '2024-01-10',
-    description: '患者分诊和优先级评估'
+    title: '用户增长',
+    message: '本月新增用户1000+',
+    time: '1小时前',
+    read: false
   }, {
     id: 3,
-    name: 'Drug Recommendation Agent',
-    type: 'recommendation',
-    status: 'inactive',
-    accuracy: 92.1,
-    lastTrained: '2024-01-08',
-    description: '药物推荐和相互作用检查'
+    title: '数据备份完成',
+    message: '系统数据备份已成功完成',
+    time: '2小时前',
+    read: true
   }]);
-  const [showAgentForm, setShowAgentForm] = React.useState(false);
-  const [editingAgent, setEditingAgent] = React.useState(null);
-  const statsData = [{
-    title: '总代理数',
-    value: '12',
-    change: '+2',
-    icon: Brain,
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-100'
-  }, {
-    title: '活跃代理',
-    value: '8',
-    change: '+1',
-    icon: Activity,
-    color: 'text-green-600',
-    bgColor: 'bg-green-100'
-  }, {
-    title: '平均准确率',
-    value: '91.5%',
-    change: '+2.3%',
-    icon: Target,
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-100'
-  }, {
-    title: '今日请求',
-    value: '3,847',
-    change: '+523',
-    icon: Zap,
-    color: 'text-orange-600',
-    bgColor: 'bg-orange-100'
-  }];
-  const handleTabChange = value => {
-    setActiveTab(value);
+  const handleSearch = query => {
+    setSearchQuery(query);
     toast({
-      title: "页面切换",
-      description: `已切换到${value === 'overview' ? '概览' : value === 'agents' ? 'AI代理' : value === 'system' ? '系统监控' : '日志管理'}页面`
+      title: "搜索",
+      description: `正在搜索: ${query}`
     });
   };
-  const handleCreateAgent = () => {
-    setEditingAgent(null);
-    setShowAgentForm(true);
-  };
-  const handleEditAgent = agent => {
-    setEditingAgent(agent);
-    setShowAgentForm(true);
-  };
-  const handleDeleteAgent = agent => {
-    setAgents(prev => prev.filter(a => a.id !== agent.id));
+  const handleNotificationClick = notification => {
+    setNotifications(prev => prev.map(n => n.id === notification.id ? {
+      ...n,
+      read: true
+    } : n));
     toast({
-      title: "删除成功",
-      description: `代理 ${agent.name} 已删除`
+      title: "通知",
+      description: notification.message
     });
   };
-  const handleSaveAgent = agentData => {
-    if (editingAgent) {
-      setAgents(prev => prev.map(a => a.id === editingAgent.id ? {
-        ...a,
-        ...agentData
-      } : a));
-      toast({
-        title: "更新成功",
-        description: `代理 ${agentData.name} 已更新`
-      });
-    } else {
-      const newAgent = {
-        id: Date.now(),
-        ...agentData
-      };
-      setAgents(prev => [...prev, newAgent]);
-      toast({
-        title: "创建成功",
-        description: `代理 ${agentData.name} 已创建`
-      });
-    }
-    setShowAgentForm(false);
-    setEditingAgent(null);
-  };
-  return <div style={style} className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
+  const unreadCount = notifications.filter(n => !n.read).length;
+  return <div style={style} className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <ErrorBoundary>
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto p-4">
           {/* Header */}
           <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
-                <div className="p-3 bg-gray-800 rounded-lg">
-                  <Settings className="h-8 w-8 text-white" />
+                <div className="p-3 bg-blue-600 rounded-lg">
+                  <Shield className="h-8 w-8 text-white" />
                 </div>
                 <div>
                   <h1 className="text-3xl font-bold text-gray-900">管理员仪表板</h1>
-                  <p className="text-gray-600">系统管理和AI代理配置</p>
+                  <p className="text-gray-600">系统监控与管理中心</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <SearchBar placeholder="搜索代理..." />
-                <NotificationBell />
+                <SearchBar onSearch={handleSearch} placeholder="搜索系统日志、用户..." />
+                <NotificationBell notifications={notifications} onNotificationClick={handleNotificationClick} />
                 <Button variant="outline" className="flex items-center space-x-2">
-                  <RefreshCw className="h-4 w-4" />
-                  <span>刷新</span>
+                  <Settings className="h-4 w-4" />
+                  <span>设置</span>
                 </Button>
               </div>
             </div>
           </div>
 
-          {/* Navigation Tabs */}
-          <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-4 bg-white p-1 rounded-lg shadow">
-              <TabsTrigger value="overview" className="flex items-center space-x-2">
-                <BarChart3 className="h-4 w-4" />
-                <span>系统概览</span>
-              </TabsTrigger>
-              <TabsTrigger value="agents" className="flex items-center space-x-2">
-                <Brain className="h-4 w-4" />
-                <span>AI代理</span>
-              </TabsTrigger>
-              <TabsTrigger value="system" className="flex items-center space-x-2">
-                <Monitor className="h-4 w-4" />
-                <span>系统监控</span>
-              </TabsTrigger>
-              <TabsTrigger value="logs" className="flex items-center space-x-2">
-                <FileText className="h-4 w-4" />
-                <span>日志管理</span>
-              </TabsTrigger>
-            </TabsList>
+          {/* Stats Overview */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <AdminStatsCard title="总用户数" value="12,345" change="+12%" icon={Users} color="blue" />
+            <AdminStatsCard title="活跃医生" value="234" change="+8%" icon={Stethoscope} color="green" />
+            <AdminStatsCard title="API调用" value="1.2M" change="+25%" icon={Zap} color="purple" />
+            <AdminStatsCard title="系统健康" value="98.5%" change="+2%" icon={Shield} color="emerald" />
+          </div>
 
-            {/* Overview Tab */}
-            <TabsContent value="overview" className="space-y-6">
-              {/* Stats Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {statsData.map((stat, index) => <AdminStatsCard key={index} {...stat} />)}
-              </div>
-
-              {/* Charts and Activity */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <Card className="lg:col-span-2">
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <TrendingUp className="h-5 w-5 mr-2" />
-                      系统性能趋势
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ChartContainer type="line" data={{
-                    labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
-                    datasets: [{
-                      label: 'API请求',
-                      data: [1200, 1900, 3000, 5000, 4000, 3800],
-                      borderColor: 'rgb(59, 130, 246)',
-                      backgroundColor: 'rgba(59, 130, 246, 0.1)'
-                    }, {
-                      label: 'AI诊断',
-                      data: [800, 1200, 2000, 3200, 2800, 2500],
-                      borderColor: 'rgb(16, 185, 129)',
-                      backgroundColor: 'rgba(16, 185, 129, 0.1)'
-                    }]
-                  }} />
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <Clock className="h-5 w-5 mr-2" />
-                      最近活动
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <RecentActivity />
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-
-            {/* Agents Tab */}
-            <TabsContent value="agents" className="space-y-6">
-              <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold text-gray-900">AI代理管理</h2>
-                <Button onClick={handleCreateAgent} className="flex items-center space-x-2">
-                  <Plus className="h-4 w-4" />
-                  <span>创建代理</span>
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {agents.map(agent => <AgentCard key={agent.id} agent={agent} onEdit={handleEditAgent} onDelete={handleDeleteAgent} />)}
-              </div>
-
-              {/* Agent Form Modal */}
-              <Modal isOpen={showAgentForm} onClose={() => setShowAgentForm(false)} title={editingAgent ? '编辑代理' : '创建代理'}>
-                <AgentForm agent={editingAgent} onSave={handleSaveAgent} onCancel={() => setShowAgentForm(false)} />
-              </Modal>
-            </TabsContent>
-
-            {/* System Tab */}
-            <TabsContent value="system" className="space-y-6">
+          {/* Main Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-6">
               <SystemHealthMonitor />
-            </TabsContent>
-
-            {/* Logs Tab */}
-            <TabsContent value="logs" className="space-y-6">
+              <RecentActivity />
+            </div>
+            <div className="space-y-6">
+              {/* Quick Actions */}
               <Card>
                 <CardHeader>
-                  <CardTitle>系统日志</CardTitle>
+                  <CardTitle>快速操作</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <EmptyState icon={FileText} title="日志管理" description="日志查看和管理功能正在开发中..." />
+                <CardContent className="space-y-3">
+                  <Button className="w-full justify-start" variant="outline">
+                    <Users className="h-4 w-4 mr-2" />
+                    用户管理
+                  </Button>
+                  <Button className="w-full justify-start" variant="outline">
+                    <Database className="h-4 w-4 mr-2" />
+                    数据备份
+                  </Button>
+                  <Button className="w-full justify-start" variant="outline">
+                    <Settings className="h-4 w-4 mr-2" />
+                    系统配置
+                  </Button>
+                  <Button className="w-full justify-start" variant="outline">
+                    <FileText className="h-4 w-4 mr-2" />
+                    查看日志
+                  </Button>
                 </CardContent>
               </Card>
-            </TabsContent>
-          </Tabs>
+
+              {/* System Status */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>系统状态</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">API服务</span>
+                    <StatusBadge status="active" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">数据库</span>
+                    <StatusBadge status="active" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">缓存服务</span>
+                    <StatusBadge status="active" />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium">文件存储</span>
+                    <StatusBadge status="warning" />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </div>
       </ErrorBoundary>
     </div>;

@@ -1,550 +1,176 @@
 // @ts-ignore;
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 // @ts-ignore;
-import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Alert, AlertDescription, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
-// @ts-ignore;
-import { Bot, Settings, BarChart3, Zap, Shield, Users, Activity } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle, Button, Badge, Tabs, TabsContent, TabsList, TabsTrigger, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, useToast, Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui';
 
+// @ts-ignore;
+import { Brain, Users, Activity, Settings, Database, Shield, BarChart3, Calendar, AlertTriangle, CheckCircle, TrendingUp, Clock, Zap, Target, FileText, Heart, Stethoscope, Pill, Microscope, Building, CreditCard, BookOpen, Search, Filter, Download, Upload, RefreshCw, Plus, Edit, Trash2, Eye, ChevronRight, Globe, Lock, Key, UserCheck, Server, Cpu, HardDrive, Wifi, Battery, Thermometer, Wind, Handshake, DollarSign, FileContract, Route, MapPin, Timeline, GanttChart, GitBranch, Layers, Network, PieChart, LineChart, AreaChart, ScatterChart, RadarChart, TreePine, Package, Code, Terminal, Monitor, Smartphone, Tablet, Cloud, Bell, BellRing, BellOff, Volume2, VolumeX, Play, Pause, SkipForward, SkipBack, Repeat, Shuffle, Mic, MicOff, Video, VideoOff, Phone, PhoneOff, Mail, MailOpen, Send, Paperclip, PaperclipOff, Image, ImageOff, File, FilePlus, FileMinus, FileCheck, FileX, FileSearch, FileSignature, FileInput, FileOutput, FileDown, FileUp, FileCopy, FileMove, FileRename, FileDelete, FileArchive, FileUnarchive, FileLock, FileUnlock, FileQuestion, FileWarning, FileError, FileDone, FilePending, FileProcessing, FileUploading, FileDownloading, FileSync, FileSyncing, FileRefresh, FileRefreshCw, FileRefreshCcw, FileRotate, FileRotateCw, FileRotateCcw, FileFlip, FileFlipHorizontal, FileFlipVertical, FileZoomIn, FileZoomOut, FileMaximize, FileMinimize, FileExpand, FileShrink, FileFull, FileEmpty, Home, Layout, Grid, List, MoreHorizontal, MoreVertical, Menu, X, ChevronLeft, ChevronDown, ChevronUp, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, ArrowDownRight, ArrowUpLeft, ArrowDownLeft, DoubleArrowUp, DoubleArrowDown, DoubleArrowLeft, DoubleArrowRight, Minimize, Maximize, Expand, Shrink, Fullscreen, ExitFullscreen, ZoomIn, ZoomOut, RotateCw, RotateCcw, Sun, Moon, CloudRain, CloudSnow, CloudDrizzle, CloudLightning, Umbrella, Droplets, Gauge, Fuel, Power, PowerOff, Plug, PlugZap, Unplug, Signal, SignalHigh, SignalLow, SignalMedium, SignalZero, Radio, RadioTower, Broadcast, Satellite, Radar, Waves, HeartPulse, HeartHandshake, Lungs, Bone, Ear, EarOff, EyeOff, Nose, Mouth, Smile, Frown, Meh, Angry, Dizzy, Confused, Surprised, Kiss, Grin, Laugh, Wink, FrownOpen, Grimace, Tongue, TongueWink, Star, StarHalf, StarOff, HeartOff, ThumbsUp, ThumbsDown, MessageSquare, MessageCircle, MessageSquarePlus, MessageSquareMinus, MessageSquareQuote, MessageSquareDashed, MessageSquareText, MessageSquareCode, MessageSquareShare, MessageSquareMore, Reply, ReplyAll, Forward, Forwarded, Share, Share2, SendToBack, BringToFront, AlignLeft, AlignCenter, AlignRight, AlignJustify, AlignStart, AlignEnd, Indent, Outdent, ListOrdered, ListChecks, ListTodo, ListMinus, ListPlus, ListX, ListVideo, ListMusic, ListEnd, ListStart, ListCollapse, ListFilter, ListFilterPlus, ListFilterMinus, ListFilterX, ListFilter2, ListFilter3, ListFilter4, ListFilter5, ListFilter6, ListFilter7, ListFilter8, ListFilter9, ListFilter0, ListFilterDot, ListFilterSquare, ListFilterCircle, ListFilterTriangle, ListFilterHexagon, ListFilterOctagon, ListFilterDiamond, ListFilterPentagon, ListFilterStar, ListFilterHeart, ListFilterFlower, ListFilterLeaf, ListFilterCloud, ListFilterSun, ListFilterMoon, ListFilterRain, ListFilterSnow, ListFilterLightning, ListFilterUmbrella, ListFilterDroplets, ListFilterGauge, ListFilterFuel, ListFilterZap, ListFilterBattery, ListFilterPower, ListFilterPlug, ListFilterWifi, ListFilterSignal, ListFilterRadio, ListFilterBroadcast, ListFilterSatellite, ListFilterRadar, ListFilterWaves, ListFilterActivity, ListFilterHeartPulse, ListFilterLungs, ListFilterBone, ListFilterEar, ListFilterNose, ListFilterMouth, ListFilterSmile, ListFilterFrown, ListFilterMeh, ListFilterAngry, ListFilterDizzy, ListFilterConfused, ListFilterSurprised, ListFilterKiss, ListFilterGrin, ListFilterLaugh, ListFilterWink, ListFilterTongue, ListFilterThumbs, ListFilterMessage, ListFilterReply, ListFilterForward, ListFilterShare, ListFilterSend, ListFilterAlign, ListFilterIndent, ListFilterList, ListFilterCollapse, ListFilterTree, ListFilterChevron, ListFilterArrow, ListFilterDoubleArrow, ListFilterMinimize, ListFilterMaximize, ListFilterExpand, ListFilterShrink, ListFilterFullscreen, ListFilterZoom, ListFilterRotate } from '@/components/Icons';
 import { AgentCard } from '@/components/AgentCard';
 import { AgentForm } from '@/components/AgentForm';
 import { AgentStats } from '@/components/AgentStats';
-
-// AI代理配置翻译提供者
-function AIAgentTranslationProvider({
-  children
-}) {
-  const translations = {
-    zh: {
-      aiAgentConfig: 'AI代理配置',
-      agentManagement: '代理管理',
-      createAgent: '创建代理',
-      agentList: '代理列表',
-      agentStats: '代理统计',
-      settings: '设置',
-      activeAgents: '活跃代理',
-      totalAgents: '总代理数',
-      processingTasks: '处理任务',
-      successRate: '成功率',
-      agentName: '代理名称',
-      agentType: '代理类型',
-      status: '状态',
-      createdAt: '创建时间',
-      lastActive: '最后活跃',
-      actions: '操作',
-      edit: '编辑',
-      delete: '删除',
-      start: '启动',
-      stop: '停止',
-      restart: '重启',
-      viewLogs: '查看日志',
-      configuration: '配置',
-      permissions: '权限',
-      apiKeys: 'API密钥',
-      webhooks: 'Webhooks',
-      integrations: '集成',
-      monitoring: '监控',
-      alerts: '警报',
-      logs: '日志',
-      performance: '性能',
-      usage: '用量',
-      cost: '成本',
-      efficiency: '效率',
-      reliability: '可靠性',
-      availability: '可用性',
-      scalability: '可扩展性',
-      security: '安全性',
-      compliance: '合规性',
-      documentation: '文档',
-      support: '支持',
-      help: '帮助',
-      search: '搜索',
-      filter: '筛选',
-      sort: '排序',
-      refresh: '刷新',
-      export: '导出',
-      import: '导入',
-      save: '保存',
-      cancel: '取消',
-      confirm: '确认',
-      close: '关闭',
-      success: '成功',
-      error: '错误',
-      warning: '警告',
-      info: '信息',
-      loading: '加载中...',
-      noData: '暂无数据',
-      createNewAgent: '创建新代理',
-      agentDetails: '代理详情',
-      basicInfo: '基本信息',
-      advancedSettings: '高级设置',
-      environmentVariables: '环境变量',
-      resourceLimits: '资源限制',
-      healthChecks: '健康检查',
-      autoScaling: '自动扩展',
-      loadBalancing: '负载均衡',
-      caching: '缓存',
-      rateLimiting: '速率限制',
-      circuitBreaker: '熔断器',
-      retryPolicy: '重试策略',
-      timeout: '超时',
-      logging: '日志记录',
-      metrics: '指标',
-      tracing: '追踪',
-      profiling: '性能分析',
-      debugging: '调试',
-      testing: '测试',
-      staging: '预发布',
-      production: '生产',
-      development: '开发',
-      local: '本地',
-      remote: '远程',
-      cloud: '云',
-      edge: '边缘',
-      hybrid: '混合',
-      multiRegion: '多区域',
-      highAvailability: '高可用',
-      disasterRecovery: '灾难恢复',
-      backup: '备份',
-      restore: '恢复',
-      rollback: '回滚',
-      deployment: '部署',
-      upgrade: '升级',
-      downgrade: '降级',
-      migration: '迁移',
-      synchronization: '同步',
-      replication: '复制',
-      sharding: '分片',
-      partitioning: '分区',
-      clustering: '集群',
-      federation: '联邦',
-      mesh: '网格',
-      serviceMesh: '服务网格',
-      microservices: '微服务',
-      serverless: '无服务器',
-      container: '容器',
-      orchestration: '编排',
-      kubernetes: 'Kubernetes',
-      docker: 'Docker',
-      vm: '虚拟机',
-      bareMetal: '裸机',
-      infrastructure: '基础设施',
-      platform: '平台',
-      framework: '框架',
-      library: '库',
-      sdk: 'SDK',
-      api: 'API',
-      rest: 'REST',
-      graphql: 'GraphQL',
-      grpc: 'gRPC',
-      websocket: 'WebSocket',
-      http: 'HTTP',
-      https: 'HTTPS',
-      tcp: 'TCP',
-      udp: 'UDP',
-      ip: 'IP',
-      dns: 'DNS',
-      cdn: 'CDN',
-      loadBalancer: '负载均衡器',
-      proxy: '代理',
-      gateway: '网关',
-      firewall: '防火墙',
-      vpn: 'VPN',
-      ssl: 'SSL',
-      tls: 'TLS',
-      encryption: '加密',
-      decryption: '解密',
-      hashing: '哈希',
-      signature: '签名',
-      certificate: '证书',
-      token: '令牌',
-      jwt: 'JWT',
-      oauth: 'OAuth',
-      saml: 'SAML',
-      ldap: 'LDAP',
-      rbac: 'RBAC',
-      abac: 'ABAC',
-      mfa: 'MFA',
-      '2fa': '2FA',
-      sso: 'SSO',
-      identity: '身份',
-      authentication: '认证',
-      authorization: '授权',
-      audit: '审计',
-      compliance: '合规',
-      governance: '治理',
-      policy: '策略',
-      rule: '规则',
-      workflow: '工作流',
-      pipeline: '管道',
-      ci: 'CI',
-      cd: 'CD',
-      cicd: 'CI/CD',
-      devops: 'DevOps',
-      git: 'Git',
-      github: 'GitHub',
-      gitlab: 'GitLab',
-      bitbucket: 'Bitbucket',
-      jenkins: 'Jenkins',
-      travis: 'Travis',
-      circleci: 'CircleCI',
-      azure: 'Azure',
-      aws: 'AWS',
-      gcp: 'GCP',
-      alibaba: '阿里云',
-      tencent: '腾讯云',
-      huawei: '华为云',
-      baidu: '百度云'
-    },
-    en: {
-      aiAgentConfig: 'AI Agent Configuration',
-      agentManagement: 'Agent Management',
-      createAgent: 'Create Agent',
-      agentList: 'Agent List',
-      agentStats: 'Agent Statistics',
-      settings: 'Settings',
-      activeAgents: 'Active Agents',
-      totalAgents: 'Total Agents',
-      processingTasks: 'Processing Tasks',
-      successRate: 'Success Rate',
-      agentName: 'Agent Name',
-      agentType: 'Agent Type',
-      status: 'Status',
-      createdAt: 'Created At',
-      lastActive: 'Last Active',
-      actions: 'Actions',
-      edit: 'Edit',
-      delete: 'Delete',
-      start: 'Start',
-      stop: 'Stop',
-      restart: 'Restart',
-      viewLogs: 'View Logs',
-      configuration: 'Configuration',
-      permissions: 'Permissions',
-      apiKeys: 'API Keys',
-      webhooks: 'Webhooks',
-      integrations: 'Integrations',
-      monitoring: 'Monitoring',
-      alerts: 'Alerts',
-      logs: 'Logs',
-      performance: 'Performance',
-      usage: 'Usage',
-      cost: 'Cost',
-      efficiency: 'Efficiency',
-      reliability: 'Reliability',
-      availability: 'Availability',
-      scalability: 'Scalability',
-      security: 'Security',
-      compliance: 'Compliance',
-      documentation: 'Documentation',
-      support: 'Support',
-      help: 'Help',
-      search: 'Search',
-      filter: 'Filter',
-      sort: 'Sort',
-      refresh: 'Refresh',
-      export: 'Export',
-      import: 'Import',
-      save: 'Save',
-      cancel: 'Cancel',
-      confirm: 'Confirm',
-      close: 'Close',
-      success: 'Success',
-      error: 'Error',
-      warning: 'Warning',
-      info: 'Info',
-      loading: 'Loading...',
-      noData: 'No Data',
-      createNewAgent: 'Create New Agent',
-      agentDetails: 'Agent Details',
-      basicInfo: 'Basic Info',
-      advancedSettings: 'Advanced Settings',
-      environmentVariables: 'Environment Variables',
-      resourceLimits: 'Resource Limits',
-      healthChecks: 'Health Checks',
-      autoScaling: 'Auto Scaling',
-      loadBalancing: 'Load Balancing',
-      caching: 'Caching',
-      rateLimiting: 'Rate Limiting',
-      circuitBreaker: 'Circuit Breaker',
-      retryPolicy: 'Retry Policy',
-      timeout: 'Timeout',
-      logging: 'Logging',
-      metrics: 'Metrics',
-      tracing: 'Tracing',
-      profiling: 'Performance Analysis',
-      debugging: 'Debugging',
-      testing: 'Testing',
-      staging: 'Staging',
-      production: 'Production',
-      development: 'Development',
-      local: 'Local',
-      remote: 'Remote',
-      cloud: 'Cloud',
-      edge: 'Edge',
-      hybrid: 'Hybrid',
-      multiRegion: 'Multi-Region',
-      highAvailability: 'High Availability',
-      disasterRecovery: 'Disaster Recovery',
-      backup: 'Backup',
-      restore: 'Restore',
-      rollback: 'Rollback',
-      deployment: 'Deployment',
-      upgrade: 'Upgrade',
-      downgrade: 'Downgrade',
-      migration: 'Migration',
-      synchronization: 'Synchronization',
-      replication: 'Replication',
-      sharding: 'Sharding',
-      partitioning: 'Partitioning',
-      clustering: 'Clustering',
-      federation: 'Federation',
-      mesh: 'Mesh',
-      serviceMesh: 'Service Mesh',
-      microservices: 'Microservices',
-      serverless: 'Serverless',
-      container: 'Container',
-      orchestration: 'Orchestration',
-      kubernetes: 'Kubernetes',
-      docker: 'Docker',
-      vm: 'Virtual Machine',
-      bareMetal: 'Bare Metal',
-      infrastructure: 'Infrastructure',
-      platform: 'Platform',
-      framework: 'Framework',
-      library: 'Library',
-      sdk: 'SDK',
-      api: 'API',
-      rest: 'REST',
-      graphql: 'GraphQL',
-      grpc: 'gRPC',
-      websocket: 'WebSocket',
-      http: 'HTTP',
-      https: 'HTTPS',
-      tcp: 'TCP',
-      udp: 'UDP',
-      ip: 'IP',
-      dns: 'DNS',
-      cdn: 'CDN',
-      loadBalancer: 'Load Balancer',
-      proxy: 'Proxy',
-      gateway: 'Gateway',
-      firewall: 'Firewall',
-      vpn: 'VPN',
-      ssl: 'SSL',
-      tls: 'TLS',
-      encryption: 'Encryption',
-      decryption: 'Decryption',
-      hashing: 'Hashing',
-      signature: 'Signature',
-      certificate: 'Certificate',
-      token: 'Token',
-      jwt: 'JWT',
-      oauth: 'OAuth',
-      saml: 'SAML',
-      ldap: 'LDAP',
-      rbac: 'RBAC',
-      abac: 'ABAC',
-      mfa: 'MFA',
-      '2fa': '2FA',
-      sso: 'SSO',
-      identity: 'Identity',
-      authentication: 'Authentication',
-      authorization: 'Authorization',
-      audit: 'Audit',
-      compliance: 'Compliance',
-      governance: 'Governance',
-      policy: 'Policy',
-      rule: 'Rule',
-      workflow: 'Workflow',
-      pipeline: 'Pipeline',
-      ci: 'CI',
-      cd: 'CD',
-      cicd: 'CI/CD',
-      devops: 'DevOps',
-      git: 'Git',
-      github: 'GitHub',
-      gitlab: 'GitLab',
-      bitbucket: 'Bitbucket',
-      jenkins: 'Jenkins',
-      travis: 'Travis',
-      circleci: 'CircleCI',
-      azure: 'Azure',
-      aws: 'AWS',
-      gcp: 'GCP',
-      alibaba: 'Alibaba Cloud',
-      tencent: 'Tencent Cloud',
-      huawei: 'Huawei Cloud',
-      baidu: 'Baidu Cloud'
+import { LoadingSpinner } from '@/components/LoadingSpinner';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { EmptyState } from '@/components/EmptyState';
+import { NotificationBell } from '@/components/NotificationBell';
+import { SearchBar } from '@/components/SearchBar';
+import { Pagination } from '@/components/Pagination';
+import { Modal } from '@/components/Modal';
+import { Toast } from '@/components/Toast';
+import { Tooltip } from '@/components/Tooltip';
+import { StatusBadge } from '@/components/StatusBadge';
+import { DataTable } from '@/components/DataTable';
+import { ChartContainer } from '@/components/ChartContainer';
+import { ActionMenu } from '@/components/ActionMenu';
+import { FormField } from '@/components/FormField';
+import { LoadingOverlay } from '@/components/LoadingOverlay';
+import { ConfirmDialog } from '@/components/ConfirmDialog';
+export default function AIAgentConfig(props) {
+  const {
+    $w,
+    style
+  } = props;
+  const {
+    toast
+  } = useToast();
+  const [agents, setAgents] = React.useState([{
+    id: 1,
+    name: 'Medical Diagnosis Agent',
+    type: 'diagnosis',
+    status: 'active',
+    accuracy: 95.2,
+    lastTrained: '2024-01-15',
+    description: '专门用于医疗诊断的AI代理'
+  }, {
+    id: 2,
+    name: 'Patient Triage Agent',
+    type: 'triage',
+    status: 'training',
+    accuracy: 89.7,
+    lastTrained: '2024-01-10',
+    description: '患者分诊和优先级评估'
+  }, {
+    id: 3,
+    name: 'Drug Recommendation Agent',
+    type: 'recommendation',
+    status: 'inactive',
+    accuracy: 92.1,
+    lastTrained: '2024-01-08',
+    description: '药物推荐和相互作用检查'
+  }]);
+  const [showForm, setShowForm] = React.useState(false);
+  const [editingAgent, setEditingAgent] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const handleCreateAgent = () => {
+    setEditingAgent(null);
+    setShowForm(true);
+  };
+  const handleEditAgent = agent => {
+    setEditingAgent(agent);
+    setShowForm(true);
+  };
+  const handleDeleteAgent = agent => {
+    setAgents(prev => prev.filter(a => a.id !== agent.id));
+    toast({
+      title: "删除成功",
+      description: `代理 ${agent.name} 已删除`
+    });
+  };
+  const handleSaveAgent = agentData => {
+    if (editingAgent) {
+      setAgents(prev => prev.map(a => a.id === editingAgent.id ? {
+        ...a,
+        ...agentData
+      } : a));
+      toast({
+        title: "更新成功",
+        description: `代理 ${agentData.name} 已更新`
+      });
+    } else {
+      const newAgent = {
+        id: Date.now(),
+        ...agentData
+      };
+      setAgents(prev => [...prev, newAgent]);
+      toast({
+        title: "创建成功",
+        description: `代理 ${agentData.name} 已创建`
+      });
     }
+    setShowForm(false);
+    setEditingAgent(null);
   };
-  const [language, setLanguage] = useState('zh');
-  const t = key => translations[language][key] || key;
-  return <div data-language={language}>
-      {React.cloneElement(children, {
-      t,
-      language,
-      setLanguage
-    })}
-    </div>;
-}
-function AIAgentConfigContent({
-  t,
-  language,
-  setLanguage
-}) {
-  const [agents, setAgents] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('list');
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  useEffect(() => {
-    loadAgents();
-  }, []);
-  const loadAgents = async () => {
-    try {
-      setLoading(true);
-      // 模拟数据加载
-      setTimeout(() => {
-        setAgents([{
-          id: 'agent-001',
-          name: '客服机器人',
-          type: 'chatbot',
-          status: 'active',
-          createdAt: '2024-01-15',
-          lastActive: '2分钟前',
-          tasks: 156,
-          successRate: 94.5
-        }, {
-          id: 'agent-002',
-          name: '数据分析助手',
-          type: 'analytics',
-          status: 'active',
-          createdAt: '2024-01-10',
-          lastActive: '5分钟前',
-          tasks: 89,
-          successRate: 97.2
-        }, {
-          id: 'agent-003',
-          name: '图像识别服务',
-          type: 'vision',
-          status: 'inactive',
-          createdAt: '2024-01-08',
-          lastActive: '1天前',
-          tasks: 234,
-          successRate: 91.8
-        }]);
-        setLoading(false);
-      }, 1000);
-    } catch (error) {
-      console.error('Failed to load agents:', error);
-      setLoading(false);
-    }
-  };
-  const handleCreateAgent = agentData => {
-    const newAgent = {
-      id: `agent-${Date.now()}`,
-      ...agentData,
-      createdAt: new Date().toISOString().split('T')[0],
-      lastActive: '刚刚',
-      tasks: 0,
-      successRate: 100
-    };
-    setAgents([...agents, newAgent]);
-    setShowCreateForm(false);
-  };
-  const handleDeleteAgent = agentId => {
-    setAgents(agents.filter(agent => agent.id !== agentId));
-  };
-  const handleToggleStatus = agentId => {
-    setAgents(agents.map(agent => agent.id === agentId ? {
-      ...agent,
-      status: agent.status === 'active' ? 'inactive' : 'active'
-    } : agent));
-  };
-  const stats = {
-    totalAgents: agents.length,
-    activeAgents: agents.filter(a => a.status === 'active').length,
-    processingTasks: agents.reduce((sum, a) => sum + a.tasks, 0),
-    avgSuccessRate: agents.length > 0 ? (agents.reduce((sum, a) => sum + a.successRate, 0) / agents.length).toFixed(1) : 0
-  };
-  return <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">{t('aiAgentConfig')}</h1>
-              <p className="text-gray-600 mt-1">{t('agentManagement')}</p>
+  return <div style={style} className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4">
+      <ErrorBoundary>
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-blue-600 rounded-lg">
+                  <Brain className="h-8 w-8 text-white" />
+                </div>
+                <div>
+                  <h1 className="text-3xl font-bold text-gray-900">AI代理配置</h1>
+                  <p className="text-gray-600">管理和配置智能医疗AI代理</p>
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <SearchBar placeholder="搜索代理..." />
+                <Button onClick={handleCreateAgent} className="flex items-center space-x-2">
+                  <Plus className="h-4 w-4" />
+                  <span>创建代理</span>
+                </Button>
+              </div>
             </div>
-            <Button onClick={() => setShowCreateForm(true)}>
-              <Bot className="h-4 w-4 mr-2" />
-              {t('createAgent')}
-            </Button>
           </div>
-        </div>
 
-        {/* Stats */}
-        <AgentStats stats={stats} t={t} />
-
-        {/* Main Content */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="list">{t('agentList')}</TabsTrigger>
-            <TabsTrigger value="create">{t('createAgent')}</TabsTrigger>
-            <TabsTrigger value="settings">{t('settings')}</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="list">
-            <div className="grid gap-6">
-              {loading ? <div className="text-center py-12">
-                  <Activity className="h-12 w-12 mx-auto text-gray-400 mb-4 animate-spin" />
-                  <p className="text-gray-500">{t('loading')}</p>
-                </div> : agents.length === 0 ? <div className="text-center py-12">
-                  <Bot className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                  <p className="text-gray-500">{t('noData')}</p>
-                </div> : <div className="grid gap-4">
-                  {agents.map(agent => <AgentCard key={agent.id} agent={agent} onDelete={handleDeleteAgent} onToggleStatus={handleToggleStatus} t={t} />)}
-                </div>}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="create">
+          {/* Stats Overview */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <Card>
-              <CardHeader>
-                <CardTitle>{t('createNewAgent')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <AgentForm onSubmit={handleCreateAgent} onCancel={() => setActiveTab('list')} t={t} />
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="settings">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t('settings')}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <Settings className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                  <p className="text-gray-500">系统设置功能开发中...</p>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">总代理数</p>
+                    <p className="text-2xl font-bold text-gray-900">{agents.length}</p>
+                  </div>
+                  <Brain className="h-8 w-8 text-blue-600" />
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
-        </Tabs>
-      </div>
-
-      {/* Create Agent Modal */}
-      {showCreateForm && <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
-            <h2 className="text-xl font-semibold mb-4">{t('createNewAgent')}</h2>
-            <AgentForm onSubmit={handleCreateAgent} onCancel={() => setShowCreateForm(false)} t={t} />
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">活跃代理</p>
+                    <p className="text-2xl font-bold text-gray-900">{agents.filter(a => a.status === 'active').length}</p>
+                  </div>
+                  <Activity className="h-8 w-8 text-green-600" />
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600">平均准确率</p>
+                    <p className="text-2xl font-bold text-gray-900">{(agents.reduce((sum, a) => sum + a.accuracy, 0) / agents.length).toFixed(1)}%</p>
+                  </div>
+                  <Target className="h-8 w-8 text-purple-600" />
+                </div>
+              </CardContent>
+            </Card>
           </div>
-        </div>}
+
+          {/* Agents Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {agents.map(agent => <AgentCard key={agent.id} agent={agent} onEdit={handleEditAgent} onDelete={handleDeleteAgent} />)}
+          </div>
+
+          {/* Agent Form Modal */}
+          <Modal isOpen={showForm} onClose={() => setShowForm(false)} title={editingAgent ? '编辑代理' : '创建代理'}>
+            <AgentForm agent={editingAgent} onSave={handleSaveAgent} onCancel={() => setShowForm(false)} />
+          </Modal>
+        </div>
+      </ErrorBoundary>
     </div>;
-}
-export default function AIAgentConfig(props) {
-  return <AIAgentTranslationProvider>
-      <AIAgentConfigContent {...props} />
-    </AIAgentTranslationProvider>;
 }

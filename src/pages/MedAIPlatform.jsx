@@ -10,6 +10,8 @@ import { PatientManagement } from '@/components/PatientManagement';
 import { AIWorkspace } from '@/components/AIWorkspace';
 import { AnalyticsReports } from '@/components/AnalyticsReports';
 import { SystemSettings } from '@/components/SystemSettings';
+import { AIChatModal } from '@/components/AIChatModal';
+import { AuthModal } from '@/components/AuthModal';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { EmptyState } from '@/components/EmptyState';
@@ -37,30 +39,32 @@ export default function MedAIPlatform(props) {
   const [activeTab, setActiveTab] = React.useState('dashboard');
   const [isLoading, setIsLoading] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [showChatModal, setShowChatModal] = React.useState(false);
+  const [showAuthModal, setShowAuthModal] = React.useState(false);
   const [notifications, setNotifications] = React.useState([{
     id: 1,
-    title: '新患者注册',
-    message: '张三刚刚完成注册',
-    time: '2分钟前',
-    read: false
-  }, {
-    id: 2,
     title: 'AI诊断完成',
-    message: '李四的AI诊断报告已生成',
+    message: '新的AI诊断报告已生成',
     time: '5分钟前',
     read: false
   }, {
-    id: 3,
+    id: 2,
     title: '系统更新',
     message: 'AI模型已更新到最新版本',
     time: '1小时前',
+    read: false
+  }, {
+    id: 3,
+    title: '数据同步',
+    message: '患者数据同步完成',
+    time: '2小时前',
     read: true
   }]);
   const handleTabChange = value => {
     setActiveTab(value);
     toast({
       title: "页面切换",
-      description: `已切换到${value === 'dashboard' ? '仪表板' : value === 'patients' ? '患者管理' : value === 'workspace' ? 'AI工作台' : value === 'analytics' ? '数据分析' : '系统设置'}页面`
+      description: `已切换到${value === 'dashboard' ? '仪表板' : value === 'patients' ? '患者管理' : value === 'workspace' ? 'AI工作台' : value === 'analytics' ? '分析报告' : '系统设置'}页面`
     });
   };
   const handleSearch = query => {
@@ -92,13 +96,17 @@ export default function MedAIPlatform(props) {
                   <Brain className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold text-gray-900">MedAI Platform</h1>
-                  <p className="text-gray-600">智能医疗AI综合管理平台</p>
+                  <h1 className="text-3xl font-bold text-gray-900">智能医疗AI平台</h1>
+                  <p className="text-gray-600">基于人工智能的医疗诊断与管理平台</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <SearchBar onSearch={handleSearch} placeholder="搜索患者、诊断记录或AI模型..." />
+                <SearchBar onSearch={handleSearch} placeholder="搜索患者、诊断记录..." />
                 <NotificationBell notifications={notifications} onNotificationClick={handleNotificationClick} />
+                <Button onClick={() => setShowChatModal(true)} className="flex items-center space-x-2">
+                  <MessageSquare className="h-4 w-4" />
+                  <span>AI助手</span>
+                </Button>
                 <Button variant="outline" className="flex items-center space-x-2">
                   <Settings className="h-4 w-4" />
                   <span>设置</span>
@@ -124,7 +132,7 @@ export default function MedAIPlatform(props) {
               </TabsTrigger>
               <TabsTrigger value="analytics" className="flex items-center space-x-2">
                 <TrendingUp className="h-4 w-4" />
-                <span>数据分析</span>
+                <span>分析报告</span>
               </TabsTrigger>
               <TabsTrigger value="settings" className="flex items-center space-x-2">
                 <Settings className="h-4 w-4" />
@@ -153,6 +161,16 @@ export default function MedAIPlatform(props) {
               {isLoading ? <LoadingOverlay /> : <SystemSettings $w={$w} />}
             </TabsContent>
           </Tabs>
+
+          {/* AI Chat Modal */}
+          <Modal isOpen={showChatModal} onClose={() => setShowChatModal(false)} title="AI医疗助手">
+            <AIChatModal onClose={() => setShowChatModal(false)} />
+          </Modal>
+
+          {/* Auth Modal */}
+          <Modal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} title="身份验证">
+            <AuthModal onClose={() => setShowAuthModal(false)} />
+          </Modal>
         </div>
       </ErrorBoundary>
     </div>;
