@@ -139,6 +139,265 @@ export const getUnusedIcons = () => {
   return allIcons.filter(iconName => !iconUsageStats[iconName]);
 };
 
+/**
+ * 动态导入图标组件（按需加载）
+ * @param {string} iconName - 图标名称
+ * @returns {Promise<React.Component>} - 图标组件Promise
+ */
+export const dynamicImportIcon = async (iconName) => {
+  try {
+    // 模拟动态导入，实际项目中可以根据需要实现真正的按需加载
+    const iconModule = await import('@/components/Icons');
+    const IconComponent = iconModule[iconName];
+    
+    if (!IconComponent) {
+      throw new Error(`Icon "${iconName}" not found`);
+    }
+    
+    return IconComponent;
+  } catch (error) {
+    console.error(`Failed to import icon "${iconName}":`, error);
+    throw error;
+  }
+};
+
+/**
+ * 批量导入图标
+ * @param {string[]} iconNames - 图标名称数组
+ * @returns {Promise<object>} - 图标组件对象Promise
+ */
+export const batchImportIcons = async (iconNames) => {
+  try {
+    const iconModule = await import('@/components/Icons');
+    const icons = {};
+    
+    iconNames.forEach(iconName => {
+      if (iconModule[iconName]) {
+        icons[iconName] = iconModule[iconName];
+      }
+    });
+    
+    return icons;
+  } catch (error) {
+    console.error('Failed to batch import icons:', error);
+    throw error;
+  }
+};
+
+/**
+ * 预加载常用图标
+ * @param {string[]} iconNames - 需要预加载的图标名称数组
+ * @returns {Promise<void>}
+ */
+export const preloadIcons = async (iconNames) => {
+  try {
+    await batchImportIcons(iconNames);
+    console.log(`Preloaded ${iconNames.length} icons`);
+  } catch (error) {
+    console.error('Failed to preload icons:', error);
+  }
+};
+
+/**
+ * 图标缓存管理
+ */
+class IconCache {
+  constructor() {
+    this.cache = new Map();
+    this.maxSize = 100; // 最大缓存数量
+  }
+
+  /**
+   * 获取缓存的图标
+   * @param {string} iconName - 图标名称
+   * @returns {React.Component|null} - 缓存的图标组件
+   */
+  get(iconName) {
+    return this.cache.get(iconName) || null;
+  }
+
+  /**
+   * 设置图标缓存
+   * @param {string} iconName - 图标名称
+   * @param {React.Component} iconComponent - 图标组件
+   */
+  set(iconName, iconComponent) {
+    if (this.cache.size >= this.maxSize) {
+      // 删除最旧的缓存项
+      const firstKey = this.cache.keys().next().value;
+      this.cache.delete(firstKey);
+    }
+    this.cache.set(iconName, iconComponent);
+  }
+
+  /**
+   * 清空缓存
+   */
+  clear() {
+    this.cache.clear();
+  }
+
+  /**
+   * 获取缓存大小
+   * @returns {number} - 缓存项数量
+   */
+  size() {
+    return this.cache.size;
+  }
+}
+
+// 创建全局图标缓存实例
+export const iconCache = new IconCache();
+
+/**
+ * 带缓存的图标获取
+ * @param {string} iconName - 图标名称
+ * @returns {React.Component|null} - 图标组件
+ */
+export const getCachedIcon = (iconName) => {
+  // 先检查缓存
+  let iconComponent = iconCache.get(iconName);
+  
+  if (!iconComponent) {
+    // 缓存中没有，从Icons中获取
+    iconComponent = getIcon(iconName);
+    
+    if (iconComponent) {
+      // 存入缓存
+      iconCache.set(iconName, iconComponent);
+    }
+  }
+  
+  return iconComponent;
+};
+
+/**
+ * 图标主题配置
+ */
+export const iconThemes = {
+  default: {
+    size: '24px',
+    color: 'currentColor',
+    strokeWidth: 2
+  },
+  small: {
+    size: '16px',
+    color: 'currentColor',
+    strokeWidth: 2
+  },
+  large: {
+    size: '32px',
+    color: 'currentColor',
+    strokeWidth: 1.5
+  },
+  colored: {
+    size: '24px',
+    color: '#3b82f6', // blue-500
+    strokeWidth: 2
+  }
+};
+
+/**
+ * 应用主题到图标
+ * @param {string} iconName - 图标名称
+ * @param {string} themeName - 主题名称
+ * @param {object} additionalProps - 额外的props
+ * @returns {React.ReactNode} - 应用主题的图标组件
+ */
+export const renderThemedIcon = (iconName, themeName = 'default', additionalProps = {}) => {
+  const theme = iconThemes[themeName] || iconThemes.default;
+  const iconProps = {
+    size: theme.size,
+    color: theme.color,
+    strokeWidth: theme.strokeWidth,
+    ...additionalProps
+  };
+  
+  return renderIcon(iconName, iconProps);
+};
+
+/**
+ * 图标验证器
+ */
+export const iconValidator = {
+  /**
+   * 验证图标名称是否有效
+   * @param {string} iconName - 图标名称
+   * @returns {boolean} - 是否有效
+   */
+  isValidIconName(iconName) {
+    return typeof iconName === 'string' && 
+           iconName.length > 0 && 
+           /^[A-Z][a-zA-Z0-9]*$/.test(iconName);
+  },
+
+  /**
+   * 验证图标props
+   * @param {object} props - 图标props
+   * @returns {object} - 验证结果
+   */
+  validateIconProps(props) {
+    const errors = [];
+    
+    if (props.size && (typeof props.size !== 'string' && typeof props.size !== 'number')) {
+      errors.push('Size must be a string or number');
+    }
+    
+    if (props.color && typeof props.color !== 'string') {
+      errors.push('Color must be a string');
+    }
+    
+    if (props.strokeWidth && (typeof props.strokeWidth !== 'string' && typeof props.strokeWidth !== 'number')) {
+      errors.push('StrokeWidth must be a string or number');
+    }
+    
+    return {
+      isValid: errors.length === 0,
+      errors
+    };
+  }
+};
+
+/**
+ * 图标性能监控
+ */
+export const iconPerformanceMonitor = {
+  startTime: null,
+  endTime: null,
+  
+  /**
+   * 开始性能监控
+   */
+  start() {
+    this.startTime = performance.now();
+  },
+  
+  /**
+   * 结束性能监控并返回耗时
+   * @returns {number} - 耗时（毫秒）
+   */
+  end() {
+    this.endTime = performance.now();
+    return this.endTime - this.startTime;
+  },
+  
+  /**
+   * 监控图标渲染性能
+   * @param {string} iconName - 图标名称
+   * @param {Function} renderFunction - 渲染函数
+   * @returns {any} - 渲染结果
+   */
+  async measureRender(iconName, renderFunction) {
+    this.start();
+    const result = await renderFunction();
+    const duration = this.end();
+    
+    console.log(`Icon "${iconName}" render time: ${duration.toFixed(2)}ms`);
+    
+    return result;
+  }
+};
+
 export default {
   getIcon,
   getAvailableIcons,
@@ -149,5 +408,14 @@ export default {
   getRandomIcon,
   trackIconUsage,
   getIconUsageStats,
-  getUnusedIcons
+  getUnusedIcons,
+  dynamicImportIcon,
+  batchImportIcons,
+  preloadIcons,
+  iconCache,
+  getCachedIcon,
+  iconThemes,
+  renderThemedIcon,
+  iconValidator,
+  iconPerformanceMonitor
 };
