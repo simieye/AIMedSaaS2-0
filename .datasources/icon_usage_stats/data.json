@@ -1,0 +1,789 @@
+
+[
+  {
+    "_id": "icon_stat_001",
+    "stat_id": "STAT202401150001",
+    "icon_name": "Home",
+    "usage_count": 15420,
+    "category": "ui",
+    "performance_metrics": {
+      "avg_load_time": 2.3,
+      "min_load_time": 0.8,
+      "max_load_time": 8.5,
+      "avg_render_time": 1.2,
+      "cache_hit_rate": 94.5,
+      "cache_miss_count": 847,
+      "file_size": 1024
+    },
+    "user_context": {
+      "user_type": "patient",
+      "page": "PatientPortal",
+      "component": "Layout",
+      "session_id": "sess_abc123"
+    },
+    "technical_context": {
+      "browser": "Chrome",
+      "device_type": "desktop",
+      "screen_resolution": "1920x1080",
+      "connection_type": "wifi",
+      "theme": "light"
+    },
+    "usage_patterns": {
+      "peak_usage_hours": [9, 10, 14, 15, 20, 21],
+      "usage_frequency": "high",
+      "trend_direction": "up",
+      "seasonal_variation": 1.2
+    },
+    "error_stats": {
+      "load_error_count": 12,
+      "render_error_count": 3,
+      "error_rate": 0.097,
+      "common_errors": [
+        {
+          "error_type": "network_timeout",
+          "error_count": 8,
+          "last_occurred": 1705737600000
+        },
+        {
+          "error_type": "render_failure",
+          "error_count": 3,
+          "last_occurred": 1705734000000
+        }
+      ]
+    },
+    "optimization_suggestions": [
+      {
+        "suggestion_type": "preload",
+        "priority": "high",
+        "description": "预加载Home图标以提高缓存命中率",
+        "expected_improvement": "减少加载时间30%",
+        "implementation_cost": "low"
+      },
+      {
+        "suggestion_type": "cache",
+        "priority": "medium",
+        "description": "增加缓存大小以减少缓存未命中",
+        "expected_improvement": "提高缓存命中率5%",
+        "implementation_cost": "medium"
+      }
+    ],
+    "stat_period": {
+      "start_time": 1704067200000,
+      "end_time": 1705737600000,
+      "period_type": "daily"
+    },
+    "comparison_data": {
+      "previous_period_usage": 12890,
+      "usage_change_percentage": 19.6,
+      "performance_change": {
+        "load_time_change": -0.3,
+        "cache_hit_rate_change": 2.1
+      }
+    },
+    "business_impact": {
+      "user_experience_score": 8.5,
+      "page_load_impact": 0.8,
+      "bandwidth_usage": 15.6,
+      "conversion_impact": 2.3
+    },
+    "alerts": [
+      {
+        "alert_type": "performance",
+        "severity": "medium",
+        "message": "Home图标加载时间超过阈值",
+        "threshold": 5.0,
+        "current_value": 8.5,
+        "triggered_at": 1705734000000,
+        "resolved_at": 1705737600000
+      }
+    ],
+    "tags": ["navigation", "frequently_used", "core_ui"],
+    "metadata": {
+      "data_source": "client",
+      "collection_method": "automatic",
+      "version": "1.0.0",
+      "environment": "production"
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000,
+    "owner": "system",
+    "createBy": "icon_monitor",
+    "updateBy": "icon_monitor"
+  },
+  {
+    "_id": "icon_stat_002",
+    "stat_id": "STAT202401150002",
+    "icon_name": "Heart",
+    "usage_count": 12350,
+    "category": "medical",
+    "performance_metrics": {
+      "avg_load_time": 3.1,
+      "min_load_time": 1.2,
+      "max_load_time": 12.3,
+      "avg_render_time": 1.8,
+      "cache_hit_rate": 91.2,
+      "cache_miss_count": 1089,
+      "file_size": 2048
+    },
+    "user_context": {
+      "user_type": "patient",
+      "page": "PatientPortal",
+      "component": "Dashboard",
+      "session_id": "sess_def456"
+    },
+    "technical_context": {
+      "browser": "Safari",
+      "device_type": "mobile",
+      "screen_resolution": "375x812",
+      "connection_type": "4g",
+      "theme": "light"
+    },
+    "usage_patterns": {
+      "peak_usage_hours": [8, 12, 18, 22],
+      "usage_frequency": "high",
+      "trend_direction": "stable",
+      "seasonal_variation": 1.0
+    },
+    "error_stats": {
+      "load_error_count": 18,
+      "render_error_count": 7,
+      "error_rate": 0.203,
+      "common_errors": [
+        {
+          "error_type": "file_not_found",
+          "error_count": 12,
+          "last_occurred": 1705732000000
+        },
+        {
+          "error_type": "memory_limit",
+          "error_count": 6,
+          "last_occurred": 1705728000000
+        }
+      ]
+    },
+    "optimization_suggestions": [
+      {
+        "suggestion_type": "lazy_load",
+        "priority": "high",
+        "description": "对Heart图标实施懒加载以减少初始页面负载",
+        "expected_improvement": "减少首屏加载时间15%",
+        "implementation_cost": "medium"
+      },
+      {
+        "suggestion_type": "bundle",
+        "priority": "medium",
+        "description": "将Heart图标打包到核心bundle中",
+        "expected_improvement": "减少网络请求20%",
+        "implementation_cost": "low"
+      }
+    ],
+    "stat_period": {
+      "start_time": 1704067200000,
+      "end_time": 1705737600000,
+      "period_type": "daily"
+    },
+    "comparison_data": {
+      "previous_period_usage": 11890,
+      "usage_change_percentage": 3.9,
+      "performance_change": {
+        "load_time_change": 0.2,
+        "cache_hit_rate_change": -1.5
+      }
+    },
+    "business_impact": {
+      "user_experience_score": 7.8,
+      "page_load_impact": 1.2,
+      "bandwidth_usage": 25.3,
+      "conversion_impact": 1.8
+    },
+    "alerts": [
+      {
+        "alert_type": "error",
+        "severity": "high",
+        "message": "Heart图标错误率超过阈值",
+        "threshold": 0.1,
+        "current_value": 0.203,
+        "triggered_at": 1705732000000,
+        "resolved_at": null
+      }
+    ],
+    "tags": ["medical", "health", "core_icon", "mobile_optimized"],
+    "metadata": {
+      "data_source": "client",
+      "collection_method": "automatic",
+      "version": "1.0.0",
+      "environment": "production"
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000,
+    "owner": "system",
+    "createBy": "icon_monitor",
+    "updateBy": "icon_monitor"
+  },
+  {
+    "_id": "icon_stat_003",
+    "stat_id": "STAT202401150003",
+    "icon_name": "Brain",
+    "usage_count": 8760,
+    "category": "medical",
+    "performance_metrics": {
+      "avg_load_time": 4.2,
+      "min_load_time": 1.5,
+      "max_load_time": 15.8,
+      "avg_render_time": 2.3,
+      "cache_hit_rate": 87.6,
+      "cache_miss_count": 1095,
+      "file_size": 2560
+    },
+    "user_context": {
+      "user_type": "doctor",
+      "page": "DoctorPortal",
+      "component": "AIWorkspace",
+      "session_id": "sess_ghi789"
+    },
+    "technical_context": {
+      "browser": "Chrome",
+      "device_type": "desktop",
+      "screen_resolution": "2560x1440",
+      "connection_type": "wifi",
+      "theme": "dark"
+    },
+    "usage_patterns": {
+      "peak_usage_hours": [10, 11, 14, 15, 16],
+      "usage_frequency": "medium",
+      "trend_direction": "up",
+      "seasonal_variation": 1.5
+    },
+    "error_stats": {
+      "load_error_count": 8,
+      "render_error_count": 2,
+      "error_rate": 0.114,
+      "common_errors": [
+        {
+          "error_type": "timeout",
+          "error_count": 5,
+          "last_occurred": 1705724000000
+        },
+        {
+          "error_type": "corruption",
+          "error_count": 2,
+          "last_occurred": 1705716000000
+        }
+      ]
+    },
+    "optimization_suggestions": [
+      {
+        "suggestion_type": "replace",
+        "priority": "medium",
+        "description": "考虑使用更轻量的Brain图标替代方案",
+        "expected_improvement": "减少文件大小40%",
+        "implementation_cost": "high"
+      },
+      {
+        "suggestion_type": "preload",
+        "priority": "low",
+        "description": "在医生工作台预加载Brain图标",
+        "expected_improvement": "提高用户体验10%",
+        "implementation_cost": "low"
+      }
+    ],
+    "stat_period": {
+      "start_time": 1704067200000,
+      "end_time": 1705737600000,
+      "period_type": "daily"
+    },
+    "comparison_data": {
+      "previous_period_usage": 7230,
+      "usage_change_percentage": 21.2,
+      "performance_change": {
+        "load_time_change": 0.8,
+        "cache_hit_rate_change": -2.3
+      }
+    },
+    "business_impact": {
+      "user_experience_score": 7.2,
+      "page_load_impact": 2.1,
+      "bandwidth_usage": 22.4,
+      "conversion_impact": 3.1
+    },
+    "alerts": [],
+    "tags": ["ai", "medical", "doctor_tools", "complex_icon"],
+    "metadata": {
+      "data_source": "client",
+      "collection_method": "automatic",
+      "version": "1.0.0",
+      "environment": "production"
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000,
+    "owner": "system",
+    "createBy": "icon_monitor",
+    "updateBy": "icon_monitor"
+  },
+  {
+    "_id": "icon_stat_004",
+    "stat_id": "STAT202401150004",
+    "icon_name": "Settings",
+    "usage_count": 6540,
+    "category": "ui",
+    "performance_metrics": {
+      "avg_load_time": 1.8,
+      "min_load_time": 0.6,
+      "max_load_time": 6.2,
+      "avg_render_time": 0.9,
+      "cache_hit_rate": 96.8,
+      "cache_miss_count": 209,
+      "file_size": 896
+    },
+    "user_context": {
+      "user_type": "admin",
+      "page": "AdminDashboard",
+      "component": "Header",
+      "session_id": "sess_jkl012"
+    },
+    "technical_context": {
+      "browser": "Firefox",
+      "device_type": "desktop",
+      "screen_resolution": "1920x1080",
+      "connection_type": "wifi",
+      "theme": "light"
+    },
+    "usage_patterns": {
+      "peak_usage_hours": [9, 13, 17, 21],
+      "usage_frequency": "medium",
+      "trend_direction": "stable",
+      "seasonal_variation": 0.8
+    },
+    "error_stats": {
+      "load_error_count": 3,
+      "render_error_count": 1,
+      "error_rate": 0.061,
+      "common_errors": [
+        {
+          "error_type": "permission_denied",
+          "error_count": 2,
+          "last_occurred": 1705710000000
+        }
+      ]
+    },
+    "optimization_suggestions": [
+      {
+        "suggestion_type": "cache",
+        "priority": "low",
+        "description": "Settings图标性能良好，维持当前策略",
+        "expected_improvement": "维持现状",
+        "implementation_cost": "none"
+      }
+    ],
+    "stat_period": {
+      "start_time": 1704067200000,
+      "end_time": 1705737600000,
+      "period_type": "daily"
+    },
+    "comparison_data": {
+      "previous_period_usage": 6780,
+      "usage_change_percentage": -3.5,
+      "performance_change": {
+        "load_time_change": -0.2,
+        "cache_hit_rate_change": 1.2
+      }
+    },
+    "business_impact": {
+      "user_experience_score": 9.2,
+      "page_load_impact": 0.3,
+      "bandwidth_usage": 5.9,
+      "conversion_impact": 0.8
+    },
+    "alerts": [],
+    "tags": ["settings", "admin", "well_optimized"],
+    "metadata": {
+      "data_source": "client",
+      "collection_method": "automatic",
+      "version": "1.0.0",
+      "environment": "production"
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000,
+    "owner": "system",
+    "createBy": "icon_monitor",
+    "updateBy": "icon_monitor"
+  },
+  {
+    "_id": "icon_stat_005",
+    "stat_id": "STAT202401150005",
+    "icon_name": "Stethoscope",
+    "usage_count": 4320,
+    "category": "medical",
+    "performance_metrics": {
+      "avg_load_time": 5.6,
+      "min_load_time": 2.1,
+      "max_load_time": 18.9,
+      "avg_render_time": 3.2,
+      "cache_hit_rate": 82.3,
+      "cache_miss_count": 768,
+      "file_size": 3072
+    },
+    "user_context": {
+      "user_type": "doctor",
+      "page": "DoctorPortal",
+      "component": "Header",
+      "session_id": "sess_mno345"
+    },
+    "technical_context": {
+      "browser": "Edge",
+      "device_type": "tablet",
+      "screen_resolution": "1024x768",
+      "connection_type": "wifi",
+      "theme": "light"
+    },
+    "usage_patterns": {
+      "peak_usage_hours": [8, 9, 14, 15, 16],
+      "usage_frequency": "low",
+      "trend_direction": "down",
+      "seasonal_variation": 0.6
+    },
+    "error_stats": {
+      "load_error_count": 15,
+      "render_error_count": 8,
+      "error_rate": 0.532,
+      "common_errors": [
+        {
+          "error_type": "large_file",
+          "error_count": 10,
+          "last_occurred": 1705728000000
+        },
+        {
+          "error_type": "slow_network",
+          "error_count": 5,
+          "last_occurred": 1705712000000
+        }
+      ]
+    },
+    "optimization_suggestions": [
+      {
+        "suggestion_type": "replace",
+        "priority": "high",
+        "description": "Stethoscope图标文件过大，建议优化或替换",
+        "expected_improvement": "减少加载时间60%",
+        "implementation_cost": "medium"
+      },
+      {
+        "suggestion_type": "lazy_load",
+        "priority": "medium",
+        "description": "对Stethoscope图标实施懒加载",
+        "expected_improvement": "减少初始负载25%",
+        "implementation_cost": "low"
+      }
+    ],
+    "stat_period": {
+      "start_time": 1704067200000,
+      "end_time": 1705737600000,
+      "period_type": "daily"
+    },
+    "comparison_data": {
+      "previous_period_usage": 5120,
+      "usage_change_percentage": -15.6,
+      "performance_change": {
+        "load_time_change": 1.2,
+        "cache_hit_rate_change": -3.8
+      }
+    },
+    "business_impact": {
+      "user_experience_score": 5.8,
+      "page_load_impact": 3.8,
+      "bandwidth_usage": 13.3,
+      "conversion_impact": -1.2
+    },
+    "alerts": [
+      {
+        "alert_type": "performance",
+        "severity": "high",
+        "message": "Stethoscope图标性能严重下降",
+        "threshold": 3.0,
+        "current_value": 5.6,
+        "triggered_at": 1705728000000,
+        "resolved_at": null
+      },
+      {
+        "alert_type": "error",
+        "severity": "medium",
+        "message": "Stethoscope图标错误率过高",
+        "threshold": 0.3,
+        "current_value": 0.532,
+        "triggered_at": 1705728000000,
+        "resolved_at": null
+      }
+    ],
+    "tags": ["medical", "doctor", "performance_issue", "needs_optimization"],
+    "metadata": {
+      "data_source": "client",
+      "collection_method": "automatic",
+      "version": "1.0.0",
+      "environment": "production"
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000,
+    "owner": "system",
+    "createBy": "icon_monitor",
+    "updateBy": "icon_monitor"
+  },
+  {
+    "_id": "icon_stat_006",
+    "stat_id": "STAT202401150006",
+    "icon_name": "BarChart3",
+    "usage_count": 9870,
+    "category": "chart",
+    "performance_metrics": {
+      "avg_load_time": 2.8,
+      "min_load_time": 1.0,
+      "max_load_time": 9.5,
+      "avg_render_time": 1.5,
+      "cache_hit_rate": 93.1,
+      "cache_miss_count": 682,
+      "file_size": 1536
+    },
+    "user_context": {
+      "user_type": "partner",
+      "page": "PartnerPortal",
+      "component": "Dashboard",
+      "session_id": "sess_pqr678"
+    },
+    "technical_context": {
+      "browser": "Chrome",
+      "device_type": "desktop",
+      "screen_resolution": "1920x1080",
+      "connection_type": "wifi",
+      "theme": "light"
+    },
+    "usage_patterns": {
+      "peak_usage_hours": [10, 11, 15, 16, 17],
+      "usage_frequency": "high",
+      "trend_direction": "up",
+      "seasonal_variation": 1.3
+    },
+    "error_stats": {
+      "load_error_count": 6,
+      "render_error_count": 2,
+      "error_rate": 0.081,
+      "common_errors": [
+        {
+          "error_type": "render_timeout",
+          "error_count": 4,
+          "last_occurred": 1705731000000
+        }
+      ]
+    },
+    "optimization_suggestions": [
+      {
+        "suggestion_type": "preload",
+        "priority": "medium",
+        "description": "在合作伙伴门户预加载BarChart3图标",
+        "expected_improvement": "提高响应速度20%",
+        "implementation_cost": "low"
+      }
+    ],
+    "stat_period": {
+      "start_time": 1704067200000,
+      "end_time": 1705737600000,
+      "period_type": "daily"
+    },
+    "comparison_data": {
+      "previous_period_usage": 8230,
+      "usage_change_percentage": 19.9,
+      "performance_change": {
+        "load_time_change": -0.1,
+        "cache_hit_rate_change": 0.8
+      }
+    },
+    "business_impact": {
+      "user_experience_score": 8.1,
+      "page_load_impact": 1.0,
+      "bandwidth_usage": 15.1,
+      "conversion_impact": 2.8
+    },
+    "alerts": [],
+    "tags": ["analytics", "business", "frequently_used"],
+    "metadata": {
+      "data_source": "client",
+      "collection_method": "automatic",
+      "version": "1.0.0",
+      "environment": "production"
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000,
+    "owner": "system",
+    "createBy": "icon_monitor",
+    "updateBy": "icon_monitor"
+  },
+  {
+    "_id": "icon_stat_007",
+    "stat_id": "STAT202401150007",
+    "icon_name": "Activity",
+    "usage_count": 3210,
+    "category": "medical",
+    "performance_metrics": {
+      "avg_load_time": 3.5,
+      "min_load_time": 1.3,
+      "max_load_time": 11.2,
+      "avg_render_time": 1.9,
+      "cache_hit_rate": 89.4,
+      "cache_miss_count": 340,
+      "file_size": 1280
+    },
+    "user_context": {
+      "user_type": "patient",
+      "page": "PatientPortal",
+      "component": "HealthMetrics",
+      "session_id": "sess_stu901"
+    },
+    "technical_context": {
+      "browser": "Safari",
+      "device_type": "mobile",
+      "screen_resolution": "414x896",
+      "connection_type": "4g",
+      "theme": "light"
+    },
+    "usage_patterns": {
+      "peak_usage_hours": [7, 8, 19, 20, 21],
+      "usage_frequency": "low",
+      "trend_direction": "stable",
+      "seasonal_variation": 0.9
+    },
+    "error_stats": {
+      "load_error_count": 4,
+      "render_error_count": 1,
+      "error_rate": 0.156,
+      "common_errors": [
+        {
+          "error_type": "mobile_render",
+          "error_count": 3,
+          "last_occurred": 1705725000000
+        }
+      ]
+    },
+    "optimization_suggestions": [
+      {
+        "suggestion_type": "mobile_optimize",
+        "priority": "medium",
+        "description": "优化Activity图标的移动端渲染性能",
+        "expected_improvement": "减少移动端错误率50%",
+        "implementation_cost": "medium"
+      }
+    ],
+    "stat_period": {
+      "start_time": 1704067200000,
+      "end_time": 1705737600000,
+      "period_type": "daily"
+    },
+    "comparison_data": {
+      "previous_period_usage": 3450,
+      "usage_change_percentage": -7.0,
+      "performance_change": {
+        "load_time_change": 0.3,
+        "cache_hit_rate_change": -1.1
+      }
+    },
+    "business_impact": {
+      "user_experience_score": 7.5,
+      "page_load_impact": 0.7,
+      "bandwidth_usage": 4.1,
+      "conversion_impact": 0.9
+    },
+    "alerts": [],
+    "tags": ["health", "monitoring", "mobile"],
+    "metadata": {
+      "data_source": "client",
+      "collection_method": "automatic",
+      "version": "1.0.0",
+      "environment": "production"
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000,
+    "owner": "system",
+    "createBy": "icon_monitor",
+    "updateBy": "icon_monitor"
+  },
+  {
+    "_id": "icon_stat_008",
+    "stat_id": "STAT202401150008",
+    "icon_name": "FileText",
+    "usage_count": 7650,
+    "category": "file",
+    "performance_metrics": {
+      "avg_load_time": 2.1,
+      "min_load_time": 0.7,
+      "max_load_time": 7.8,
+      "avg_render_time": 1.1,
+      "cache_hit_rate": 95.2,
+      "cache_miss_count": 367,
+      "file_size": 768
+    },
+    "user_context": {
+      "user_type": "doctor",
+      "page": "DoctorPortal",
+      "component": "Reports",
+      "session_id": "sess_vwx234"
+    },
+    "technical_context": {
+      "browser": "Chrome",
+      "device_type": "desktop",
+      "screen_resolution": "1920x1080",
+      "connection_type": "wifi",
+      "theme": "light"
+    },
+    "usage_patterns": {
+      "peak_usage_hours": [9, 10, 14, 15, 16],
+      "usage_frequency": "medium",
+      "trend_direction": "up",
+      "seasonal_variation": 1.1
+    },
+    "error_stats": {
+      "load_error_count": 2,
+      "render_error_count": 0,
+      "error_rate": 0.026,
+      "common_errors": []
+    },
+    "optimization_suggestions": [
+      {
+        "suggestion_type": "maintain",
+        "priority": "low",
+        "description": "FileText图标性能优秀，维持当前配置",
+        "expected_improvement": "维持现状",
+        "implementation_cost": "none"
+      }
+    ],
+    "stat_period": {
+      "start_time": 1704067200000,
+      "end_time": 1705737600000,
+      "period_type": "daily"
+    },
+    "comparison_data": {
+      "previous_period_usage": 6890,
+      "usage_change_percentage": 11.0,
+      "performance_change": {
+        "load_time_change": -0.1,
+        "cache_hit_rate_change": 0.5
+      }
+    },
+    "business_impact": {
+      "user_experience_score": 9.0,
+      "page_load_impact": 0.4,
+      "bandwidth_usage": 5.9,
+      "conversion_impact": 1.5
+    },
+    "alerts": [],
+    "tags": ["documents", "reports", "well_optimized"],
+    "metadata": {
+      "data_source": "client",
+      "collection_method": "automatic",
+      "version": "1.0.0",
+      "environment": "production"
+    },
+    "createdAt": 1705737600000,
+    "updatedAt": 1705737600000,
+    "owner": "system",
+    "createBy": "icon_monitor",
+    "updateBy": "icon_monitor"
+  }
+]
+  

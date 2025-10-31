@@ -1,0 +1,461 @@
+
+{
+  "name": "icon_usage_stats",
+  "title": "图标使用统计",
+  "description": "记录图标使用频率、加载时间、缓存命中率等性能统计数据，用于优化图标系统性能",
+  "schemas": [
+    {
+      "name": "stat_id",
+      "title": "统计ID",
+      "type": "String",
+      "description": "统计记录唯一标识符"
+    },
+    {
+      "name": "icon_name",
+      "title": "图标名称",
+      "type": "String",
+      "description": "被使用的图标名称"
+    },
+    {
+      "name": "usage_count",
+      "title": "使用次数",
+      "type": "Number",
+      "description": "该图标在统计周期内的使用次数"
+    },
+    {
+      "name": "category",
+      "title": "图标分类",
+      "type": "String",
+      "description": "图标所属分类：ui|file|navigation|medical|business|system|media|chart|communication|time|alert|social|weather|device|coding|other"
+    },
+    {
+      "name": "performance_metrics",
+      "title": "性能指标",
+      "type": "Object",
+      "description": "图标加载和渲染性能数据",
+      "schemas": [
+        {
+          "name": "avg_load_time",
+          "title": "平均加载时间",
+          "type": "Number",
+          "description": "图标平均加载时间（毫秒）"
+        },
+        {
+          "name": "min_load_time",
+          "title": "最小加载时间",
+          "type": "Number",
+          "description": "图标最小加载时间（毫秒）"
+        },
+        {
+          "name": "max_load_time",
+          "title": "最大加载时间",
+          "type": "Number",
+          "description": "图标最大加载时间（毫秒）"
+        },
+        {
+          "name": "avg_render_time",
+          "title": "平均渲染时间",
+          "type": "Number",
+          "description": "图标平均渲染时间（毫秒）"
+        },
+        {
+          "name": "cache_hit_rate",
+          "title": "缓存命中率",
+          "type": "Number",
+          "description": "图标缓存命中率（百分比）"
+        },
+        {
+          "name": "cache_miss_count",
+          "title": "缓存未命中次数",
+          "type": "Number",
+          "description": "图标缓存未命中次数"
+        },
+        {
+          "name": "file_size",
+          "title": "文件大小",
+          "type": "Number",
+          "description": "图标文件大小（字节）"
+        }
+      ]
+    },
+    {
+      "name": "user_context",
+      "title": "用户上下文",
+      "type": "Object",
+      "description": "图标使用时的用户环境信息",
+      "schemas": [
+        {
+          "name": "user_type",
+          "title": "用户类型",
+          "type": "String",
+          "description": "doctor|patient|partner|admin|guest"
+        },
+        {
+          "name": "page",
+          "title": "页面",
+          "type": "String",
+          "description": "图标使用的页面名称"
+        },
+        {
+          "name": "component",
+          "title": "组件",
+          "type": "String",
+          "description": "图标使用的组件名称"
+        },
+        {
+          "name": "session_id",
+          "title": "会话ID",
+          "type": "String",
+          "description": "用户会话标识符"
+        }
+      ]
+    },
+    {
+      "name": "technical_context",
+      "title": "技术上下文",
+      "type": "Object",
+      "description": "图标使用时的技术环境信息",
+      "schemas": [
+        {
+          "name": "browser",
+          "title": "浏览器",
+          "type": "String",
+          "description": "用户浏览器类型"
+        },
+        {
+          "name": "device_type",
+          "title": "设备类型",
+          "type": "String",
+          "description": "desktop|mobile|tablet"
+        },
+        {
+          "name": "screen_resolution",
+          "title": "屏幕分辨率",
+          "type": "String",
+          "description": "设备屏幕分辨率"
+        },
+        {
+          "name": "connection_type",
+          "title": "网络类型",
+          "type": "String",
+          "description": "wifi|4g|3g|2g|offline"
+        },
+        {
+          "name": "theme",
+          "title": "主题",
+          "type": "String",
+          "description": "light|dark|auto"
+        }
+      ]
+    },
+    {
+      "name": "usage_patterns",
+      "title": "使用模式",
+      "type": "Object",
+      "description": "图标使用的时间和行为模式",
+      "schemas": [
+        {
+          "name": "peak_usage_hours",
+          "title": "高峰使用时段",
+          "type": "Array",
+          "items": {
+            "type": "Number"
+          },
+          "description": "图标使用高峰时段（小时）"
+        },
+        {
+          "name": "usage_frequency",
+          "title": "使用频率",
+          "type": "String",
+          "description": "high|medium|low|rare"
+        },
+        {
+          "name": "trend_direction",
+          "title": "趋势方向",
+          "type": "String",
+          "description": "up|down|stable"
+        },
+        {
+          "name": "seasonal_variation",
+          "title": "季节性变化",
+          "type": "Number",
+          "description": "使用量的季节性变化系数"
+        }
+      ]
+    },
+    {
+      "name": "error_stats",
+      "title": "错误统计",
+      "type": "Object",
+      "description": "图标加载和渲染错误统计",
+      "schemas": [
+        {
+          "name": "load_error_count",
+          "title": "加载错误次数",
+          "type": "Number",
+          "description": "图标加载失败次数"
+        },
+        {
+          "name": "render_error_count",
+          "title": "渲染错误次数",
+          "type": "Number",
+          "description": "图标渲染失败次数"
+        },
+        {
+          "name": "error_rate",
+          "title": "错误率",
+          "type": "Number",
+          "description": "图标错误率（百分比）"
+        },
+        {
+          "name": "common_errors",
+          "title": "常见错误",
+          "type": "Array",
+          "items": {
+            "type": "Object",
+            "schemas": [
+              {
+                "name": "error_type",
+                "title": "错误类型",
+                "type": "String"
+              },
+              {
+                "name": "error_count",
+                "title": "错误次数",
+                "type": "Number"
+              },
+              {
+                "name": "last_occurred",
+                "title": "最后发生时间",
+                "type": "DateTime",
+                "format": "timestamp-ms"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "optimization_suggestions",
+      "title": "优化建议",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "suggestion_type",
+            "title": "建议类型",
+            "type": "String",
+            "description": "cache|preload|lazy_load|bundle|replace"
+          },
+          {
+            "name": "priority",
+            "title": "优先级",
+            "type": "String",
+            "description": "high|medium|low"
+          },
+          {
+            "name": "description",
+            "title": "建议描述",
+            "type": "String"
+          },
+          {
+            "name": "expected_improvement",
+            "title": "预期改进",
+            "type": "String"
+          },
+          {
+            "name": "implementation_cost",
+            "title": "实施成本",
+            "type": "String",
+            "description": "low|medium|high"
+          }
+        ]
+      }
+    },
+    {
+      "name": "stat_period",
+      "title": "统计周期",
+      "type": "Object",
+      "description": "统计数据的时间范围",
+      "schemas": [
+        {
+          "name": "start_time",
+          "title": "开始时间",
+          "type": "DateTime",
+          "format": "timestamp-ms"
+        },
+        {
+          "name": "end_time",
+          "title": "结束时间",
+          "type": "DateTime",
+          "format": "timestamp-ms"
+        },
+        {
+          "name": "period_type",
+          "title": "周期类型",
+          "type": "String",
+          "description": "hourly|daily|weekly|monthly"
+        }
+      ]
+    },
+    {
+      "name": "comparison_data",
+      "title": "对比数据",
+      "type": "Object",
+      "description": "与历史数据的对比分析",
+      "schemas": [
+        {
+          "name": "previous_period_usage",
+          "title": "上期使用量",
+          "type": "Number"
+        },
+        {
+          "name": "usage_change_percentage",
+          "title": "使用量变化百分比",
+          "type": "Number"
+        },
+        {
+          "name": "performance_change",
+          "title": "性能变化",
+          "type": "Object",
+          "schemas": [
+            {
+              "name": "load_time_change",
+              "title": "加载时间变化",
+              "type": "Number"
+            },
+            {
+              "name": "cache_hit_rate_change",
+              "title": "缓存命中率变化",
+              "type": "Number"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "business_impact",
+      "title": "业务影响",
+      "type": "Object",
+      "description": "图标性能对业务的影响分析",
+      "schemas": [
+        {
+          "name": "user_experience_score",
+          "title": "用户体验评分",
+          "type": "Number",
+          "description": "图标性能对用户体验的影响评分（1-10）"
+        },
+        {
+          "name": "page_load_impact",
+          "title": "页面加载影响",
+          "type": "Number",
+          "description": "图标对页面加载时间的影响（毫秒）"
+        },
+        {
+          "name": "bandwidth_usage",
+          "title": "带宽使用",
+          "type": "Number",
+          "description": "图标带宽使用量（KB）"
+        },
+        {
+          "name": "conversion_impact",
+          "title": "转化影响",
+          "type": "Number",
+          "description": "图标性能对用户转化的影响（百分比）"
+        }
+      ]
+    },
+    {
+      "name": "alerts",
+      "title": "告警信息",
+      "type": "Array",
+      "items": {
+        "type": "Object",
+        "schemas": [
+          {
+            "name": "alert_type",
+            "title": "告警类型",
+            "type": "String",
+            "description": "performance|error|usage|cache"
+          },
+          {
+            "name": "severity",
+            "title": "严重程度",
+            "type": "String",
+            "description": "critical|high|medium|low"
+          },
+          {
+            "name": "message",
+            "title": "告警消息",
+            "type": "String"
+          },
+          {
+            "name": "threshold",
+            "title": "阈值",
+            "type": "Number"
+          },
+            {
+            "name": "current_value",
+            "title": "当前值",
+            "type": "Number"
+          },
+          {
+            "name": "triggered_at",
+            "title": "触发时间",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          },
+          {
+            "name": "resolved_at",
+            "title": "解决时间",
+            "type": "DateTime",
+            "format": "timestamp-ms"
+          }
+        ]
+      }
+    },
+    {
+      "name": "tags",
+      "title": "标签",
+      "type": "Array",
+      "items": {
+        "type": "String"
+      },
+      "description": "统计记录的标签，用于分类和筛选"
+    },
+    {
+      "name": "metadata",
+      "title": "元数据",
+      "type": "Object",
+      "description": "额外的元数据信息",
+      "schemas": [
+        {
+          "name": "data_source",
+          "title": "数据来源",
+          "type": "String",
+          "description": "client|server|analytics|monitoring"
+        },
+        {
+          "name": "collection_method",
+          "title": "收集方法",
+          "type": "String",
+          "description": "automatic|manual|api|webhook"
+        },
+        {
+          "name": "version",
+          "title": "版本",
+          "type": "String",
+          "description": "图标系统版本"
+        },
+        {
+          "name": "environment",
+          "title": "环境",
+          "type": "String",
+          "description": "production|staging|development"
+        }
+      ]
+    }
+  ]
+}
+  
